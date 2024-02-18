@@ -1,0 +1,12 @@
+### /execute
+POST http://localhost:8005/api/v1/execute
+Content-Type: application/json
+x-sta-tenant: stoneage
+x-sta-userid: user@email.com
+
+{
+  "validationSet": "CPF",
+  "data": {
+    "cpf": "39280992805"
+  }
+}
