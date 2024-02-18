@@ -15,7 +15,9 @@
     "prisma-generate": "prisma generate",
     "prisma-migrate": "npx prisma migrate",
     "prisma-migrate-dev": "npx prisma migrate dev",
-    "prepare": "chmod ug+x .husky/* && husky install"
+    "prepare": "chmod ug+x .husky/* && husky install",
+    "db:up": "docker compose -f docker-compose.dev.yml up -d",
+    "db:down": "docker compose -f docker-compose.dev.yml down"
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
