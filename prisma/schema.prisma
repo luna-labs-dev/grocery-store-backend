@@ -6,3 +6,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model market {
+  id             String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code           String           @unique @db.VarChar(60)
+  name           String           @unique @db.VarChar(100)
+  createdAt      DateTime         @default(now()) @db.Timestamp(6)
+  createdBy      String           @db.VarChar(320)
+  shopping_event shopping_event[]
+}
+
+model shopping_event {
+  id             String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  marketId       String                  @db.Uuid
+  description    String                  @db.Text
+  totalPaid      Decimal                 @db.Money
+  wholesaleTotal Decimal                 @db.Money
+  retailTotal    Decimal                 @db.Money
+  status         shoppingEventStatusEnum @default(ONGOING)
+  createdAt      DateTime                @default(now()) @db.Timestamp(6)
+  finishedAt     DateTime?               @db.Timestamp(6)
+  createdBy      String                  @db.VarChar(320)
+  market         market                  @relation(fields: [marketId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shopping_event_marketId_market_id_fk")
+  product        product[]
+}
+
+model product {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  shoppingEventId String         @db.Uuid
+  name            String         @unique @db.VarChar(256)
+  amount          Int            @db.Integer
+  wholesaleAmount Int?           @db.Integer
+  price           Decimal        @db.Money
+  wholesalePrice  Decimal?       @db.Money
+  addedAt         DateTime?      @db.Timestamp(6)
+  addedBy         String         @db.VarChar(320)
+  shoppingEvent   shopping_event @relation(fields: [shoppingEventId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_shoppingEventId_shopping_event_id_fk")
+}
+
+enum shoppingEventStatusEnum {
+  ONGOING
+  CANCELED
+  FINISHED
+}
