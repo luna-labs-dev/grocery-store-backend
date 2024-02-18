@@ -1,6 +1,8 @@
 import { Entity } from '../core';
+import { nameToCode } from '../helper';
 
 export interface MarketProps {
+  code?: string;
   name: string;
   createdAt: Date;
   createdBy: string;
@@ -9,6 +11,10 @@ export interface MarketProps {
 export class Market extends Entity<MarketProps> {
   private constructor(props: MarketProps, id?: string) {
     super(props, id);
+  }
+
+  get code(): string | undefined {
+    return this.props.code;
   }
 
   get name(): string {
@@ -24,7 +30,10 @@ export class Market extends Entity<MarketProps> {
   }
 
   public static create(props: MarketProps, id?: string): Market {
-    const entity = new Market(props, id);
-    return entity;
+    if (!props.code) {
+      props.code = nameToCode(props.name);
+    }
+
+    return new Market(props, id);
   }
 }
