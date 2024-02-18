@@ -6,6 +6,7 @@ export type NewMarketErrors = UnexpectedError;
 
 export interface NewMarketParams {
   name: string;
+  user: string;
 }
 
 export interface NewMarketResult {
