@@ -2,6 +2,8 @@ import { DbNewMarket, NewMarketRepository } from '@/application';
 import { Market } from '@/domain';
 
 describe('DbNewMarket', () => {
+  it.todo('should return MarketAlreadyExists when code is found on database');
+
   it('shoud create a new Market and return success', async () => {
     // Arrange
     class MockedNewMarketRepository implements NewMarketRepository {
