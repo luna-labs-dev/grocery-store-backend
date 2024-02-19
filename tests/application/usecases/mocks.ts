@@ -1,30 +1,18 @@
-import { DbNewMarket, GetMarketByCodeRepositoryParams, NewMarketRepositories } from '@/application';
-import { Market, NewMarket, NewMarketParams } from '@/domain';
+import { mockRepositories } from 'tests/mocks/repositories';
 
-const mockRepository = (): NewMarketRepositories => {
-  class MockedNewMarketRepository implements NewMarketRepositories {
-    getByCode = (params: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
-      return Promise.resolve(undefined);
-    };
-
-    new = (market: Market): Promise<void> => {
-      return Promise.resolve();
-    };
-  }
-
-  return new MockedNewMarketRepository();
-};
+import { DbNewMarket, NewMarketRepositories } from '@/application';
+import { NewMarket, NewMarketParams } from '@/domain';
 
 interface SutResult {
   sut: NewMarket;
-  repository: NewMarketRepositories;
+  marketRepository: NewMarketRepositories;
 }
 
 export const makeSut = (): SutResult => {
-  const repository = mockRepository();
-  const sut = new DbNewMarket(repository);
+  const { marketRepository } = mockRepositories();
+  const sut = new DbNewMarket(marketRepository);
 
-  return { sut, repository };
+  return { sut, marketRepository };
 };
 
 interface MockParams {
