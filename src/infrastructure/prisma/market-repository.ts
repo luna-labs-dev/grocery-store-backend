@@ -1,10 +1,14 @@
 import { MarketMapper } from './mappers/market-mapper';
 
-import { GetMarketByCodeRepository, GetMarketByCodeRepositoryParams } from '@/application';
+import {
+  GetMarketByCodeRepository,
+  GetMarketByCodeRepositoryParams,
+  NewMarketRepository,
+} from '@/application';
 import { Market } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
-type MarketRepositories = GetMarketByCodeRepository;
+type MarketRepositories = GetMarketByCodeRepository & NewMarketRepository;
 
 export class PrismaMarketRepository implements MarketRepositories {
   getByCode = async ({ code }: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
@@ -15,5 +19,11 @@ export class PrismaMarketRepository implements MarketRepositories {
     });
 
     return MarketMapper.toDomain(market);
+  };
+
+  create = async (market: Market): Promise<void> => {
+    await prisma.market.create({
+      data: MarketMapper.toPersistence(market),
+    });
   };
 }

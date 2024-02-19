@@ -10,11 +10,24 @@ export class MarketMapper {
       return;
     }
 
-    return Market.create({
-      code: raw.code,
-      name: raw.name,
-      createdAt: raw.createdAt,
-      createdBy: raw.createdBy,
-    });
+    return Market.create(
+      {
+        code: raw.code,
+        name: raw.name,
+        createdAt: raw.createdAt,
+        createdBy: raw.createdBy,
+      },
+      raw.id,
+    );
+  }
+
+  static toPersistence(market: Market): MarketPersistence {
+    return {
+      id: market.id,
+      code: market.code as string,
+      name: market.name,
+      createdAt: market.createdAt,
+      createdBy: market.createdBy,
+    };
   }
 }
