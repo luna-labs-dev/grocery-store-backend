@@ -21,7 +21,7 @@ export class PrismaMarketRepository implements MarketRepositories {
     return MarketMapper.toDomain(market);
   };
 
-  create = async (market: Market): Promise<void> => {
+  new = async (market: Market): Promise<void> => {
     await prisma.market.create({
       data: MarketMapper.toPersistence(market),
     });

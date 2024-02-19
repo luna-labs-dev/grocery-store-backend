@@ -31,7 +31,7 @@ export class DbNewMarket implements NewMarket {
         return left(new MarketAlreadyExistsError());
       }
 
-      await this.repository.create(market);
+      await this.repository.new(market);
 
       return right(market);
     } catch (error) {

@@ -7,7 +7,7 @@ const mockRepository = (): NewMarketRepositories => {
       return Promise.resolve(undefined);
     };
 
-    create = (market: Market): Promise<void> => {
+    new = (market: Market): Promise<void> => {
       return Promise.resolve();
     };
   }

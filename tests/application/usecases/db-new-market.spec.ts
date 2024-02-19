@@ -46,7 +46,7 @@ describe('DbNewMarket', () => {
     // Arrange
     const { sut, repository } = makeSut();
 
-    vi.spyOn(repository, 'create').mockImplementationOnce(() => {
+    vi.spyOn(repository, 'new').mockImplementationOnce(() => {
       throw new Error('Something went wrong with the database');
     });
 
