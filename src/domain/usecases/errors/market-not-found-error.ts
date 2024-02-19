@@ -1,0 +1,12 @@
+import { UseCaseError } from '@/domain/core';
+
+export class MarketNotFoundError extends Error implements UseCaseError {
+  code: string;
+  uuid?: string;
+
+  constructor() {
+    super('The Market was not found');
+    this.name = 'MarketNotFoundError';
+    this.code = 'MARKET_NOT_FOUND_ERROR';
+  }
+}
