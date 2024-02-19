@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { makeSut, mockParams } from './mocks';
 
 import { nameToCode } from '@/domain/helper';
@@ -6,9 +7,9 @@ import { Market, MarketAlreadyExistsError, NewMarketErrors, UnexpectedError } fr
 describe('DbNewMarket', () => {
   it('shoud call GetMarketByCode with correct values', async () => {
     // Arrange
-    const { sut, marketRepository } = makeSut();
+    const { sut, mockedMarketRepository } = makeSut();
 
-    const repositorySpy = vi.spyOn(marketRepository, 'getByCode');
+    const repositorySpy = vi.spyOn(mockedMarketRepository, 'getByCode');
 
     const { newMarketParams } = mockParams();
 
@@ -21,9 +22,9 @@ describe('DbNewMarket', () => {
 
   it('should return MarketAlreadyExistsError when code is found on database', async () => {
     // Arrange
-    const { sut, marketRepository } = makeSut();
+    const { sut, mockedMarketRepository } = makeSut();
 
-    vi.spyOn(marketRepository, 'getByCode').mockResolvedValueOnce(
+    vi.spyOn(mockedMarketRepository, 'getByCode').mockResolvedValueOnce(
       Market.create({
         name: 'Assai Carapicuiba',
         createdAt: new Date(),
@@ -44,9 +45,9 @@ describe('DbNewMarket', () => {
 
   it('should return UnexpectedError if repository throws', async () => {
     // Arrange
-    const { sut, marketRepository } = makeSut();
+    const { sut, mockedMarketRepository } = makeSut();
 
-    vi.spyOn(marketRepository, 'new').mockImplementationOnce(() => {
+    vi.spyOn(mockedMarketRepository, 'new').mockImplementationOnce(() => {
       throw new Error('Something went wrong with the database');
     });
 

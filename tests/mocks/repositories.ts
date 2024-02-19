@@ -2,7 +2,7 @@ import { GetMarketByCodeRepositoryParams, MarketRepositories } from '@/applicati
 import { Market } from '@/domain';
 
 export interface MockRepositoriesResult {
-  marketRepository: MarketRepositories;
+  mockedMarketRepository: MarketRepositories;
 }
 
 export const mockRepositories = (): MockRepositoriesResult => {
@@ -17,6 +17,6 @@ export const mockRepositories = (): MockRepositoriesResult => {
   }
 
   return {
-    marketRepository: new MockedMarketRepository(),
+    mockedMarketRepository: new MockedMarketRepository(),
   };
 };

@@ -5,14 +5,14 @@ import { NewMarket, NewMarketParams } from '@/domain';
 
 interface SutResult {
   sut: NewMarket;
-  marketRepository: NewMarketRepositories;
+  mockedMarketRepository: NewMarketRepositories;
 }
 
 export const makeSut = (): SutResult => {
-  const { marketRepository } = mockRepositories();
-  const sut = new DbNewMarket(marketRepository);
+  const { mockedMarketRepository } = mockRepositories();
+  const sut = new DbNewMarket(mockedMarketRepository);
 
-  return { sut, marketRepository };
+  return { sut, mockedMarketRepository };
 };
 
 interface MockParams {
