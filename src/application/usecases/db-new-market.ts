@@ -12,7 +12,7 @@ import {
   UnexpectedError,
 } from '@/domain';
 import { GetMarketByCodeRepository, NewMarketRepository } from '@/application';
-import { injection } from '@/main/di';
+import { injection } from '@/main/di/injection-codes';
 
 export type NewMarketRepositories = NewMarketRepository & GetMarketByCodeRepository;
 
