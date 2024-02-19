@@ -1,37 +1,6 @@
-import { DbNewMarket, GetMarketByCodeRepositoryParams, NewMarketRepositories } from '@/application';
-import {
-  Market,
-  MarketAlreadyExistsError,
-  NewMarket,
-  NewMarketErrors,
-  UnexpectedError,
-} from '@/domain';
+import { makeSut } from './mocks';
 
-const mockRepository = (): NewMarketRepositories => {
-  class MockedNewMarketRepository implements NewMarketRepositories {
-    getByCode = (params: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
-      return Promise.resolve(undefined);
-    };
-
-    create = (market: Market): Promise<void> => {
-      return Promise.resolve();
-    };
-  }
-
-  return new MockedNewMarketRepository();
-};
-
-interface SutResult {
-  sut: NewMarket;
-  repository: NewMarketRepositories;
-}
-
-const makeSut = (): SutResult => {
-  const repository = mockRepository();
-  const sut = new DbNewMarket(repository);
-
-  return { sut, repository };
-};
+import { Market, MarketAlreadyExistsError, NewMarketErrors, UnexpectedError } from '@/domain';
 
 describe('DbNewMarket', () => {
   it('should return MarketAlreadyExistsError when code is found on database', async () => {
