@@ -72,5 +72,8 @@ describe('DbNewMarket', () => {
 
     // Assert
     expect(response.isRight()).toBe(true);
+    expect(response.value).instanceOf(Market);
+    expect((response.value as Market).code).toBe(nameToCode(newMarketParams.name));
+    expect((response.value as Market).name).toBe(newMarketParams.name);
   });
 });

@@ -1,4 +1,5 @@
 import { Either } from '../core';
+import { Market } from '../entities';
 
 import { UnexpectedError } from './errors';
 
@@ -9,11 +10,6 @@ export interface NewMarketParams {
   user: string;
 }
 
-export interface NewMarketResult {
-  id: string;
-  createdAt: Date;
-}
-
 export interface NewMarket {
-  execute: (request: NewMarketParams) => Promise<Either<NewMarketErrors, NewMarketResult>>;
+  execute: (request: NewMarketParams) => Promise<Either<NewMarketErrors, Market>>;
 }

@@ -6,7 +6,6 @@ import {
   NewMarket,
   NewMarketErrors,
   NewMarketParams,
-  NewMarketResult,
   right,
   UnexpectedError,
 } from '@/domain';
@@ -16,10 +15,7 @@ export type NewMarketRepositories = NewMarketRepository & GetMarketByCodeReposit
 
 export class DbNewMarket implements NewMarket {
   constructor(private readonly repository: NewMarketRepositories) {}
-  execute = async ({
-    name,
-    user,
-  }: NewMarketParams): Promise<Either<NewMarketErrors, NewMarketResult>> => {
+  execute = async ({ name, user }: NewMarketParams): Promise<Either<NewMarketErrors, Market>> => {
     try {
       const market = Market.create({
         name,
@@ -37,10 +33,7 @@ export class DbNewMarket implements NewMarket {
 
       await this.repository.create(market);
 
-      return right({
-        id: market.id,
-        createdAt: market.createdAt,
-      });
+      return right(market);
     } catch (error) {
       console.error(error);
       return left(new UnexpectedError());
