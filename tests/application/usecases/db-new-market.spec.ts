@@ -1,7 +1,13 @@
 import { makeSut, mockParams } from './mocks';
 
 import { nameToCode } from '@/domain/helper';
-import { Market, MarketAlreadyExistsError, NewMarketErrors, UnexpectedError } from '@/domain';
+import {
+  Market,
+  MarketAlreadyExistsError,
+  NewMarketErrors,
+  NewMarketResult,
+  UnexpectedError,
+} from '@/domain';
 
 describe('DbNewMarket', () => {
   it('shoud call GetMarketByCode with correct values', async () => {
@@ -72,5 +78,6 @@ describe('DbNewMarket', () => {
 
     // Assert
     expect(response.isRight()).toBe(true);
+    expect((response.value as NewMarketResult).id).toBeTruthy();
   });
 });
