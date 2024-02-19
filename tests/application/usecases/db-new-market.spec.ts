@@ -1,5 +1,11 @@
 import { DbNewMarket, GetMarketByCodeRepositoryParams, NewMarketRepositories } from '@/application';
-import { Market, MarketAlreadyExistsError, NewMarket, NewMarketErrors } from '@/domain';
+import {
+  Market,
+  MarketAlreadyExistsError,
+  NewMarket,
+  NewMarketErrors,
+  UnexpectedError,
+} from '@/domain';
 
 const mockRepository = (): NewMarketRepositories => {
   class MockedNewMarketRepository implements NewMarketRepositories {
@@ -50,7 +56,23 @@ describe('DbNewMarket', () => {
     expect(response.value as NewMarketErrors).toEqual(new MarketAlreadyExistsError());
   });
 
-  it.todo('should return UnexpectedError if repository throws');
+  it('should return UnexpectedError if repository throws', async () => {
+    // Arrange
+    const { sut, repository } = makeSut();
+    vi.spyOn(repository, 'create').mockImplementationOnce(() => {
+      throw new Error('Something went wrong with the database');
+    });
+    // Act
+    const response = await sut.execute({
+      name: 'Assai Carapicuiba',
+      user: 'tiagoluizpoli@gmail.com',
+    });
+
+    // Assert
+
+    expect(response.isLeft()).toBe(true);
+    expect(response.value as NewMarketErrors).toEqual(new UnexpectedError());
+  });
 
   it('shoud create a new Market and return success', async () => {
     // Arrange
