@@ -1,5 +1,5 @@
 import { DbNewMarket, GetMarketByCodeRepositoryParams, NewMarketRepositories } from '@/application';
-import { Market, NewMarket } from '@/domain';
+import { Market, NewMarket, NewMarketParams } from '@/domain';
 
 const mockRepository = (): NewMarketRepositories => {
   class MockedNewMarketRepository implements NewMarketRepositories {
@@ -25,4 +25,17 @@ export const makeSut = (): SutResult => {
   const sut = new DbNewMarket(repository);
 
   return { sut, repository };
+};
+
+interface MockParams {
+  newMarketParams: NewMarketParams;
+}
+
+export const mockParams = (): MockParams => {
+  return {
+    newMarketParams: {
+      name: 'Assai Carapicuiba',
+      user: 'tiagoluizpoli@gmail.com',
+    },
+  };
 };
