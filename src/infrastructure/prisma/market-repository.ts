@@ -8,7 +8,7 @@ import {
 import { Market } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
-type MarketRepositories = GetMarketByCodeRepository & NewMarketRepository;
+export type MarketRepositories = GetMarketByCodeRepository & NewMarketRepository;
 
 export class PrismaMarketRepository implements MarketRepositories {
   getByCode = async ({ code }: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {

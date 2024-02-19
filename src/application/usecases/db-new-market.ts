@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import {
   Either,
   left,
@@ -10,11 +12,18 @@ import {
   UnexpectedError,
 } from '@/domain';
 import { GetMarketByCodeRepository, NewMarketRepository } from '@/application';
+import { injection } from '@/main/di';
 
 export type NewMarketRepositories = NewMarketRepository & GetMarketByCodeRepository;
 
+const { infra } = injection;
+
+@injectable()
 export class DbNewMarket implements NewMarket {
-  constructor(private readonly repository: NewMarketRepositories) {}
+  constructor(
+    @inject(infra.marketRepositories) private readonly repository: NewMarketRepositories,
+  ) {}
+
   execute = async ({ name, user }: NewMarketParams): Promise<Either<NewMarketErrors, Market>> => {
     try {
       const market = Market.create({
