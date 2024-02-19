@@ -1,1 +1,1 @@
-export * from './text-to-code';
+export * from './name-to-code';
