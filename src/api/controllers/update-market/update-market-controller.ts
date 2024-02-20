@@ -6,7 +6,7 @@ import { updateMarketRequestSchema } from './update-market-controller-validation
 import { injection } from '@/main/di/injection-codes';
 import { Controller, HttpResponse } from '@/api/contracts';
 import { UpdateMarket } from '@/domain';
-import { ok } from '@/api';
+import { mapErrorByCode, ok } from '@/api';
 
 export type UpdateMarketControllerRequest = z.infer<typeof updateMarketRequestSchema>;
 
@@ -15,8 +15,13 @@ const { usecases } = injection;
 export class UpdateMarketController implements Controller {
   constructor(@inject(usecases.updateMarket) private readonly updateMarket: UpdateMarket) {}
 
-  handle = async ({ marketId, name }: UpdateMarketControllerRequest): Promise<HttpResponse> => {
-    await this.updateMarket.execute({ marketId, name });
+  handle = async (request: UpdateMarketControllerRequest): Promise<HttpResponse> => {
+    const { marketId, name } = request;
+    const result = await this.updateMarket.execute({ marketId, name });
+
+    if (result.isLeft()) {
+      return mapErrorByCode(result.value);
+    }
 
     return ok({});
   };
