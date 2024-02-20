@@ -10,6 +10,7 @@ import {
   Either,
   left,
   Market,
+  MarketAlreadyExistsError,
   MarketNotFoundError,
   right,
   UnexpectedError,
@@ -47,7 +48,11 @@ export class DbUpdateMarket implements UpdateMarket {
       market.update({ name });
 
       // Search by market Code
-      await this.repositories.getByCode({ code: market.code });
+      const marketWithSameCode = await this.repositories.getByCode({ code: market.code });
+
+      if (marketWithSameCode && marketWithSameCode.id !== marketId) {
+        return left(new MarketAlreadyExistsError());
+      }
 
       // Update Market in the Database
       await this.repositories.update(market);

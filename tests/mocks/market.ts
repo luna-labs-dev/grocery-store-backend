@@ -4,6 +4,7 @@ interface MockMarketResult {
   id: string;
   code: string;
   market: Market;
+  existingMarket: Market;
 }
 
 export const mockMarket = (): MockMarketResult => {
@@ -17,9 +18,16 @@ export const mockMarket = (): MockMarketResult => {
     id,
   );
 
+  const existingMarket = Market.create({
+    name: 'Assai Carapicuiba',
+    createdAt: new Date(),
+    createdBy: 'mock@email.com',
+  });
+
   return {
     id,
-    code: market.code as string,
+    code: market.code,
     market,
+    existingMarket,
   };
 };
