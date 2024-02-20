@@ -23,6 +23,15 @@ export class UpdateMarketController implements Controller {
       return mapErrorByCode(result.value);
     }
 
-    return ok({});
+    const market = result.value;
+
+    const response = {
+      id: market.id,
+      code: market.code,
+      name: market.name,
+      createdAt: market.createdAt,
+    };
+
+    return ok(response);
   };
 }
