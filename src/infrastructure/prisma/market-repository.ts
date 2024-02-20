@@ -3,14 +3,28 @@ import { MarketMapper } from './mappers/market-mapper';
 import {
   GetMarketByCodeRepository,
   GetMarketByCodeRepositoryParams,
+  GetMarketByIdRepository,
+  GetMarketByIdRepositoryParams,
   NewMarketRepository,
 } from '@/application';
 import { Market } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
-export type MarketRepositories = GetMarketByCodeRepository & NewMarketRepository;
+export type MarketRepositories = GetMarketByCodeRepository &
+  GetMarketByIdRepository &
+  NewMarketRepository;
 
 export class PrismaMarketRepository implements MarketRepositories {
+  getById = async ({ id }: GetMarketByIdRepositoryParams): Promise<Market | undefined> => {
+    const market = await prisma.market.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    return MarketMapper.toDomain(market);
+  };
+
   getByCode = async ({ code }: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
     const market = await prisma.market.findFirst({
       where: {
