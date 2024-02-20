@@ -77,10 +77,23 @@ describe('DbUpdateMarket', () => {
     expect(repositorySpy).toHaveBeenCalledWith(market);
   });
 
-  it.todo('shoud return UnexpectedError if UpdateMarketRepository throws', () => {
+  it('shoud return UnexpectedError if UpdateMarketRepository throws', async () => {
     // Arrange
+    const { sut, mockedMarketRepository } = makeSut();
+    vi.spyOn(mockedMarketRepository, 'update').mockImplementationOnce(() => {
+      throw new Error('Something went wrong with the database');
+    });
+    const { id, market } = mockMarket();
+
     // Act
+    const response = await sut.execute({
+      marketId: id,
+      name: market.name,
+    });
+
     // Assert
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toEqual(new UnexpectedError());
   });
 
   it.todo('shoud return an updated Market on success', () => {
