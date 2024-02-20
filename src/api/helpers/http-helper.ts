@@ -1,5 +1,7 @@
 import { Readable } from 'stream';
 
+import { NotFoundError } from '../errors/not-found-error';
+
 import { HttpResponse } from '@/api/contracts';
 import {
   BadRequestError,
@@ -25,9 +27,9 @@ export const ok = <T>(data?: T): HttpResponse => ({
   body: data,
 });
 
-export const created = (): HttpResponse => ({
+export const created = <T>(data?: T): HttpResponse => ({
   statusCode: 201,
-  body: undefined,
+  body: data,
 });
 
 export const noContent = (): HttpResponse => ({
@@ -42,7 +44,7 @@ export const badRequest = (error: UseCaseError): HttpResponse => ({
 
 export const notFound = (error: UseCaseError): HttpResponse => ({
   statusCode: 404,
-  body: error,
+  body: new NotFoundError(error),
 });
 
 export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({

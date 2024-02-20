@@ -5,13 +5,16 @@ import { newMarketRequestSchema } from './new-market-controller-validation-schem
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { NewMarket } from '@/domain';
-import { mapErrorByCode, ok } from '@/api/helpers';
+import { created, mapErrorByCode } from '@/api/helpers';
+import { injection } from '@/main/di/injection-codes';
 
 type NewMarketControllerRequest = z.infer<typeof newMarketRequestSchema>;
 
+const { usecases } = injection;
+
 @injectable()
 export class NewMarketController implements Controller {
-  constructor(@inject('NewMarket') private readonly newMarket: NewMarket) {}
+  constructor(@inject(usecases.newMarket) private readonly newMarket: NewMarket) {}
 
   handle = async (request: NewMarketControllerRequest): Promise<HttpResponse> => {
     const { name, user } = request;
@@ -34,6 +37,6 @@ export class NewMarketController implements Controller {
       createdAt: market.createdAt,
     };
 
-    return ok(response);
+    return created(response);
   };
 }

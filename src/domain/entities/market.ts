@@ -8,13 +8,17 @@ export interface MarketProps {
   createdBy: string;
 }
 
+interface UpdateMarketProps {
+  name: string;
+}
+
 export class Market extends Entity<MarketProps> {
   private constructor(props: MarketProps, id?: string) {
     super(props, id);
   }
 
-  get code(): string | undefined {
-    return this.props.code;
+  get code(): string {
+    return this.props.code ?? nameToCode(this.props.name);
   }
 
   get name(): string {
@@ -27,6 +31,11 @@ export class Market extends Entity<MarketProps> {
 
   get createdBy(): string {
     return this.props.createdBy;
+  }
+
+  public update({ name }: UpdateMarketProps): void {
+    this.props.name = name;
+    this.props.code = nameToCode(name);
   }
 
   public static create(props: MarketProps, id?: string): Market {
