@@ -1,4 +1,10 @@
-import { GetMarketByCodeRepositoryParams, MarketRepositories } from '@/application';
+import { mockMarket } from './market';
+
+import {
+  GetMarketByCodeRepositoryParams,
+  GetMarketByIdRepositoryParams,
+  MarketRepositories,
+} from '@/application';
 import { Market } from '@/domain';
 
 export interface MockRepositoriesResult {
@@ -7,6 +13,12 @@ export interface MockRepositoriesResult {
 
 export const mockRepositories = (): MockRepositoriesResult => {
   class MockedMarketRepository implements MarketRepositories {
+    getById = (params: GetMarketByIdRepositoryParams): Promise<Market | undefined> => {
+      const { market } = mockMarket();
+
+      return Promise.resolve(market);
+    };
+
     getByCode = (params: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
       return Promise.resolve(undefined);
     };
