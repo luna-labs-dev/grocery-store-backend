@@ -25,9 +25,9 @@ export const ok = <T>(data?: T): HttpResponse => ({
   body: data,
 });
 
-export const created = (): HttpResponse => ({
+export const created = <T>(data?: T): HttpResponse => ({
   statusCode: 201,
-  body: undefined,
+  body: data,
 });
 
 export const noContent = (): HttpResponse => ({
