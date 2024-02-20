@@ -17,8 +17,8 @@ export class Market extends Entity<MarketProps> {
     super(props, id);
   }
 
-  get code(): string | undefined {
-    return this.props.code;
+  get code(): string {
+    return this.props.code ?? nameToCode(this.props.name);
   }
 
   get name(): string {
