@@ -4,6 +4,7 @@ export const injection = {
   },
   usecases: {
     newMarket: 'new-market-usecase',
+    updateMarket: 'update-market-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
