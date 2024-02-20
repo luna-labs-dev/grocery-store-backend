@@ -4,6 +4,8 @@ import { mockMarket } from 'tests/mocks/market';
 
 import { makeSut } from './mocks';
 
+import { UnexpectedError } from '@/domain';
+
 describe('DbUpdateMarket', () => {
   it('shoud call GetMarketByIdRepository with correct id', async () => {
     // Arrange
@@ -21,10 +23,23 @@ describe('DbUpdateMarket', () => {
     expect(repositorySpy).toHaveBeenCalledWith({ id });
   });
 
-  it.todo('shoud return UnexpectedError if GetMarketByIdRepository throws', () => {
+  it('shoud return UnexpectedError if GetMarketByIdRepository throws', async () => {
     // Arrange
+    const { sut, mockedMarketRepository } = makeSut();
+    vi.spyOn(mockedMarketRepository, 'getById').mockImplementationOnce(() => {
+      throw new Error('Something went wrong with the database');
+    });
+    const { id, market } = mockMarket();
+
     // Act
+    const response = await sut.execute({
+      marketId: id,
+      name: market.name,
+    });
+
     // Assert
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toEqual(new UnexpectedError());
   });
 
   it.todo('shoud return MarketNotFoundError if GetMarketByIdRepository returns undefined', () => {
