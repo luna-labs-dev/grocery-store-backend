@@ -6,6 +6,7 @@ import {
   Either,
   left,
   Market,
+  MarketNotFoundError,
   right,
   UnexpectedError,
   UpdateMarket,
@@ -32,13 +33,16 @@ export class DbUpdateMarket implements UpdateMarket {
       const market = await this.repositories.getById({ id: marketId });
 
       // Return Market not found if No market is returned
+      if (!market) {
+        return left(new MarketNotFoundError());
+      }
 
       // Update Market Entity with new values
 
       // Update Market in the Database
 
       // Return Updated Market
-      return right(market as Market);
+      return right(market);
     } catch (error) {
       console.error(error);
 
