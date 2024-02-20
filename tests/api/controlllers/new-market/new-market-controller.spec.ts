@@ -63,7 +63,7 @@ describe('NewMarketController', () => {
     expect(response).toEqual(serverError(new UnexpectedError()));
   });
 
-  it('shoud return 200 - Ok on success', async () => {
+  it('shoud return 201 - Ok on success', async () => {
     // Arrange
     const { sut } = makeSut();
 
@@ -74,7 +74,7 @@ describe('NewMarketController', () => {
     });
 
     // Assert
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(201);
     expect(response.body.name).toBe('Assai Carapicuiba');
     expect(response.body.code).toBe(nameToCode('Assai Carapicuiba'));
   });
