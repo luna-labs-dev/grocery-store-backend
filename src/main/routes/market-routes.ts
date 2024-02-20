@@ -6,4 +6,5 @@ import { injection } from '../di';
 
 export const marketRouter = Router();
 
-marketRouter.post('/new', adaptRoute(container.resolve(injection.controllers.newMarket)));
+marketRouter.post('/', adaptRoute(container.resolve(injection.controllers.newMarket)));
+marketRouter.put('/:marketId', adaptRoute(container.resolve(injection.controllers.updateMarket)));

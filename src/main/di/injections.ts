@@ -11,6 +11,7 @@ import {
   Controller,
   NewMarketController,
   newMarketRequestSchema,
+  UpdateMarketController,
   updateMarketRequestSchema,
 } from '@/api';
 
@@ -35,7 +36,7 @@ container.register<Controller>(controllers.newMarket, {
 container.register<Controller>(controllers.updateMarket, {
   useValue: new ErrorHandlingControllerDecorator(
     new ValidationControllerDecorator(
-      new NewMarketController(container.resolve(usecases.updateMarket)),
+      new UpdateMarketController(container.resolve(usecases.updateMarket)),
       updateMarketRequestSchema,
     ),
   ),
