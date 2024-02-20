@@ -4,7 +4,7 @@ import { mockMarket } from 'tests/mocks/market';
 
 import { makeSut } from './mocks';
 
-import { MarketNotFoundError, UnexpectedError } from '@/domain';
+import { MarketAlreadyExistsError, MarketNotFoundError, UnexpectedError } from '@/domain';
 
 describe('DbUpdateMarket', () => {
   it('shoud call GetMarketByCodeRepository with correct code', async () => {
@@ -42,26 +42,23 @@ describe('DbUpdateMarket', () => {
     expect(response.value).toEqual(new UnexpectedError());
   });
 
-  it.todo(
-    'shoud return MarketAlreadyExists if GetMarketByCodeRepository returns a market with a different id',
-    async () => {
-      // Arrange
-      const { sut, mockedMarketRepository } = makeSut();
+  it('shoud return MarketAlreadyExists if GetMarketByCodeRepository returns a market with a different id', async () => {
+    // Arrange
+    const { sut, mockedMarketRepository } = makeSut();
+    const { id, market, existingMarket } = mockMarket();
 
-      vi.spyOn(mockedMarketRepository, 'getById').mockResolvedValueOnce(undefined);
-      const { id, market } = mockMarket();
+    vi.spyOn(mockedMarketRepository, 'getByCode').mockResolvedValueOnce(existingMarket);
 
-      // Act
-      const response = await sut.execute({
-        marketId: id,
-        name: market.name,
-      });
+    // Act
+    const response = await sut.execute({
+      marketId: id,
+      name: market.name,
+    });
 
-      // Assert
-      expect(response.isLeft()).toBe(true);
-      expect(response.value).toEqual(new MarketNotFoundError());
-    },
-  );
+    // Assert
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toEqual(new MarketAlreadyExistsError());
+  });
 
   it('shoud call GetMarketByIdRepository with correct id', async () => {
     // Arrange
