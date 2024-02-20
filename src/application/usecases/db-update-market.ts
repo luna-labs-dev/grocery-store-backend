@@ -6,6 +6,7 @@ import {
   Either,
   left,
   Market,
+  right,
   UnexpectedError,
   UpdateMarket,
   UpdateMarketErrors,
@@ -26,16 +27,22 @@ export class DbUpdateMarket implements UpdateMarket {
     name,
     marketId,
   }: UpdateMarketParams): Promise<Either<UpdateMarketErrors, Market>> => {
-    // GetMarketById
-    await this.repositories.getById({ id: marketId });
+    try {
+      // GetMarketById
+      const market = await this.repositories.getById({ id: marketId });
 
-    // Return Market not found if No market is returned
+      // Return Market not found if No market is returned
 
-    // Update Market Entity with new values
+      // Update Market Entity with new values
 
-    // Update Market in the Database
+      // Update Market in the Database
 
-    // Return Updated Market
-    return left(new UnexpectedError());
+      // Return Updated Market
+      return right(market as Market);
+    } catch (error) {
+      console.error(error);
+
+      return left(new UnexpectedError());
+    }
   };
 }
