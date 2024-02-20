@@ -96,9 +96,23 @@ describe('DbUpdateMarket', () => {
     expect(response.value).toEqual(new UnexpectedError());
   });
 
-  it.todo('shoud return an updated Market on success', () => {
+  it('shoud return an updated Market on success', async () => {
     // Arrange
+    const { sut } = makeSut();
+
+    const { id, market } = mockMarket();
+    const newName = 'Assai Cotia';
+    market.update({ name: newName });
+
     // Act
+
+    const response = await sut.execute({
+      marketId: id,
+      name: newName,
+    });
+
     // Assert
+    expect(response.isRight()).toBe(true);
+    expect(response.value).toEqual(market);
   });
 });
