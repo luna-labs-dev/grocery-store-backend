@@ -5,10 +5,11 @@ import { UnexpectedError } from './errors';
 
 export type UpdateMarketErrors = UnexpectedError;
 
-export interface NewMarketParams {
+export interface UpdateMarketParams {
   name: string;
+  marketId: string;
 }
 
 export interface UpdateMarket {
-  execute: (request: NewMarketParams) => Promise<Either<UpdateMarketErrors, Market>>;
+  execute: (request: UpdateMarketParams) => Promise<Either<UpdateMarketErrors, Market>>;
 }
