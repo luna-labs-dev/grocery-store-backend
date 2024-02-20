@@ -4,7 +4,7 @@ import { mockMarket } from 'tests/mocks/market';
 
 import { makeSut } from './mocks';
 
-import { UnexpectedError } from '@/domain';
+import { MarketNotFoundError, UnexpectedError } from '@/domain';
 
 describe('DbUpdateMarket', () => {
   it('shoud call GetMarketByIdRepository with correct id', async () => {
@@ -42,10 +42,22 @@ describe('DbUpdateMarket', () => {
     expect(response.value).toEqual(new UnexpectedError());
   });
 
-  it.todo('shoud return MarketNotFoundError if GetMarketByIdRepository returns undefined', () => {
+  it('shoud return MarketNotFoundError if GetMarketByIdRepository returns undefined', async () => {
     // Arrange
+    const { sut, mockedMarketRepository } = makeSut();
+
+    vi.spyOn(mockedMarketRepository, 'getById').mockResolvedValueOnce(undefined);
+    const { id, market } = mockMarket();
+
     // Act
+    const response = await sut.execute({
+      marketId: id,
+      name: market.name,
+    });
+
     // Assert
+    expect(response.isLeft()).toBe(true);
+    expect(response.value).toEqual(new MarketNotFoundError());
   });
 
   it.todo('shoud call UpdateMarketRepository with correct values', () => {
