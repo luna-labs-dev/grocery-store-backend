@@ -60,10 +60,21 @@ describe('DbUpdateMarket', () => {
     expect(response.value).toEqual(new MarketNotFoundError());
   });
 
-  it.todo('shoud call UpdateMarketRepository with correct values', () => {
+  it('shoud call UpdateMarketRepository with correct values', async () => {
     // Arrange
+    const { sut, mockedMarketRepository } = makeSut();
+    const repositorySpy = vi.spyOn(mockedMarketRepository, 'update');
+    const { id, market } = mockMarket();
+
     // Act
+    await sut.execute({
+      marketId: id,
+      name: 'Assai Cotia',
+    });
+    market.update({ name: 'Assai Cotia' });
+
     // Assert
+    expect(repositorySpy).toHaveBeenCalledWith(market);
   });
 
   it.todo('shoud return UnexpectedError if UpdateMarketRepository throws', () => {

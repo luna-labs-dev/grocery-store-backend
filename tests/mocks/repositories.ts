@@ -26,6 +26,10 @@ export const mockRepositories = (): MockRepositoriesResult => {
     new = (market: Market): Promise<void> => {
       return Promise.resolve();
     };
+
+    update = (market: Market): Promise<void> => {
+      return Promise.resolve();
+    };
   }
 
   return {
