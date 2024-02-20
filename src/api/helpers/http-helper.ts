@@ -1,5 +1,7 @@
 import { Readable } from 'stream';
 
+import { NotFoundError } from '../errors/not-found-error';
+
 import { HttpResponse } from '@/api/contracts';
 import {
   BadRequestError,
@@ -42,7 +44,7 @@ export const badRequest = (error: UseCaseError): HttpResponse => ({
 
 export const notFound = (error: UseCaseError): HttpResponse => ({
   statusCode: 404,
-  body: error,
+  body: new NotFoundError(error),
 });
 
 export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({

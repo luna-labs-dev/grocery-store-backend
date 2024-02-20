@@ -34,7 +34,7 @@ export class DbUpdateMarket implements UpdateMarket {
 
       // Return Market not found if No market is returned
       if (!market) {
-        return left(new MarketNotFoundError());
+        return left(new MarketNotFoundError(marketId));
       }
 
       // Update Market Entity with new values
