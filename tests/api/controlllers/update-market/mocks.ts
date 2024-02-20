@@ -20,11 +20,11 @@ export const makeSut = (): sutResult => {
   };
 };
 
-export interface MockedUpdateMarketControllerParams {
+export interface MockedUpdateMarketControllerObjects {
   params: UpdateMarketControllerRequest;
 }
 
-export const mockedUpdateMarketControllerParams = (): MockedUpdateMarketControllerParams => {
+export const mockedUpdateMarketControllerObjects = (): MockedUpdateMarketControllerObjects => {
   return {
     params: { marketId: '3feb9ece-c742-4357-80e6-1cb9053434ec', name: 'Assai Carapicuiba' },
   };

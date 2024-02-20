@@ -1,15 +1,16 @@
 import 'reflect-metadata';
-import { makeSut, mockedUpdateMarketControllerParams } from './mocks';
+import { makeSut, mockedUpdateMarketControllerObjects } from './mocks';
 
 import { left, MarketNotFoundError, UnexpectedError } from '@/domain';
 import { notFound, serverError } from '@/api';
+import { nameToCode } from '@/domain/helper';
 
 describe('UpdateMarketController', () => {
   it('shoud call UpdateMarket usecase with correct values', async () => {
     // Arrange
     const { sut, mockedUpdateMarket } = makeSut();
     const updateMarketSpy = vi.spyOn(mockedUpdateMarket, 'execute');
-    const { params } = mockedUpdateMarketControllerParams();
+    const { params } = mockedUpdateMarketControllerObjects();
 
     // Act
     await sut.handle(params);
@@ -22,7 +23,7 @@ describe('UpdateMarketController', () => {
     // Arrange
     const { sut, mockedUpdateMarket } = makeSut();
     vi.spyOn(mockedUpdateMarket, 'execute').mockResolvedValueOnce(left(new MarketNotFoundError()));
-    const { params } = mockedUpdateMarketControllerParams();
+    const { params } = mockedUpdateMarketControllerObjects();
 
     // Act
     const response = await sut.handle(params);
@@ -35,7 +36,7 @@ describe('UpdateMarketController', () => {
     // Arrange
     const { sut, mockedUpdateMarket } = makeSut();
     vi.spyOn(mockedUpdateMarket, 'execute').mockResolvedValueOnce(left(new UnexpectedError()));
-    const { params } = mockedUpdateMarketControllerParams();
+    const { params } = mockedUpdateMarketControllerObjects();
 
     // Act
     const response = await sut.handle(params);
@@ -44,9 +45,18 @@ describe('UpdateMarketController', () => {
     expect(response).toEqual(serverError(new UnexpectedError()));
   });
 
-  it.todo('shoud return 200 - Ok on success', () => {
+  it.todo('shoud return 200 - Ok on success', async () => {
     // Arrange
+    const { sut } = makeSut();
+    const { params } = mockedUpdateMarketControllerObjects();
+
     // Act
+    const response = await sut.handle(params);
+
     // Assert
+    expect(response.statusCode).toBe(200);
+    expect(response.body.id).toBe(params.marketId);
+    expect(response.body.code).toBe(nameToCode(params.name));
+    expect(response.body.name).toBe(params.name);
   });
 });
