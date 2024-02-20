@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { GetMarketByIdRepository } from '../contracts';
+import { GetMarketByIdRepository, UpdateMarketRepository } from '../contracts';
 
 import {
   Either,
@@ -15,7 +15,7 @@ import {
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 
-export type UpdateMarketRepositories = GetMarketByIdRepository;
+export type UpdateMarketRepositories = GetMarketByIdRepository & UpdateMarketRepository;
 
 const { infra } = injection;
 @injectable()
@@ -38,8 +38,10 @@ export class DbUpdateMarket implements UpdateMarket {
       }
 
       // Update Market Entity with new values
+      market.update({ name });
 
       // Update Market in the Database
+      await this.repositories.update(market);
 
       // Return Updated Market
       return right(market);
