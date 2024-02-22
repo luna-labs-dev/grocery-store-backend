@@ -35,19 +35,19 @@ export class DbGetMarketList implements GetMarketList {
         markets: [],
       };
 
+      // Fetch actual Market list only if total is greater than 0
       if (marketCount > 0) {
-        await this.repositories.getAll({
+        const markets = await this.repositories.getAll({
           search,
           pageIndex,
           pageSize,
           orderBy,
           orderDirection,
         });
+
+        // -> Set list to the response.markets
+        response.markets = markets;
       }
-
-      // Fetch actual Market list only if total is greater than 0
-
-      // -> Set list to the response.markets
 
       // return the response
 
