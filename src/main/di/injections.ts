@@ -5,8 +5,8 @@ import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from 
 import { injection } from './injection-codes';
 
 import { PrismaMarketRepository } from '@/infrastructure';
-import { NewMarket, UpdateMarket } from '@/domain';
-import { DbNewMarket, DbUpdateMarket, MarketRepositories } from '@/application';
+import { GetMarketList, NewMarket, UpdateMarket } from '@/domain';
+import { DbGetMarketList, DbNewMarket, DbUpdateMarket, MarketRepositories } from '@/application';
 import {
   Controller,
   NewMarketController,
@@ -22,6 +22,7 @@ container.register<MarketRepositories>(infra.marketRepositories, PrismaMarketRep
 // Usecases
 container.register<NewMarket>(usecases.newMarket, DbNewMarket);
 container.register<UpdateMarket>(usecases.updateMarket, DbUpdateMarket);
+container.register<GetMarketList>(usecases.getMarketList, DbGetMarketList);
 
 // Api
 container.register<Controller>(controllers.newMarket, {

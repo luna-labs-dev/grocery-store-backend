@@ -11,10 +11,13 @@ import {
   right,
   UnexpectedError,
 } from '@/domain';
+import { injection } from '@/main/di';
+
+const { marketRepositories } = injection.infra;
 
 @injectable()
 export class DbGetMarketList implements GetMarketList {
-  constructor(@inject('') private readonly repositories: GetMarketListRepository) {}
+  constructor(@inject(marketRepositories) private readonly repositories: GetMarketListRepository) {}
 
   execute = async ({
     search,
