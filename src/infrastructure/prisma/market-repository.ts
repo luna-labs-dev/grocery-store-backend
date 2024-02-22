@@ -1,6 +1,7 @@
 import { MarketMapper } from './mappers/market-mapper';
 
 import {
+  CountMarketListRepositoryParams,
   GetMarketByCodeRepositoryParams,
   GetMarketByIdRepositoryParams,
   GetMarketListRepositoryParams,
@@ -10,6 +11,18 @@ import { Market } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
 export class PrismaMarketRepository implements MarketRepositories {
+  count = async ({ search }: CountMarketListRepositoryParams): Promise<number> => {
+    const count = await prisma.market.count({
+      where: {
+        name: {
+          contains: search,
+        },
+      },
+    });
+
+    return count;
+  };
+
   getAll = async ({
     search,
     pageIndex,

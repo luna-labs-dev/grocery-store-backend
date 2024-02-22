@@ -8,6 +8,9 @@ export interface GetMarketListRepositoryParams {
   orderDirection: 'desc' | 'asc';
 }
 
+export type CountMarketListRepositoryParams = Pick<GetMarketListRepositoryParams, 'search'>;
+
 export interface GetMarketListRepository {
+  count: (params: CountMarketListRepositoryParams) => Promise<number>;
   getAll: (params: GetMarketListRepositoryParams) => Promise<Market[]>;
 }
