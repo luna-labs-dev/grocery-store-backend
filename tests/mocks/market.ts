@@ -7,15 +7,15 @@ interface MockMarketResult {
   existingMarket: Market;
 }
 
-export const mockMarket = (): MockMarketResult => {
-  const id = 'd1f72237-6d41-4e2b-b45e-c726168f0386';
+export const mockMarket = (id?: string): MockMarketResult => {
+  const localId = 'd1f72237-6d41-4e2b-b45e-c726168f0386';
   const market = Market.create(
     {
       name: 'Assai Carapicuiba',
       createdAt: new Date(),
       createdBy: 'mock@email.com',
     },
-    id,
+    id ?? localId,
   );
 
   const existingMarket = Market.create({
@@ -25,7 +25,7 @@ export const mockMarket = (): MockMarketResult => {
   });
 
   return {
-    id,
+    id: localId,
     code: market.code,
     market,
     existingMarket,

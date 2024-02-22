@@ -26,7 +26,7 @@ export const mockRepositories = (): MockRepositoriesResult => {
     };
 
     getById = (params: GetMarketByIdRepositoryParams): Promise<Market | undefined> => {
-      const { market } = mockMarket();
+      const { market } = mockMarket(params.id);
 
       return Promise.resolve(market);
     };
