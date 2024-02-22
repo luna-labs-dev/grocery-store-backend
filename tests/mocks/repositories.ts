@@ -1,6 +1,7 @@
 import { mockMarket } from './market';
 
 import {
+  CountMarketListRepositoryParams,
   GetMarketByCodeRepositoryParams,
   GetMarketByIdRepositoryParams,
   GetMarketListRepositoryParams,
@@ -14,6 +15,10 @@ export interface MockRepositoriesResult {
 
 export const mockRepositories = (): MockRepositoriesResult => {
   class MockedMarketRepository implements MarketRepositories {
+    count = (params: CountMarketListRepositoryParams): Promise<number> => {
+      return Promise.resolve(1);
+    };
+
     getAll = (params: GetMarketListRepositoryParams): Promise<Market[]> => {
       const { market } = mockMarket();
 
