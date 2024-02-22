@@ -45,7 +45,7 @@ describe('UpdateMarketController', () => {
     expect(response).toEqual(serverError(new UnexpectedError()));
   });
 
-  it.todo('shoud return 200 - Ok on success', async () => {
+  it('shoud return 200 - Ok on success', async () => {
     // Arrange
     const { sut } = makeSut();
     const { params } = mockedUpdateMarketControllerObjects();
