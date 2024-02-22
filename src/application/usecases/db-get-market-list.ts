@@ -22,6 +22,9 @@ export class DbGetMarketList implements GetMarketList {
     orderBy,
     orderDirection,
   }: GetMarketListParams): Promise<Either<UnexpectedError, GetMarketListResult>> => {
+    await this.repositories.count({
+      search,
+    });
     return await Promise.resolve(
       right({
         total: 0,
