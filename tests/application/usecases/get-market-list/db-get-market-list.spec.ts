@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { MakeSut, mockGetMarketList } from './mockes';
 
-import { left, right, UnexpectedError } from '@/domain';
+import { GetMarketListResult, left, right, UnexpectedError } from '@/domain';
 
 describe('DbGetMarketList', () => {
   it('shoud call GetMarketListRepository.count with correct values', async () => {
@@ -73,5 +73,18 @@ describe('DbGetMarketList', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo('shoud return a market list on success', () => {});
+  it('shoud return a market list on success', async () => {
+    // Arrange
+    const { sut } = MakeSut();
+    const { paginatedParams } = mockGetMarketList();
+
+    // Act
+
+    const response = await sut.execute(paginatedParams);
+
+    // Assert
+    expect(response.isRight()).toBe(true);
+    expect((response.value as GetMarketListResult).total).toBeGreaterThan(0);
+    expect((response.value as GetMarketListResult).markets.length).toBeGreaterThan(0);
+  });
 });
