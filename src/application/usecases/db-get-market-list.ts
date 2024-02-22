@@ -24,18 +24,15 @@ export class DbGetMarketList implements GetMarketList {
     orderDirection,
   }: GetMarketListParams): Promise<Either<UnexpectedError, GetMarketListResult>> => {
     try {
-      // Count the Total
       const marketCount = await this.repositories.count({
         search,
       });
 
-      // Create response object with the count
       const response: GetMarketListResult = {
         total: marketCount,
         markets: [],
       };
 
-      // Fetch actual Market list only if total is greater than 0
       if (marketCount > 0) {
         const markets = await this.repositories.getAll({
           search,
@@ -45,11 +42,8 @@ export class DbGetMarketList implements GetMarketList {
           orderDirection,
         });
 
-        // -> Set list to the response.markets
         response.markets = markets;
       }
-
-      // return the response
 
       return right(response);
     } catch (error) {
