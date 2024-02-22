@@ -1,7 +1,7 @@
 import { Market } from '@/domain';
 
 export interface GetMarketListRepositoryParams {
-  search?: number;
+  search?: string;
   pageIndex: number;
   pageSize: number;
   orderBy: 'createdAt';

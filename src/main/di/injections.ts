@@ -4,9 +4,9 @@ import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from 
 
 import { injection } from './injection-codes';
 
-import { MarketRepositories, PrismaMarketRepository } from '@/infrastructure';
+import { PrismaMarketRepository } from '@/infrastructure';
 import { NewMarket, UpdateMarket } from '@/domain';
-import { DbNewMarket, DbUpdateMarket } from '@/application';
+import { DbNewMarket, DbUpdateMarket, MarketRepositories } from '@/application';
 import {
   Controller,
   NewMarketController,
