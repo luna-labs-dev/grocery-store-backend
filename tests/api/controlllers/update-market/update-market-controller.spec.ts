@@ -32,7 +32,7 @@ describe('UpdateMarketController', () => {
     expect(response).toEqual(notFound(new MarketNotFoundError()));
   });
 
-  it('shoud return 500 - ServerError if UpdateMarket usecase return UnexpectedError ', async () => {
+  it('shoud return 500 - ServerError if UpdateMarket usecase return UnexpectedError', async () => {
     // Arrange
     const { sut, mockedUpdateMarket } = makeSut();
     vi.spyOn(mockedUpdateMarket, 'execute').mockResolvedValueOnce(left(new UnexpectedError()));
