@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { MakeSut, mockGetMarketList } from './mockes';
 
-import { left, UnexpectedError } from '@/domain';
+import { left, right, UnexpectedError } from '@/domain';
 
 describe('DbGetMarketList', () => {
   it('shoud call GetMarketListRepository.count with correct values', async () => {
@@ -32,7 +32,18 @@ describe('DbGetMarketList', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo('shoud an empty list if GetMarketListRepository.count returns 0', () => {});
+  it('shoud an empty list if GetMarketListRepository.count returns 0', async () => {
+    // Arrange
+    const { sut, mockedMarketRepository } = MakeSut();
+    vi.spyOn(mockedMarketRepository, 'count').mockResolvedValueOnce(0);
+    const { paginatedParams } = mockGetMarketList();
+
+    // Act
+    const response = await sut.execute(paginatedParams);
+
+    // Assert
+    expect(response).toEqual(right({ total: 0, markets: [] }));
+  });
 
   it.todo('shoud call GetMarketListRepository.getAll with correct values', () => {});
 
