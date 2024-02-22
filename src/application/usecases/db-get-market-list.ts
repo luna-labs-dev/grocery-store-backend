@@ -8,6 +8,7 @@ import {
   GetMarketListParams,
   GetMarketListResult,
   left,
+  Market,
   right,
   UnexpectedError,
 } from '@/domain';
@@ -24,13 +25,29 @@ export class DbGetMarketList implements GetMarketList {
     orderDirection,
   }: GetMarketListParams): Promise<Either<UnexpectedError, GetMarketListResult>> => {
     try {
-      await this.repositories.count({
+      const marketCount = await this.repositories.count({
         search,
       });
+
+      const response: GetMarketListResult = {
+        total: marketCount,
+        markets: [],
+      };
+
+      if (!marketCount) {
+        return right(response);
+      }
+
       return await Promise.resolve(
         right({
-          total: 0,
-          markets: [],
+          total: 1,
+          markets: [
+            Market.create({
+              name: 'Assai',
+              createdAt: new Date(),
+              createdBy: 'some@email.com',
+            }),
+          ],
         }),
       );
     } catch (error) {
