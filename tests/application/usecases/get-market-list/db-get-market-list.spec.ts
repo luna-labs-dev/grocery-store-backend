@@ -1,24 +1,18 @@
 import 'reflect-metadata';
-import { MakeSut } from './mockes';
+import { MakeSut, mockGetMarketList } from './mockes';
 
 describe('DbGetMarketList', () => {
   it('shoud call GetMarketListRepository.count with correct values', async () => {
     // Arrange
     const { sut, mockedMarketRepository } = MakeSut();
     const repositorySpy = vi.spyOn(mockedMarketRepository, 'count');
-
+    const { search, paginatedParams } = mockGetMarketList();
     // Act
-    await sut.execute({
-      pageIndex: 0,
-      pageSize: 20,
-      orderBy: 'createdAt',
-      orderDirection: 'asc',
-      search: 'Assai',
-    });
+    await sut.execute(paginatedParams);
 
     // Assert
     expect(repositorySpy).toHaveBeenCalledWith({
-      search: 'Assai',
+      search,
     });
   });
   it.todo('shoud return UnexpectedError if GetMarketListRepository.count throws', () => {});

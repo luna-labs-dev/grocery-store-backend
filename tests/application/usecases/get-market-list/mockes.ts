@@ -1,7 +1,7 @@
 import { mockRepositories } from 'tests/mocks/repositories';
 
 import { DbGetMarketList, GetMarketListRepository } from '@/application';
-import { GetMarketList } from '@/domain';
+import { GetMarketList, GetMarketListParams } from '@/domain';
 
 interface SutResult {
   sut: GetMarketList;
@@ -17,4 +17,23 @@ export const MakeSut = (): SutResult => {
     sut,
     mockedMarketRepository,
   };
+};
+
+interface MockGetMarketListResult {
+  search: string;
+  paginatedParams: GetMarketListParams;
+}
+
+export const mockGetMarketList = (): MockGetMarketListResult => {
+  const search = 'Assai';
+
+  const paginatedParams: GetMarketListParams = {
+    pageIndex: 0,
+    pageSize: 20,
+    orderBy: 'createdAt',
+    orderDirection: 'asc',
+    search,
+  };
+
+  return { search, paginatedParams };
 };
