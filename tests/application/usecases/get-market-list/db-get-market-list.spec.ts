@@ -58,7 +58,20 @@ describe('DbGetMarketList', () => {
     expect(repositorySpy).toBeCalledWith(paginatedParams);
   });
 
-  it.todo('shoud return UnexpectedError if GetMarketListRepository.getAll throws', () => {});
+  it('shoud return UnexpectedError if GetMarketListRepository.getAll throws', async () => {
+    // Arrange
+    const { sut, mockedMarketRepository } = MakeSut();
+    vi.spyOn(mockedMarketRepository, 'getAll').mockImplementationOnce(() => {
+      throw new Error('something went wrong with the database');
+    });
+    const { paginatedParams } = mockGetMarketList();
+
+    // Act
+    const response = await sut.execute(paginatedParams);
+
+    // Assert
+    expect(response).toEqual(left(new UnexpectedError()));
+  });
 
   it.todo('shoud return a market list on success', () => {});
 });
