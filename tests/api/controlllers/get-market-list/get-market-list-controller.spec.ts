@@ -2,8 +2,8 @@ import 'reflect-metadata';
 
 import { makeSut, mockedGetMarketListControllerObjects } from './mocks';
 
-import { left, MarketNotFoundError } from '@/domain';
-import { notFound } from '@/api';
+import { left, MarketNotFoundError, UnexpectedError } from '@/domain';
+import { notFound, serverError } from '@/api';
 
 describe('GetMarketListController', () => {
   it('shoud call GetMarketList usecase with correct values', async () => {
@@ -32,10 +32,18 @@ describe('GetMarketListController', () => {
     expect(response).toEqual(notFound(new MarketNotFoundError()));
   });
 
-  it.todo(
-    'shoud return 500 - ServerError if GetMarketList usecase return UnexpectedError',
-    () => {},
-  );
+  it('shoud return 500 - ServerError if GetMarketList usecase return UnexpectedError', async () => {
+    // Arrange
+    const { sut, mockedGetMarketList } = makeSut();
+    vi.spyOn(mockedGetMarketList, 'execute').mockResolvedValueOnce(left(new UnexpectedError()));
+    const { params } = mockedGetMarketListControllerObjects();
+
+    // Act
+    const response = await sut.handle(params);
+
+    // Assert
+    expect(response).toEqual(serverError(new UnexpectedError()));
+  });
 
   it.todo('shoud return 200 - Ok on success', () => {});
 });
