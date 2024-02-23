@@ -1,9 +1,11 @@
 import 'reflect-metadata';
 
+import { mockMarket } from 'tests/mocks/market';
+
 import { makeSut, mockedGetMarketListControllerObjects } from './mocks';
 
 import { left, MarketNotFoundError, UnexpectedError } from '@/domain';
-import { notFound, serverError } from '@/api';
+import { notFound, ok, serverError } from '@/api';
 
 describe('GetMarketListController', () => {
   it('shoud call GetMarketList usecase with correct values', async () => {
@@ -45,5 +47,22 @@ describe('GetMarketListController', () => {
     expect(response).toEqual(serverError(new UnexpectedError()));
   });
 
-  it.todo('shoud return 200 - Ok on success', () => {});
+  it('shoud return 200 - Ok on success', async () => {
+    // Arrange
+    const { sut } = makeSut();
+
+    const { params } = mockedGetMarketListControllerObjects();
+    const { mappedMarket } = mockMarket();
+
+    // Act
+    const response = await sut.handle(params);
+
+    // Assert
+    expect(response).toEqual(
+      ok({
+        total: 1,
+        markets: expect.arrayContaining([mappedMarket]),
+      }),
+    );
+  });
 });

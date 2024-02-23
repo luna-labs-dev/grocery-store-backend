@@ -5,6 +5,11 @@ interface MockMarketResult {
   code: string;
   market: Market;
   existingMarket: Market;
+  mappedMarket: {
+    id: string;
+    code: string;
+    name: string;
+  };
 }
 
 export const mockMarket = (id?: string): MockMarketResult => {
@@ -29,5 +34,10 @@ export const mockMarket = (id?: string): MockMarketResult => {
     code: market.code,
     market,
     existingMarket,
+    mappedMarket: {
+      id: market.id,
+      code: market.code,
+      name: market.name,
+    },
   };
 };
