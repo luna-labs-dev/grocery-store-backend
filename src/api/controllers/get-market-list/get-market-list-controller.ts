@@ -33,6 +33,18 @@ export class GetMarketListController implements Controller {
     if (getMarketListResult.isLeft()) {
       return mapErrorByCode(getMarketListResult.value);
     }
-    return await Promise.resolve(ok({}));
+
+    const market = getMarketListResult.value;
+
+    const response = {
+      total: market.total,
+      markets: market.markets.map((mkt) => ({
+        id: mkt.id,
+        code: mkt.code,
+        name: mkt.name,
+      })),
+    };
+
+    return ok(response);
   };
 }
