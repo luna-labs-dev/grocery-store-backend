@@ -1,5 +1,20 @@
+import 'reflect-metadata';
+
+import { makeSut, mockedGetMarketListControllerObjects } from './mocks';
+
 describe('GetMarketListController', () => {
-  it.todo('shoud call GetMarketList usecase with correct values', () => {});
+  it('shoud call GetMarketList usecase with correct values', async () => {
+    // Arrange
+    const { sut, mockedGetMarketList } = makeSut();
+    const getMarketListSpy = vi.spyOn(mockedGetMarketList, 'execute');
+    const { params } = mockedGetMarketListControllerObjects();
+
+    // Act
+    await sut.handle(params);
+
+    // Assert
+    expect(getMarketListSpy).toHaveBeenCalledWith(params);
+  });
 
   it.todo(
     'shoud return 404 - NotFound if GetMarketList usecase return MarketNotFoundError',
