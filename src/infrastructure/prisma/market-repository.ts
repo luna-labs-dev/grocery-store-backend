@@ -16,6 +16,7 @@ export class PrismaMarketRepository implements MarketRepositories {
       where: {
         name: {
           contains: search,
+          mode: 'insensitive',
         },
       },
     });
@@ -34,6 +35,7 @@ export class PrismaMarketRepository implements MarketRepositories {
       where: {
         name: {
           contains: search,
+          mode: 'insensitive',
         },
       },
       skip: pageIndex * pageSize,
