@@ -5,7 +5,7 @@ import { getMarketListRequestSchema } from './get-market-list-controller-validat
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { GetMarketList } from '@/domain';
-import { injection } from '@/main/di';
+import { injection } from '@/main/di/injection-codes';
 import { ok } from '@/api/helpers';
 
 type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>;
@@ -22,6 +22,13 @@ export class GetMarketListController implements Controller {
     orderBy,
     orderDirection,
   }: GetMarketListControllerRequest): Promise<HttpResponse> => {
+    await this.getMarketList.execute({
+      search,
+      pageIndex,
+      pageSize,
+      orderBy,
+      orderDirection,
+    });
     return await Promise.resolve(ok({}));
   };
 }
