@@ -10,5 +10,6 @@ export const injection = {
   controllers: {
     newMarket: 'new-market-controller',
     updateMarket: 'update-market-controller',
+    getMarketList: 'get-market-list-controller',
   },
 };

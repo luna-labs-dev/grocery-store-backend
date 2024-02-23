@@ -9,6 +9,8 @@ import { GetMarketList, NewMarket, UpdateMarket } from '@/domain';
 import { DbGetMarketList, DbNewMarket, DbUpdateMarket, MarketRepositories } from '@/application';
 import {
   Controller,
+  GetMarketListController,
+  getMarketListRequestSchema,
   NewMarketController,
   newMarketRequestSchema,
   UpdateMarketController,
@@ -39,6 +41,15 @@ container.register<Controller>(controllers.updateMarket, {
     new ValidationControllerDecorator(
       new UpdateMarketController(container.resolve(usecases.updateMarket)),
       updateMarketRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.getMarketList, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new GetMarketListController(container.resolve(usecases.getMarketList)),
+      getMarketListRequestSchema,
     ),
   ),
 });
