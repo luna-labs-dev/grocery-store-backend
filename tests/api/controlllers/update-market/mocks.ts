@@ -26,6 +26,9 @@ export interface MockedUpdateMarketControllerObjects {
 
 export const mockedUpdateMarketControllerObjects = (): MockedUpdateMarketControllerObjects => {
   return {
-    params: { marketId: '3feb9ece-c742-4357-80e6-1cb9053434ec', name: 'Assai Carapicuiba' },
+    params: {
+      marketId: '3feb9ece-c742-4357-80e6-1cb9053434ec',
+      name: 'Assai Carapicuiba',
+    },
   };
 };

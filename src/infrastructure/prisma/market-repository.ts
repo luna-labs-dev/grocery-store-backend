@@ -1,28 +1,65 @@
 import { MarketMapper } from './mappers/market-mapper';
 
 import {
-  GetMarketByCodeRepository,
+  CountMarketListRepositoryParams,
   GetMarketByCodeRepositoryParams,
-  GetMarketByIdRepository,
   GetMarketByIdRepositoryParams,
-  NewMarketRepository,
-  UpdateMarketRepository,
+  GetMarketListRepositoryParams,
+  MarketRepositories,
 } from '@/application';
 import { Market } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
-export type MarketRepositories = GetMarketByCodeRepository &
-  GetMarketByIdRepository &
-  NewMarketRepository &
-  UpdateMarketRepository;
-
 export class PrismaMarketRepository implements MarketRepositories {
+  count = async ({ search }: CountMarketListRepositoryParams): Promise<number> => {
+    const count = await prisma.market.count({
+      where: {
+        name: {
+          contains: search,
+        },
+      },
+    });
+
+    return count;
+  };
+
+  getAll = async ({
+    search,
+    pageIndex,
+    pageSize,
+    orderBy,
+    orderDirection,
+  }: GetMarketListRepositoryParams): Promise<Market[]> => {
+    const markets = await prisma.market.findMany({
+      where: {
+        name: {
+          contains: search,
+        },
+      },
+      skip: pageIndex * pageSize,
+      take: pageSize,
+      orderBy: {
+        [orderBy]: orderDirection,
+      },
+    });
+
+    if (markets.length === 0) {
+      return [];
+    }
+
+    return markets.map((market) => MarketMapper.toDomain(market));
+  };
+
   getById = async ({ id }: GetMarketByIdRepositoryParams): Promise<Market | undefined> => {
     const market = await prisma.market.findFirst({
       where: {
         id,
       },
     });
+
+    if (!market) {
+      return;
+    }
 
     return MarketMapper.toDomain(market);
   };
@@ -33,6 +70,10 @@ export class PrismaMarketRepository implements MarketRepositories {
         code,
       },
     });
+
+    if (!market) {
+      return;
+    }
 
     return MarketMapper.toDomain(market);
   };

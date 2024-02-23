@@ -5,11 +5,7 @@ import { Market } from '@/domain';
 type MarketPersistence = market;
 
 export class MarketMapper {
-  static toDomain(raw: MarketPersistence | null): Market | undefined {
-    if (!raw) {
-      return;
-    }
-
+  static toDomain(raw: MarketPersistence): Market {
     return Market.create(
       {
         code: raw.code,
@@ -24,7 +20,7 @@ export class MarketMapper {
   static toPersistence(market: Market): MarketPersistence {
     return {
       id: market.id,
-      code: market.code as string,
+      code: market.code,
       name: market.name,
       createdAt: market.createdAt,
       createdBy: market.createdBy,

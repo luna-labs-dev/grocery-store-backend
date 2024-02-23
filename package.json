@@ -10,7 +10,7 @@
     "start": "node dist/src/main/server.js",
     "build": "tsup src prisma/**/*.ts --clean",
     "lint": "eslint . --ext .js,.ts",
-    "test": "vitest run",
+    "test": "vitest run --silent --reporter verbose",
     "test:watch": "vitest",
     "prisma-generate": "prisma generate",
     "prisma-migrate": "npx prisma migrate",
