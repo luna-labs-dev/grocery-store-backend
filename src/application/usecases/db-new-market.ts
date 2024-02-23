@@ -33,7 +33,7 @@ export class DbNewMarket implements NewMarket {
       });
 
       const marketExists = await this.repository.getByCode({
-        code: market.code as string,
+        code: market.code,
       });
 
       if (marketExists) {

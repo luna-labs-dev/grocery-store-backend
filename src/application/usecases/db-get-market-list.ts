@@ -11,7 +11,7 @@ import {
   right,
   UnexpectedError,
 } from '@/domain';
-import { injection } from '@/main/di';
+import { injection } from '@/main/di/injection-codes';
 
 const { marketRepositories } = injection.infra;
 
