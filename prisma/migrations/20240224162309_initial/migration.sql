@@ -1,48 +1,5 @@
-/*
-  Warnings:
-
-  - You are about to drop the `execution` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `execution_validation` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `policy` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `tenant` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `validation` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "shoppingEventStatusEnum" AS ENUM ('ONGOING', 'CANCELED', 'FINISHED');
-
--- DropForeignKey
-ALTER TABLE "execution" DROP CONSTRAINT "execution_policyId_policy_id_fk";
-
--- DropForeignKey
-ALTER TABLE "execution" DROP CONSTRAINT "execution_tenantId_tenant_id_fk";
-
--- DropForeignKey
-ALTER TABLE "execution_validation" DROP CONSTRAINT "execution_validation_executionId_execution_id_fk";
-
--- DropForeignKey
-ALTER TABLE "execution_validation" DROP CONSTRAINT "validation_validationId_execution_id_fk";
-
--- DropTable
-DROP TABLE "execution";
-
--- DropTable
-DROP TABLE "execution_validation";
-
--- DropTable
-DROP TABLE "policy";
-
--- DropTable
-DROP TABLE "tenant";
-
--- DropTable
-DROP TABLE "validation";
-
--- DropEnum
-DROP TYPE "recommendedDecisionEnum";
-
--- DropEnum
-DROP TYPE "statusEnum";
 
 -- CreateTable
 CREATE TABLE "market" (
@@ -59,7 +16,7 @@ CREATE TABLE "market" (
 CREATE TABLE "shopping_event" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "marketId" UUID NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" TEXT,
     "totalPaid" MONEY NOT NULL,
     "wholesaleTotal" MONEY NOT NULL,
     "retailTotal" MONEY NOT NULL,
@@ -80,7 +37,7 @@ CREATE TABLE "product" (
     "wholesaleAmount" INTEGER,
     "price" MONEY NOT NULL,
     "wholesalePrice" MONEY,
-    "addedAt" TIMESTAMP(6),
+    "addedAt" TIMESTAMP(6) NOT NULL,
     "addedBy" VARCHAR(320) NOT NULL,
 
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
