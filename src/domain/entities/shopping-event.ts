@@ -2,7 +2,7 @@ import { Entity } from '../core';
 
 import { Market } from './market';
 
-export const validShoppingEventStatus = ['PROCESSING', 'FINISHED', 'ERROR'] as const;
+export const validShoppingEventStatus = ['CANCELED', 'FINISHED', 'ONGOING'] as const;
 export type ShoppingEventStatus = (typeof validShoppingEventStatus)[number];
 
 export interface ShoppingEventProps {
