@@ -2,6 +2,8 @@ import 'reflect-metadata';
 
 import { makeSut, MockedStartShoppingEventData } from './mocks';
 
+import { left, UnexpectedError } from '@/domain';
+
 describe('DbStartShoppingEvent', () => {
   it('shoud call GetMarketById with correct id', async () => {
     // Arrange
@@ -18,7 +20,22 @@ describe('DbStartShoppingEvent', () => {
     expect(marketRepositorySpy).toHaveBeenCalledWith({ id: marketId });
   });
 
-  it.todo('shoud return UnexpectedError if GetMarketById throws', () => {});
+  it('shoud return UnexpectedError if GetMarketById throws', async () => {
+    // Arrange
+    const { sut, mockedMarketRepository } = makeSut();
+
+    vi.spyOn(mockedMarketRepository, 'getById').mockImplementationOnce(() => {
+      throw new Error('Something went wrong with the database');
+    });
+
+    const { params } = MockedStartShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(left(new UnexpectedError()));
+  });
 
   it.todo('shoud return MarketNotFoundError if GetMarketById returns undefined', () => {});
 
