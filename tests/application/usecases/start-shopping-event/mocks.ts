@@ -16,7 +16,7 @@ interface SutResult {
 export const makeSut = (): SutResult => {
   const { mockedMarketRepository, mockedShoppingEventRepository } = mockRepositories();
 
-  const sut = new DbStartShoppingEvent();
+  const sut = new DbStartShoppingEvent(mockedMarketRepository);
 
   return {
     sut,
