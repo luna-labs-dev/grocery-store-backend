@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { makeSut, MockedStartShoppingEventData } from './mocks';
 
-import { left, MarketNotFoundError, UnexpectedError } from '@/domain';
+import { left, MarketNotFoundError, right, UnexpectedError } from '@/domain';
 
 describe('DbStartShoppingEvent', () => {
   it('shoud call GetMarketByIdRepository with correct id', async () => {
@@ -89,5 +89,16 @@ describe('DbStartShoppingEvent', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo('shoud return the created shoppingEvent with the correct values', () => {});
+  it('shoud return the created shoppingEvent with the correct values', async () => {
+    // Arrange
+    const { sut } = makeSut();
+
+    const { params, shoppingEvent } = MockedStartShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(right(expect.objectContaining(shoppingEvent.props)));
+  });
 });
