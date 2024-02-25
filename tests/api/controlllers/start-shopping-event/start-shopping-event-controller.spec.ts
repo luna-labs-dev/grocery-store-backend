@@ -1,6 +1,9 @@
 import 'reflect-metadata';
 import { makeSut, mockedStartShoppingEventControllerData } from './mock';
 
+import { left, MarketNotFoundError } from '@/domain';
+import { notFound } from '@/api';
+
 describe('StartShoppingEventController', () => {
   it('shoud call StartShopping usecase with correct values', async () => {
     // Arrange
@@ -16,10 +19,22 @@ describe('StartShoppingEventController', () => {
     expect(startShoppingEventSpy).toHaveBeenCalledWith(params);
   });
 
-  it.todo(
-    'shoud return 404 = NotFound if StartShopping usecase returns MarketNotFoundError',
-    () => {},
-  );
+  it('shoud return 404 - NotFound if StartShopping usecase returns MarketNotFoundError', async () => {
+    // Arrange
+    const { sut, mockedStartShoppingEvent } = makeSut();
+
+    vi.spyOn(mockedStartShoppingEvent, 'execute').mockResolvedValueOnce(
+      left(new MarketNotFoundError()),
+    );
+
+    const { params } = mockedStartShoppingEventControllerData();
+
+    // Act
+    const response = await sut.handle(params);
+
+    // Assert
+    expect(response).toEqual(notFound(new MarketNotFoundError()));
+  });
 
   it.todo(
     'shoud return 500 - ServerError if StartShopping usecase returns UnexpectedError',
