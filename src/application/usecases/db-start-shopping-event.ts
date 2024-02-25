@@ -4,6 +4,7 @@ import {
   Either,
   left,
   MarketNotFoundError,
+  right,
   ShoppingEvent,
   StartShoppingEvent,
   StartShoppingEventErrors,
@@ -46,8 +47,7 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
       await this.shoppingEventRepository.add(shoppingEvent);
 
       // Returns ShoppingEvent
-
-      return await Promise.resolve(left(new UnexpectedError()));
+      return right(shoppingEvent);
     } catch (error) {
       console.error(error);
 
