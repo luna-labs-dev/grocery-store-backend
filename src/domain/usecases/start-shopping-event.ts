@@ -6,6 +6,7 @@ import { UnexpectedError } from './errors';
 export type StartShoppingEventErrors = UnexpectedError;
 
 export interface StartShoppingEventParams {
+  user: string;
   marketId: string;
 }
 

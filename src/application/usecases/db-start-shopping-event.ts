@@ -1,4 +1,4 @@
-import { GetMarketByIdRepository } from '../contracts';
+import { AddShoppingEventRepository, GetMarketByIdRepository } from '../contracts';
 
 import {
   Either,
@@ -12,8 +12,13 @@ import {
 } from '@/domain';
 
 export class DbStartShoppingEvent implements StartShoppingEvent {
-  constructor(private readonly marketRepository: GetMarketByIdRepository) {}
+  constructor(
+    private readonly marketRepository: GetMarketByIdRepository,
+    private readonly shoppingEventRepository: AddShoppingEventRepository,
+  ) {}
+
   execute = async ({
+    user,
     marketId,
   }: StartShoppingEventParams): Promise<Either<StartShoppingEventErrors, ShoppingEvent>> => {
     try {
@@ -28,8 +33,17 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
       }
 
       // Create ShoppingEvent instance
+      const shoppingEvent = ShoppingEvent.create({
+        marketId,
+        market,
+        status: 'ONGOING',
+        createdAt: new Date(),
+        createdBy: user,
+      });
 
       // Calls AddShoppingEvent repository
+
+      await this.shoppingEventRepository.add(shoppingEvent);
 
       // Returns ShoppingEvent
 
