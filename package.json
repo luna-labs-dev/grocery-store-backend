@@ -11,7 +11,7 @@
     "build": "tsup src prisma/**/*.ts --clean",
     "lint": "eslint . --ext .js,.ts",
     "test": "vitest run --silent --reporter verbose",
-    "test:watch": "vitest",
+    "test:watch": "vitest --silent --reporter verbose",
     "prisma-generate": "prisma generate",
     "prisma-migrate": "npx prisma migrate",
     "prisma-migrate-dev": "npx prisma migrate dev",
