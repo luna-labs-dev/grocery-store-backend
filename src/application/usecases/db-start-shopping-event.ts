@@ -3,6 +3,7 @@ import { GetMarketByIdRepository } from '../contracts';
 import {
   Either,
   left,
+  MarketNotFoundError,
   ShoppingEvent,
   StartShoppingEvent,
   StartShoppingEventErrors,
@@ -17,11 +18,14 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
   }: StartShoppingEventParams): Promise<Either<StartShoppingEventErrors, ShoppingEvent>> => {
     try {
       // Calls GetMarketById
-      await this.marketRepository.getById({
+      const market = await this.marketRepository.getById({
         id: marketId,
       });
 
       // If Market doesnt exists returns MarketNotFoundError
+      if (!market) {
+        return left(new MarketNotFoundError());
+      }
 
       // Create ShoppingEvent instance
 
