@@ -15,19 +15,25 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
   execute = async ({
     marketId,
   }: StartShoppingEventParams): Promise<Either<StartShoppingEventErrors, ShoppingEvent>> => {
-    // Calls GetMarketById
-    await this.marketRepository.getById({
-      id: marketId,
-    });
+    try {
+      // Calls GetMarketById
+      await this.marketRepository.getById({
+        id: marketId,
+      });
 
-    // If Market doesnt exists returns MarketNotFoundError
+      // If Market doesnt exists returns MarketNotFoundError
 
-    // Create ShoppingEvent instance
+      // Create ShoppingEvent instance
 
-    // Calls AddShoppingEvent repository
+      // Calls AddShoppingEvent repository
 
-    // Returns ShoppingEvent
+      // Returns ShoppingEvent
 
-    return await Promise.resolve(left(new UnexpectedError()));
+      return await Promise.resolve(left(new UnexpectedError()));
+    } catch (error) {
+      console.error(error);
+
+      return left(new UnexpectedError());
+    }
   };
 }
