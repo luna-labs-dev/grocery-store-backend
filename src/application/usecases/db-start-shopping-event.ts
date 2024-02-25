@@ -1,3 +1,5 @@
+import { GetMarketByIdRepository } from '../contracts';
+
 import {
   Either,
   left,
@@ -9,10 +11,14 @@ import {
 } from '@/domain';
 
 export class DbStartShoppingEvent implements StartShoppingEvent {
+  constructor(private readonly marketRepository: GetMarketByIdRepository) {}
   execute = async ({
     marketId,
   }: StartShoppingEventParams): Promise<Either<StartShoppingEventErrors, ShoppingEvent>> => {
     // Calls GetMarketById
+    await this.marketRepository.getById({
+      id: marketId,
+    });
 
     // If Market doesnt exists returns MarketNotFoundError
 
