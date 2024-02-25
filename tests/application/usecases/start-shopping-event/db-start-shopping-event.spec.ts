@@ -72,7 +72,22 @@ describe('DbStartShoppingEvent', () => {
     );
   });
 
-  it.todo('shoud return UnexpectedError if AddShoppingEventRepository throws', () => {});
+  it('shoud return UnexpectedError if AddShoppingEventRepository throws', async () => {
+    // Arrange
+    const { sut, mockedShoppingEventRepository } = makeSut();
+
+    vi.spyOn(mockedShoppingEventRepository, 'add').mockImplementationOnce(() => {
+      throw new Error('Something went wrong with the database');
+    });
+
+    const { params } = MockedStartShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(left(new UnexpectedError()));
+  });
 
   it.todo('shoud return the created shoppingEvent with the correct values', () => {});
 });
