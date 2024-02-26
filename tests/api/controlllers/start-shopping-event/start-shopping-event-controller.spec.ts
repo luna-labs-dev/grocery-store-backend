@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { makeSut, mockedStartShoppingEventControllerData } from './mock';
 
-import { left, MarketNotFoundError } from '@/domain';
-import { notFound } from '@/api';
+import { left, MarketNotFoundError, UnexpectedError } from '@/domain';
+import { notFound, ok, serverError } from '@/api';
 
 describe('StartShoppingEventController', () => {
   it('shoud call StartShopping usecase with correct values', async () => {
@@ -36,10 +36,37 @@ describe('StartShoppingEventController', () => {
     expect(response).toEqual(notFound(new MarketNotFoundError()));
   });
 
-  it.todo(
-    'shoud return 500 - ServerError if StartShopping usecase returns UnexpectedError',
-    () => {},
-  );
+  it('shoud return 500 - ServerError if StartShopping usecase returns UnexpectedError', async () => {
+    // Arrange
+    const { sut, mockedStartShoppingEvent } = makeSut();
 
-  it.todo('shoud return 200 - Ok on success', () => {});
+    vi.spyOn(mockedStartShoppingEvent, 'execute').mockResolvedValueOnce(
+      left(new UnexpectedError()),
+    );
+
+    const { params } = mockedStartShoppingEventControllerData();
+
+    // Act
+    const response = await sut.handle(params);
+
+    // Assert
+    expect(response).toEqual(serverError(new UnexpectedError()));
+  });
+
+  it('shoud return 200 - Ok on success', async () => {
+    // Arrange
+    const { sut } = makeSut();
+
+    const { params, result } = mockedStartShoppingEventControllerData();
+
+    // Act
+    const response = await sut.handle(params);
+
+    // Assert
+    expect(response).toEqual(
+      ok(
+        expect.objectContaining({ ...result, id: expect.any(String), createdAt: expect.any(Date) }),
+      ),
+    );
+  });
 });

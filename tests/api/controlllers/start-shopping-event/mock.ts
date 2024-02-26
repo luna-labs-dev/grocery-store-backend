@@ -31,6 +31,10 @@ export const makeSut = (): SutResult => {
 
 interface MockedStartShoppingEventControllerData {
   params: StartShoppingEventControllerRequest;
+  result: {
+    market: string;
+    status: string;
+  };
 }
 
 export const mockedStartShoppingEventControllerData =
@@ -39,7 +43,14 @@ export const mockedStartShoppingEventControllerData =
       marketId: '0d2962f1-c89a-49dc-8edb-0252ba9baa65',
       user: 'some-user@email.com',
     };
+
+    const result = {
+      market: 'Assai Carapicuiba',
+      status: 'ONGOING',
+    };
+
     return {
       params,
+      result,
     };
   };
