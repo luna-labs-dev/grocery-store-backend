@@ -23,6 +23,14 @@ export class StartShoppingEventController implements Controller {
       return mapErrorByCode(startShoppingEventResult.value);
     }
 
-    return await Promise.resolve(ok({}));
+    const shoppingEvent = startShoppingEventResult.value;
+
+    const response = {
+      id: shoppingEvent.id,
+      market: shoppingEvent.market?.name,
+      status: shoppingEvent.status,
+      createdAt: shoppingEvent.createdAt,
+    };
+    return await Promise.resolve(ok(response));
   };
 }
