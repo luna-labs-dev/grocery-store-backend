@@ -1,10 +1,18 @@
 import 'reflect-metadata';
+import * as mockDate from 'mockdate';
 
 import { makeSut, MockedStartShoppingEventData } from './mocks';
 
 import { left, MarketNotFoundError, right, UnexpectedError } from '@/domain';
 
 describe('DbStartShoppingEvent', () => {
+  beforeAll(() => {
+    mockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    mockDate.reset();
+  });
   it('shoud call GetMarketByIdRepository with correct id', async () => {
     // Arrange
     const { sut, mockedMarketRepository } = makeSut();
