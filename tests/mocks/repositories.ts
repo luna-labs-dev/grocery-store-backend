@@ -49,6 +49,10 @@ class MockedShoppingEventRepository implements ShoppingEventRepositories {
   add = (shoppingEvent: ShoppingEvent): Promise<void> => {
     return Promise.resolve();
   };
+
+  update = (shoppingEvent: ShoppingEvent): Promise<void> => {
+    return Promise.resolve();
+  };
 }
 
 export const mockRepositories = (): MockRepositoriesResult => {

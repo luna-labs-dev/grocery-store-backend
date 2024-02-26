@@ -7,7 +7,17 @@ import { prisma } from '@/main/prisma/client';
 export class PrismaShoppingEventRepository implements ShoppingEventRepositories {
   add = async (shoppingEvent: ShoppingEvent): Promise<void> => {
     await prisma.shopping_event.create({
-      data: ShoppingEventMapper.toPersistence(shoppingEvent),
+      data: ShoppingEventMapper.toCreatePersistence(shoppingEvent),
+    });
+  };
+
+  update = async (shoppingEvent: ShoppingEvent): Promise<void> => {
+    await prisma.shopping_event.update({
+      where: {
+        id: shoppingEvent.id,
+        marketId: shoppingEvent.marketId,
+      },
+      data: ShoppingEventMapper.toUpdatePersistence(shoppingEvent),
     });
   };
 }
