@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import { AddShoppingEventRepository, GetMarketByIdRepository } from '../contracts';
 
 import {
@@ -11,10 +13,14 @@ import {
   StartShoppingEventParams,
   UnexpectedError,
 } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 
+const { infra } = injection;
+@injectable()
 export class DbStartShoppingEvent implements StartShoppingEvent {
   constructor(
-    private readonly marketRepository: GetMarketByIdRepository,
+    @inject(infra.marketRepositories) private readonly marketRepository: GetMarketByIdRepository,
+    @inject(infra.shoppingEventRepositories)
     private readonly shoppingEventRepository: AddShoppingEventRepository,
   ) {}
 

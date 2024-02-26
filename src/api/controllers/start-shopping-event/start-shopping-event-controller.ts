@@ -1,15 +1,21 @@
 import { z } from 'zod';
+import { inject, injectable } from 'tsyringe';
 
 import { StartShoppingEventRequestSchema } from './start-shopping-event-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { StartShoppingEvent } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 
 export type StartShoppingEventControllerRequest = z.infer<typeof StartShoppingEventRequestSchema>;
-
+const { usecases } = injection;
+@injectable()
 export class StartShoppingEventController implements Controller {
-  constructor(private readonly startShoppingEvent: StartShoppingEvent) {}
+  constructor(
+    @inject(usecases.startShoppingEvent) private readonly startShoppingEvent: StartShoppingEvent,
+  ) {}
+
   handle = async ({
     user,
     marketId,
