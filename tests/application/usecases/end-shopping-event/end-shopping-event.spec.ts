@@ -2,6 +2,8 @@ import 'reflect-metadata';
 
 import { makeSut, mockEndShoppingEventData } from './mocks';
 
+import { left, UnexpectedError } from '@/domain';
+
 describe('DbEndShoppingEvent', () => {
   it('shoud call GetShoppingEventByIdRepository with correct values', async () => {
     // Arrange
@@ -10,6 +12,7 @@ describe('DbEndShoppingEvent', () => {
     const shoppingEventRepositorySpy = vi.spyOn(mockedShoppingEventRepository, 'getById');
 
     const { params } = mockEndShoppingEventData();
+
     // Act
     await sut.execute(params);
 
@@ -17,7 +20,22 @@ describe('DbEndShoppingEvent', () => {
     expect(shoppingEventRepositorySpy).toHaveBeenCalledWith(params);
   });
 
-  it.todo('shoud return UnexpectedError if GetShoppingEventByIdRepository throws', () => {});
+  it('shoud return UnexpectedError if GetShoppingEventByIdRepository throws', async () => {
+    // Arrange
+    const { sut, mockedShoppingEventRepository } = makeSut();
+
+    vi.spyOn(mockedShoppingEventRepository, 'getById').mockImplementationOnce(() => {
+      throw new Error('something went wrong with the database');
+    });
+
+    const { params } = mockEndShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(left(new UnexpectedError()));
+  });
 
   it.todo(
     'shoud return ShoppingEventNotFoundError if GetShoppingEventByIdRepository returns undefined',
