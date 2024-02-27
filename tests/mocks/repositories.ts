@@ -1,10 +1,12 @@
 import { mockMarket } from './market';
+import { mockShoppingEvent } from './shopping-event';
 
 import {
   CountMarketListRepositoryParams,
   GetMarketByCodeRepositoryParams,
   GetMarketByIdRepositoryParams,
   GetMarketListRepositoryParams,
+  GetShoppingEventByIdRepositoryProps,
   MarketRepositories,
   ShoppingEventRepositories,
 } from '@/application';
@@ -46,6 +48,14 @@ class MockedMarketRepository implements MarketRepositories {
 }
 
 class MockedShoppingEventRepository implements ShoppingEventRepositories {
+  getById = ({
+    shoppingEventId,
+  }: GetShoppingEventByIdRepositoryProps): Promise<ShoppingEvent | undefined> => {
+    const { shoppingEvent } = mockShoppingEvent(shoppingEventId);
+
+    return Promise.resolve(ShoppingEvent.create(shoppingEvent));
+  };
+
   add = (shoppingEvent: ShoppingEvent): Promise<void> => {
     return Promise.resolve();
   };
