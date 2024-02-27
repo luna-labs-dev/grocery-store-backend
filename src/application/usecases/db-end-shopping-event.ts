@@ -7,6 +7,7 @@ import {
   EndShoppingEventParams,
   left,
   ShoppingEvent,
+  ShoppingEventNotFoundError,
   UnexpectedError,
 } from '@/domain';
 
@@ -19,11 +20,14 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
     try {
       // Get Shopping Event by Id
-      await this.repository.getById({
+      const shoppingEvent = await this.repository.getById({
         shoppingEventId,
       });
 
       // Returns ShoppingEventNotFoundError if ShoppingEvent is undefined
+      if (!shoppingEvent) {
+        return left(new ShoppingEventNotFoundError());
+      }
 
       // Update ShoppingEvent object with new values
 
