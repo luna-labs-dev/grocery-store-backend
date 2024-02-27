@@ -17,18 +17,24 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
   execute = async ({
     shoppingEventId,
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
-    // Get Shopping Event by Id
-    await this.repository.getById({
-      shoppingEventId,
-    });
+    try {
+      // Get Shopping Event by Id
+      await this.repository.getById({
+        shoppingEventId,
+      });
 
-    // Returns ShoppingEventNotFoundError if ShoppingEvent is undefined
+      // Returns ShoppingEventNotFoundError if ShoppingEvent is undefined
 
-    // Update ShoppingEvent object with new values
+      // Update ShoppingEvent object with new values
 
-    // Update ShoppingEvent to the database
+      // Update ShoppingEvent to the database
 
-    // Returns Updated ShoppingEvent
-    return await Promise.resolve(left(new UnexpectedError()));
+      // Returns Updated ShoppingEvent
+      return await Promise.resolve(left(new UnexpectedError()));
+    } catch (error) {
+      console.error(error);
+
+      return left(new UnexpectedError());
+    }
   };
 }
