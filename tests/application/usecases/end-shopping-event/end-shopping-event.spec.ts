@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { makeSut, mockEndShoppingEventData } from './mocks';
 
-import { left, UnexpectedError } from '@/domain';
+import { left, ShoppingEventNotFoundError, UnexpectedError } from '@/domain';
 
 describe('DbEndShoppingEvent', () => {
   it('shoud call GetShoppingEventByIdRepository with correct values', async () => {
@@ -37,10 +37,20 @@ describe('DbEndShoppingEvent', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo(
-    'shoud return ShoppingEventNotFoundError if GetShoppingEventByIdRepository returns undefined',
-    () => {},
-  );
+  it('shoud return ShoppingEventNotFoundError if GetShoppingEventByIdRepository returns undefined', async () => {
+    // Arrange
+    const { sut, mockedShoppingEventRepository } = makeSut();
+
+    vi.spyOn(mockedShoppingEventRepository, 'getById').mockResolvedValueOnce(undefined);
+
+    const { params } = mockEndShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(left(new ShoppingEventNotFoundError()));
+  });
 
   it.todo('should call UpdateShoppingEventRepository with correct values', () => {});
 
