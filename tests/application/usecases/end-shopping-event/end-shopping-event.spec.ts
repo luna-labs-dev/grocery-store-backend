@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { makeSut } from './mocks';
+import { makeSut, mockEndShoppingEventData } from './mocks';
 
 describe('DbEndShoppingEvent', () => {
   it('shoud call GetShoppingEventByIdRepository with correct values', async () => {
@@ -9,15 +9,12 @@ describe('DbEndShoppingEvent', () => {
 
     const shoppingEventRepositorySpy = vi.spyOn(mockedShoppingEventRepository, 'getById');
 
+    const { params } = mockEndShoppingEventData();
     // Act
-    await sut.execute({
-      shoppingEventId: '09cde9b9-b54e-4c8a-b87b-f9efec57c893',
-    });
+    await sut.execute(params);
 
     // Assert
-    expect(shoppingEventRepositorySpy).toHaveBeenCalledWith({
-      shoppingEventId: '09cde9b9-b54e-4c8a-b87b-f9efec57c893',
-    });
+    expect(shoppingEventRepositorySpy).toHaveBeenCalledWith(params);
   });
 
   it.todo('shoud return UnexpectedError if GetShoppingEventByIdRepository throws', () => {});

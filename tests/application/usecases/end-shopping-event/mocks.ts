@@ -5,7 +5,7 @@ import {
   GetShoppingEventByIdRepository,
   UpdateShoppingEventRepository,
 } from '@/application';
-import { EndShoppingEvent } from '@/domain';
+import { EndShoppingEvent, EndShoppingEventParams } from '@/domain';
 
 interface SutResult {
   sut: EndShoppingEvent;
@@ -21,4 +21,17 @@ export const makeSut = (): SutResult => {
     sut,
     mockedShoppingEventRepository,
   };
+};
+
+interface MockEndShoppingEventData {
+  params: EndShoppingEventParams;
+}
+
+export const mockEndShoppingEventData = (): MockEndShoppingEventData => {
+  const shoppingEventId = '09cde9b9-b54e-4c8a-b87b-f9efec57c893';
+  const params: EndShoppingEventParams = {
+    shoppingEventId,
+  };
+
+  return { params };
 };
