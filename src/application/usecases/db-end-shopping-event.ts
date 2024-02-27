@@ -1,3 +1,5 @@
+import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '../contracts';
+
 import {
   Either,
   EndShoppingEvent,
@@ -8,11 +10,17 @@ import {
   UnexpectedError,
 } from '@/domain';
 
+type EndShoppingEventRepositories = GetShoppingEventByIdRepository & UpdateShoppingEventRepository;
 export class DbEndShoppingEvent implements EndShoppingEvent {
+  constructor(private readonly repository: EndShoppingEventRepositories) {}
+
   execute = async ({
     shoppingEventId,
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
     // Get Shopping Event by Id
+    await this.repository.getById({
+      shoppingEventId,
+    });
 
     // Returns ShoppingEventNotFoundError if ShoppingEvent is undefined
 
