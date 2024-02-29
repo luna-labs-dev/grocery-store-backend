@@ -30,8 +30,10 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
       }
 
       // Update ShoppingEvent object with new values
+      shoppingEvent.end();
 
       // Update ShoppingEvent to the database
+      await this.repository.update(shoppingEvent);
 
       // Returns Updated ShoppingEvent
       return await Promise.resolve(left(new UnexpectedError()));

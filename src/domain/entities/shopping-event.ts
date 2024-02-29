@@ -51,12 +51,20 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return this.props.status;
   }
 
+  set status(status: ShoppingEventStatus) {
+    this.props.status = status;
+  }
+
   get createdAt(): Date {
     return this.props.createdAt;
   }
 
   get finishedAt(): Date | undefined {
     return this.props.finishedAt;
+  }
+
+  set finishedAt(finishedAt: Date) {
+    this.props.finishedAt = finishedAt;
   }
 
   get createdBy(): string {
@@ -67,4 +75,9 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     const entity = new ShoppingEvent(props, id);
     return entity;
   }
+
+  end = (): void => {
+    this.props.status = 'FINISHED';
+    this.props.finishedAt = new Date();
+  };
 }
