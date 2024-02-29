@@ -1,10 +1,21 @@
 import 'reflect-metadata';
 
+import { mockShoppingEvent } from 'tests/mocks/shopping-event';
+import * as mockDate from 'mockdate';
+
 import { makeSut, mockEndShoppingEventData } from './mocks';
 
 import { left, ShoppingEventNotFoundError, UnexpectedError } from '@/domain';
 
 describe('DbEndShoppingEvent', () => {
+  beforeAll(() => {
+    mockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    mockDate.reset();
+  });
+
   it('shoud call GetShoppingEventByIdRepository with correct values', async () => {
     // Arrange
     const { sut, mockedShoppingEventRepository } = makeSut();
@@ -52,7 +63,27 @@ describe('DbEndShoppingEvent', () => {
     expect(response).toEqual(left(new ShoppingEventNotFoundError()));
   });
 
-  it.todo('should call UpdateShoppingEventRepository with correct values', () => {});
+  it('should call UpdateShoppingEventRepository with correct values', async () => {
+    // Arrange
+    const { sut, mockedShoppingEventRepository } = makeSut();
+
+    const shoppingEventRepositorySpy = vi.spyOn(mockedShoppingEventRepository, 'update');
+
+    const { shoppingEvent } = mockShoppingEvent();
+    const { params } = mockEndShoppingEventData();
+
+    // Act
+    await sut.execute(params);
+
+    // Assert
+    expect(shoppingEventRepositorySpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...shoppingEvent.props,
+        status: 'FINISHED',
+        finishedAt: new Date(),
+      }),
+    );
+  });
 
   it.todo('shoud return UnexpectedError if UpdateShoppingEventRepository throws', () => {});
 
