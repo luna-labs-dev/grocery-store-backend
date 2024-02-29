@@ -12,6 +12,9 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       where: {
         id: shoppingEventId,
       },
+      include: {
+        market: true,
+      },
     });
 
     if (!shoppingEvent) {

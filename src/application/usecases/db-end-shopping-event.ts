@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '../contracts';
 
 import {
@@ -11,10 +13,17 @@ import {
   ShoppingEventNotFoundError,
   UnexpectedError,
 } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 
 type EndShoppingEventRepositories = GetShoppingEventByIdRepository & UpdateShoppingEventRepository;
+
+const { infra } = injection;
+@injectable()
 export class DbEndShoppingEvent implements EndShoppingEvent {
-  constructor(private readonly repository: EndShoppingEventRepositories) {}
+  constructor(
+    @inject(infra.shoppingEventRepositories)
+    private readonly repository: EndShoppingEventRepositories,
+  ) {}
 
   execute = async ({
     shoppingEventId,
