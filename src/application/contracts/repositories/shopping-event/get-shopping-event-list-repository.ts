@@ -1,7 +1,11 @@
-import { ShoppingEvent } from '@/domain';
+import { ShoppingEvent, ShoppingEventStatus } from '@/domain';
 
 export interface GetShoppingEventListRepositoryParams {
-  search?: string;
+  status?: ShoppingEventStatus;
+  period?: {
+    start: Date;
+    end: Date;
+  };
   pageIndex: number;
   pageSize: number;
   orderBy: 'createdAt';
@@ -10,7 +14,7 @@ export interface GetShoppingEventListRepositoryParams {
 
 export type CountShoppingEventListRepositoryParams = Pick<
   GetShoppingEventListRepositoryParams,
-  'search'
+  'status' | 'period'
 >;
 
 export interface GetShoppingEventListRepository {
