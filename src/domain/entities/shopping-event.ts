@@ -2,7 +2,7 @@ import { Entity } from '../core';
 
 import { Market } from './market';
 
-export const validShoppingEventStatus = ['PROCESSING', 'FINISHED', 'ERROR'] as const;
+export const validShoppingEventStatus = ['CANCELED', 'FINISHED', 'ONGOING'] as const;
 export type ShoppingEventStatus = (typeof validShoppingEventStatus)[number];
 
 export interface ShoppingEventProps {
@@ -51,12 +51,20 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return this.props.status;
   }
 
+  set status(status: ShoppingEventStatus) {
+    this.props.status = status;
+  }
+
   get createdAt(): Date {
     return this.props.createdAt;
   }
 
   get finishedAt(): Date | undefined {
     return this.props.finishedAt;
+  }
+
+  set finishedAt(finishedAt: Date) {
+    this.props.finishedAt = finishedAt;
   }
 
   get createdBy(): string {
@@ -66,5 +74,30 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
   public static create(props: ShoppingEventProps, id?: string): ShoppingEvent {
     const entity = new ShoppingEvent(props, id);
     return entity;
+  }
+
+  end = (): void => {
+    this.props.status = 'FINISHED';
+    this.props.finishedAt = new Date();
+  };
+
+  public getCalculatedTotals(): object {
+    const wholesaleSavingValue =
+      !!this.retailTotal && !!this.wholesaleTotal ? this.retailTotal - this.wholesaleTotal : 0;
+
+    const retailPaidDifferenceValue =
+      !!this.retailTotal && !!this.totalPaid ? this.retailTotal - this.totalPaid : 0;
+
+    const wholesalePaidDifferenceValue =
+      !!this.wholesaleTotal && !!this.totalPaid ? this.wholesaleTotal - this.totalPaid : 0;
+
+    return {
+      retailTotal: this.retailTotal,
+      wholesaleTotal: this.wholesaleTotal,
+      paidValue: this.totalPaid,
+      wholesaleSavingValue,
+      retailPaidDifferenceValue,
+      wholesalePaidDifferenceValue,
+    };
   }
 }

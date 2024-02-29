@@ -19,7 +19,7 @@ model market {
 model shopping_event {
   id             String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   marketId       String                  @db.Uuid
-  description    String                  @db.Text
+  description    String?                 @db.Text
   totalPaid      Decimal                 @db.Money
   wholesaleTotal Decimal                 @db.Money
   retailTotal    Decimal                 @db.Money
@@ -39,7 +39,7 @@ model product {
   wholesaleAmount Int?           @db.Integer
   price           Decimal        @db.Money
   wholesalePrice  Decimal?       @db.Money
-  addedAt         DateTime?      @db.Timestamp(6)
+  addedAt         DateTime       @db.Timestamp(6)
   addedBy         String         @db.VarChar(320)
   shoppingEvent   shopping_event @relation(fields: [shoppingEventId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_shoppingEventId_shopping_event_id_fk")
 }

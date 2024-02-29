@@ -5,26 +5,51 @@ import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from 
 import { injection } from './injection-codes';
 
 import { PrismaMarketRepository } from '@/infrastructure';
-import { GetMarketList, NewMarket, UpdateMarket } from '@/domain';
-import { DbGetMarketList, DbNewMarket, DbUpdateMarket, MarketRepositories } from '@/application';
+import {
+  EndShoppingEvent,
+  GetMarketList,
+  NewMarket,
+  StartShoppingEvent,
+  UpdateMarket,
+} from '@/domain';
+import {
+  DbEndShoppingEvent,
+  DbGetMarketList,
+  DbNewMarket,
+  DbStartShoppingEvent,
+  DbUpdateMarket,
+  MarketRepositories,
+  ShoppingEventRepositories,
+} from '@/application';
 import {
   Controller,
+  EndShoppingEventController,
+  EndShoppingEventRequestSchema,
   GetMarketListController,
   getMarketListRequestSchema,
   NewMarketController,
   newMarketRequestSchema,
+  StartShoppingEventController,
+  StartShoppingEventRequestSchema,
   UpdateMarketController,
   updateMarketRequestSchema,
 } from '@/api';
+import { PrismaShoppingEventRepository } from '@/infrastructure/prisma/shopping-event-repository';
 
 const { infra, usecases, controllers } = injection;
 // Infra
 container.register<MarketRepositories>(infra.marketRepositories, PrismaMarketRepository);
+container.register<ShoppingEventRepositories>(
+  infra.shoppingEventRepositories,
+  PrismaShoppingEventRepository,
+);
 
 // Usecases
 container.register<NewMarket>(usecases.newMarket, DbNewMarket);
 container.register<UpdateMarket>(usecases.updateMarket, DbUpdateMarket);
 container.register<GetMarketList>(usecases.getMarketList, DbGetMarketList);
+container.register<StartShoppingEvent>(usecases.startShoppingEvent, DbStartShoppingEvent);
+container.register<EndShoppingEvent>(usecases.endShoppingEvent, DbEndShoppingEvent);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -50,6 +75,24 @@ container.register<Controller>(controllers.getMarketList, {
     new ValidationControllerDecorator(
       new GetMarketListController(container.resolve(usecases.getMarketList)),
       getMarketListRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.startShoppingEvent, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new StartShoppingEventController(container.resolve(usecases.startShoppingEvent)),
+      StartShoppingEventRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.endShoppingEvent, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new EndShoppingEventController(container.resolve(usecases.endShoppingEvent)),
+      EndShoppingEventRequestSchema,
     ),
   ),
 });
