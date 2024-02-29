@@ -5,7 +5,7 @@ import * as mockDate from 'mockdate';
 
 import { makeSut, mockEndShoppingEventData } from './mocks';
 
-import { left, ShoppingEventNotFoundError, UnexpectedError } from '@/domain';
+import { left, right, ShoppingEventNotFoundError, UnexpectedError } from '@/domain';
 
 describe('DbEndShoppingEvent', () => {
   beforeAll(() => {
@@ -102,5 +102,25 @@ describe('DbEndShoppingEvent', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo('shoud return the ended ShoppingEvent on success', () => {});
+  it('shoud return the ended ShoppingEvent on success', async () => {
+    // Arrange
+    const { sut } = makeSut();
+
+    const { shoppingEvent } = mockShoppingEvent();
+    const { params } = mockEndShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(
+      right(
+        expect.objectContaining({
+          ...shoppingEvent.props,
+          status: 'FINISHED',
+          finishedAt: new Date(),
+        }),
+      ),
+    );
+  });
 });
