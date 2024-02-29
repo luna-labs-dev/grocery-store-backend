@@ -15,5 +15,6 @@ export const injection = {
     updateMarket: 'update-market-controller',
     getMarketList: 'get-market-list-controller',
     startShoppingEvent: 'start-shopping-event-controller',
+    endShoppingEvent: 'end-shopping-event-controller',
   },
 };
