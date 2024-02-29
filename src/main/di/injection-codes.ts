@@ -8,6 +8,7 @@ export const injection = {
     updateMarket: 'update-market-usecase',
     getMarketList: 'get-market-list-usecase',
     startShoppingEvent: 'start-shopping-event-usecase',
+    endShoppingEvent: 'end-shopping-event-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',

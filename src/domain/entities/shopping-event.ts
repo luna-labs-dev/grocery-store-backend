@@ -80,4 +80,24 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     this.props.status = 'FINISHED';
     this.props.finishedAt = new Date();
   };
+
+  public getCalculatedTotals(): object {
+    const wholesaleSavingValue =
+      !!this.retailTotal && !!this.wholesaleTotal ? this.retailTotal - this.wholesaleTotal : 0;
+
+    const retailPaidDifferenceValue =
+      !!this.retailTotal && !!this.totalPaid ? this.retailTotal - this.totalPaid : 0;
+
+    const wholesalePaidDifferenceValue =
+      !!this.wholesaleTotal && !!this.totalPaid ? this.wholesaleTotal - this.totalPaid : 0;
+
+    return {
+      retailTotal: this.retailTotal,
+      wholesaleTotal: this.wholesaleTotal,
+      paidValue: this.totalPaid,
+      wholesaleSavingValue,
+      retailPaidDifferenceValue,
+      wholesalePaidDifferenceValue,
+    };
+  }
 }
