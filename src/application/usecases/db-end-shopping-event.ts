@@ -6,6 +6,7 @@ import {
   EndShoppingEventErrors,
   EndShoppingEventParams,
   left,
+  right,
   ShoppingEvent,
   ShoppingEventNotFoundError,
   UnexpectedError,
@@ -36,7 +37,7 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
       await this.repository.update(shoppingEvent);
 
       // Returns Updated ShoppingEvent
-      return await Promise.resolve(left(new UnexpectedError()));
+      return right(shoppingEvent);
     } catch (error) {
       console.error(error);
 
