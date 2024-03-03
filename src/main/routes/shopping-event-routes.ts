@@ -15,3 +15,8 @@ shoppingEventRouter.put(
   '/end/:shoppingEventId',
   adaptRoute(container.resolve(injection.controllers.endShoppingEvent)),
 );
+
+shoppingEventRouter.get(
+  '/',
+  adaptRoute(container.resolve(injection.controllers.getShoppingEventList)),
+);
