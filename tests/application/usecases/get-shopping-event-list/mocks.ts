@@ -5,7 +5,11 @@ import {
   DbGetShoppingEventList,
   GetShoppingEventListRepository,
 } from '@/application';
-import { GetShoppingEventList, GetShoppingEventListParams } from '@/domain';
+import {
+  GetShoppingEventList,
+  GetShoppingEventListParams,
+  GetShoppingEventListResult,
+} from '@/domain';
 
 interface SutResult {
   sut: GetShoppingEventList;
@@ -26,6 +30,7 @@ export const makeSut = (): SutResult => {
 interface MockEndShoppingEventData {
   params: GetShoppingEventListParams;
   repositoryParams: CountShoppingEventListRepositoryParams;
+  emptyResponse: GetShoppingEventListResult;
 }
 
 export const mockEndShoppingEventData = (): MockEndShoppingEventData => {
@@ -41,5 +46,10 @@ export const mockEndShoppingEventData = (): MockEndShoppingEventData => {
     period: undefined,
   };
 
-  return { params, repositoryParams };
+  const emptyResponse: GetShoppingEventListResult = {
+    total: 0,
+    shoppingEvents: [],
+  };
+
+  return { params, repositoryParams, emptyResponse };
 };

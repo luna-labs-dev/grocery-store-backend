@@ -5,7 +5,7 @@ import * as mockDate from 'mockdate';
 
 import { makeSut, mockEndShoppingEventData } from './mocks';
 
-import { left, UnexpectedError } from '@/domain';
+import { left, right, UnexpectedError } from '@/domain';
 
 describe('GetShoppingEventList', () => {
   beforeAll(() => {
@@ -45,10 +45,20 @@ describe('GetShoppingEventList', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo(
-    'shoud return the list with an empty array if GetShoppingEventListRepository.count returns 0',
-    () => {},
-  );
+  it('shoud return the list with an empty array if GetShoppingEventListRepository.count returns 0', async () => {
+    // Arrange
+    const { sut, mockedShoppingEventRepository } = makeSut();
+
+    vi.spyOn(mockedShoppingEventRepository, 'count').mockResolvedValueOnce(0);
+
+    const { params, emptyResponse } = mockEndShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(right(emptyResponse));
+  });
 
   it.todo('shoud call GetShoppingEventListRepository.getAll with the correct values', () => {});
 
