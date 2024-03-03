@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import { GetShoppingEventListRepository } from '../contracts';
 
 import {
@@ -10,9 +12,16 @@ import {
   right,
   UnexpectedError,
 } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 
+const { infra } = injection;
+@injectable()
 export class DbGetShoppingEventList implements GetShoppingEventList {
-  constructor(private readonly repository: GetShoppingEventListRepository) {}
+  constructor(
+    @inject(infra.shoppingEventRepositories)
+    private readonly repository: GetShoppingEventListRepository,
+  ) {}
+
   execute = async ({
     status,
     period,

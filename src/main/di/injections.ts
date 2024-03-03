@@ -8,6 +8,7 @@ import { PrismaMarketRepository } from '@/infrastructure';
 import {
   EndShoppingEvent,
   GetMarketList,
+  GetShoppingEventList,
   NewMarket,
   StartShoppingEvent,
   UpdateMarket,
@@ -15,6 +16,7 @@ import {
 import {
   DbEndShoppingEvent,
   DbGetMarketList,
+  DbGetShoppingEventList,
   DbNewMarket,
   DbStartShoppingEvent,
   DbUpdateMarket,
@@ -27,6 +29,8 @@ import {
   EndShoppingEventRequestSchema,
   GetMarketListController,
   getMarketListRequestSchema,
+  GetShoppingEventListController,
+  getShoppingEventListRequestSchema,
   NewMarketController,
   newMarketRequestSchema,
   StartShoppingEventController,
@@ -50,6 +54,7 @@ container.register<UpdateMarket>(usecases.updateMarket, DbUpdateMarket);
 container.register<GetMarketList>(usecases.getMarketList, DbGetMarketList);
 container.register<StartShoppingEvent>(usecases.startShoppingEvent, DbStartShoppingEvent);
 container.register<EndShoppingEvent>(usecases.endShoppingEvent, DbEndShoppingEvent);
+container.register<GetShoppingEventList>(usecases.getShoppingEventList, DbGetShoppingEventList);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -93,6 +98,15 @@ container.register<Controller>(controllers.endShoppingEvent, {
     new ValidationControllerDecorator(
       new EndShoppingEventController(container.resolve(usecases.endShoppingEvent)),
       EndShoppingEventRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.getShoppingEventList, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new GetShoppingEventListController(container.resolve(usecases.getShoppingEventList)),
+      getShoppingEventListRequestSchema,
     ),
   ),
 });
