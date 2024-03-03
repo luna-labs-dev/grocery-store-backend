@@ -1,12 +1,20 @@
 import 'reflect-metadata';
 
 import { databaseError } from 'tests/mocks/errors';
+import * as mockDate from 'mockdate';
 
 import { makeSut, mockEndShoppingEventData } from './mocks';
 
 import { left, UnexpectedError } from '@/domain';
 
 describe('GetShoppingEventList', () => {
+  beforeAll(() => {
+    mockDate.set(new Date());
+  });
+
+  afterAll(() => {
+    mockDate.reset();
+  });
   it('shoud call GetShoppingEventListRepository.count with the correct values', async () => {
     // Arrange
     const { sut, mockedShoppingEventRepository } = makeSut();
