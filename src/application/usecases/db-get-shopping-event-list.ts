@@ -12,10 +12,14 @@ import {
 
 export class DbGetShoppingEventList implements GetShoppingEventList {
   constructor(private readonly repository: GetShoppingEventListRepository) {}
-  execute = async (
-    params: GetShoppingEventListParams,
-  ): Promise<Either<GetShoppingEventListPossibleErrors, GetShoppingEventListResult>> => {
+  execute = async ({
+    status,
+    period,
+  }: GetShoppingEventListParams): Promise<
+    Either<GetShoppingEventListPossibleErrors, GetShoppingEventListResult>
+  > => {
     // Get the ShoppingEvent List count based on the filters
+    await this.repository.count({ status, period });
 
     // Create the return object with the count and an empty array
 
