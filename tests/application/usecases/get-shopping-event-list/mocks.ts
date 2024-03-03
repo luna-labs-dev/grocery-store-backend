@@ -1,15 +1,15 @@
 import { mockRepositories } from 'tests/mocks/repositories';
 
 import {
+  CountShoppingEventListRepositoryParams,
   DbGetShoppingEventList,
-  GetShoppingEventByIdRepository,
-  UpdateShoppingEventRepository,
+  GetShoppingEventListRepository,
 } from '@/application';
 import { GetShoppingEventList, GetShoppingEventListParams } from '@/domain';
 
 interface SutResult {
   sut: GetShoppingEventList;
-  mockedShoppingEventRepository: GetShoppingEventByIdRepository & UpdateShoppingEventRepository;
+  mockedShoppingEventRepository: GetShoppingEventListRepository;
 }
 
 export const makeSut = (): SutResult => {
@@ -25,6 +25,7 @@ export const makeSut = (): SutResult => {
 
 interface MockEndShoppingEventData {
   params: GetShoppingEventListParams;
+  repositoryParams: CountShoppingEventListRepositoryParams;
 }
 
 export const mockEndShoppingEventData = (): MockEndShoppingEventData => {
@@ -35,5 +36,10 @@ export const mockEndShoppingEventData = (): MockEndShoppingEventData => {
     orderDirection: 'asc',
   };
 
-  return { params };
+  const repositoryParams: CountShoppingEventListRepositoryParams = {
+    status: undefined,
+    period: undefined,
+  };
+
+  return { params, repositoryParams };
 };

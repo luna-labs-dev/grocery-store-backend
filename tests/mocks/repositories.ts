@@ -3,10 +3,12 @@ import { mockShoppingEvent } from './shopping-event';
 
 import {
   CountMarketListRepositoryParams,
+  CountShoppingEventListRepositoryParams,
   GetMarketByCodeRepositoryParams,
   GetMarketByIdRepositoryParams,
   GetMarketListRepositoryParams,
   GetShoppingEventByIdRepositoryProps,
+  GetShoppingEventListRepositoryParams,
   MarketRepositories,
   ShoppingEventRepositories,
 } from '@/application';
@@ -48,6 +50,15 @@ class MockedMarketRepository implements MarketRepositories {
 }
 
 class MockedShoppingEventRepository implements ShoppingEventRepositories {
+  count = (params: CountShoppingEventListRepositoryParams): Promise<number> => {
+    return Promise.resolve(1);
+  };
+
+  getAll = (params: GetShoppingEventListRepositoryParams): Promise<ShoppingEvent[]> => {
+    const { shoppingEvent } = mockShoppingEvent();
+    return Promise.resolve([shoppingEvent]);
+  };
+
   getById = ({
     shoppingEventId,
   }: GetShoppingEventByIdRepositoryProps): Promise<ShoppingEvent | undefined> => {
