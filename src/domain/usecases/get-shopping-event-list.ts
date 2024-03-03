@@ -15,9 +15,9 @@ export interface GetShoppingEventListParams {
   orderDirection: 'desc' | 'asc';
 }
 
-type GetShoppingEventListPossibleErrors = UnexpectedError;
+export type GetShoppingEventListPossibleErrors = UnexpectedError;
 
-export interface GetMarketListResult {
+export interface GetShoppingEventListResult {
   total: number;
   shoppingEvents: ShoppingEvent[];
 }
@@ -25,5 +25,5 @@ export interface GetMarketListResult {
 export interface GetShoppingEventList {
   execute: (
     params: GetShoppingEventListParams,
-  ) => Promise<Either<GetShoppingEventListPossibleErrors, GetMarketListResult>>;
+  ) => Promise<Either<GetShoppingEventListPossibleErrors, GetShoppingEventListResult>>;
 }
