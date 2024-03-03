@@ -20,7 +20,10 @@ export class GetShoppingEventListController implements Controller {
   }: GetShoppingEventListControllerParams): Promise<HttpResponse> => {
     const result = await this.getShoppingEventList.execute({
       status,
-      period,
+      period: period && {
+        start: new Date(period.start),
+        end: new Date(period.end),
+      },
       pageIndex,
       pageSize,
       orderBy,

@@ -6,8 +6,12 @@ export const getShoppingEventListRequestSchema = z.object({
   status: z.enum(validShoppingEventStatus).optional(),
   period: z
     .object({
-      start: z.date(),
-      end: z.date(),
+      start: z.string().datetime({
+        offset: true,
+      }),
+      end: z.string().datetime({
+        offset: true,
+      }),
     })
     .optional(),
   pageIndex: z.coerce.number().min(0).default(0),

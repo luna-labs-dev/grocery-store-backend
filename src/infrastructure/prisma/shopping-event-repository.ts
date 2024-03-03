@@ -15,8 +15,8 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       where: {
         status,
         createdAt: period && {
-          lte: period.start,
-          gte: period.end,
+          gte: period.start,
+          lte: period.end,
         },
       },
     });
@@ -36,8 +36,8 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       where: {
         status,
         createdAt: period && {
-          lte: period?.start,
-          gte: period?.end,
+          gte: period.start,
+          lte: period.end,
         },
       },
       skip: pageIndex * pageSize,
