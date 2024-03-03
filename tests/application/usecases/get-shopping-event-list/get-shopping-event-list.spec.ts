@@ -60,7 +60,20 @@ describe('GetShoppingEventList', () => {
     expect(response).toEqual(right(emptyResponse));
   });
 
-  it.todo('shoud call GetShoppingEventListRepository.getAll with the correct values', () => {});
+  it('shoud call GetShoppingEventListRepository.getAll with the correct values', async () => {
+    // Arrange
+    const { sut, mockedShoppingEventRepository } = makeSut();
+
+    const shoppingEventRepositorySpy = vi.spyOn(mockedShoppingEventRepository, 'getAll');
+
+    const { params } = mockEndShoppingEventData();
+
+    // Act
+    await sut.execute(params);
+
+    // Assert
+    expect(shoppingEventRepositorySpy).toHaveBeenCalledWith(params);
+  });
 
   it.todo('shoud return UnexpectedError if GetShoppingEventListRepository.getAll throws', () => {});
 
