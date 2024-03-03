@@ -1,4 +1,5 @@
 import { mockRepositories } from 'tests/mocks/repositories';
+import { mockShoppingEvent } from 'tests/mocks/shopping-event';
 
 import {
   CountShoppingEventListRepositoryParams,
@@ -30,6 +31,7 @@ export const makeSut = (): SutResult => {
 interface MockEndShoppingEventData {
   params: GetShoppingEventListParams;
   repositoryParams: CountShoppingEventListRepositoryParams;
+  successResponse: GetShoppingEventListResult;
   emptyResponse: GetShoppingEventListResult;
 }
 
@@ -46,10 +48,18 @@ export const mockEndShoppingEventData = (): MockEndShoppingEventData => {
     period: undefined,
   };
 
+  const { shoppingEvent } = mockShoppingEvent();
+
+  const shoppingEventList = [shoppingEvent];
+  const successResponse: GetShoppingEventListResult = {
+    total: shoppingEventList.length,
+    shoppingEvents: shoppingEventList,
+  };
+
   const emptyResponse: GetShoppingEventListResult = {
     total: 0,
     shoppingEvents: [],
   };
 
-  return { params, repositoryParams, emptyResponse };
+  return { params, repositoryParams, successResponse, emptyResponse };
 };

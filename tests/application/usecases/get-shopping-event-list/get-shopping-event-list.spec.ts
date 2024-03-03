@@ -90,5 +90,16 @@ describe('GetShoppingEventList', () => {
     expect(response).toEqual(left(new UnexpectedError()));
   });
 
-  it.todo('shoud return the fetched list on success', () => {});
+  it.todo('shoud return the fetched list on success', async () => {
+    // Arrange
+    const { sut } = makeSut();
+
+    const { params, successResponse } = mockEndShoppingEventData();
+
+    // Act
+    const response = await sut.execute(params);
+
+    // Assert
+    expect(response).toEqual(right(successResponse));
+  });
 });
