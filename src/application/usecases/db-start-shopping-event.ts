@@ -6,6 +6,7 @@ import {
   Either,
   left,
   MarketNotFoundError,
+  Products,
   right,
   ShoppingEvent,
   StartShoppingEvent,
@@ -46,6 +47,7 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
         status: 'ONGOING',
         createdAt: new Date(),
         createdBy: user,
+        products: Products.create([]),
       });
 
       // Calls AddShoppingEvent repository
