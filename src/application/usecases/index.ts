@@ -4,3 +4,4 @@ export * from './db-get-market-list';
 export * from './db-start-shopping-event';
 export * from './db-end-shopping-event';
 export * from './db-get-shopping-event-list';
+export * from './db-get-shopping-event-by-id';
