@@ -1,10 +1,62 @@
 import { ShoppingEventMapper } from './mappers';
 
-import { GetShoppingEventByIdRepositoryProps, ShoppingEventRepositories } from '@/application';
+import {
+  CountShoppingEventListRepositoryParams,
+  GetShoppingEventByIdRepositoryProps,
+  GetShoppingEventListRepositoryParams,
+  ShoppingEventRepositories,
+} from '@/application';
 import { ShoppingEvent } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
 export class PrismaShoppingEventRepository implements ShoppingEventRepositories {
+  count = async ({ status, period }: CountShoppingEventListRepositoryParams): Promise<number> => {
+    const count = await prisma.shopping_event.count({
+      where: {
+        status,
+        createdAt: period && {
+          gte: period.start,
+          lte: period.end,
+        },
+      },
+    });
+
+    return count;
+  };
+
+  getAll = async ({
+    status,
+    period,
+    pageIndex,
+    pageSize,
+    orderBy,
+    orderDirection,
+  }: GetShoppingEventListRepositoryParams): Promise<ShoppingEvent[]> => {
+    const shoppingEvents = await prisma.shopping_event.findMany({
+      where: {
+        status,
+        createdAt: period && {
+          gte: period.start,
+          lte: period.end,
+        },
+      },
+      skip: pageIndex * pageSize,
+      take: pageSize,
+      orderBy: {
+        [orderBy]: orderDirection,
+      },
+      include: {
+        market: true,
+      },
+    });
+
+    if (shoppingEvents.length === 0) {
+      return [];
+    }
+
+    return shoppingEvents.map((shoppingEvent) => ShoppingEventMapper.toDomain(shoppingEvent));
+  };
+
   getById = async ({
     shoppingEventId,
   }: GetShoppingEventByIdRepositoryProps): Promise<ShoppingEvent | undefined> => {
