@@ -8,6 +8,7 @@ import { PrismaMarketRepository } from '@/infrastructure';
 import {
   EndShoppingEvent,
   GetMarketList,
+  GetShoppingEventById,
   GetShoppingEventList,
   NewMarket,
   StartShoppingEvent,
@@ -16,6 +17,7 @@ import {
 import {
   DbEndShoppingEvent,
   DbGetMarketList,
+  DbGetShoppingEventById,
   DbGetShoppingEventList,
   DbNewMarket,
   DbStartShoppingEvent,
@@ -29,6 +31,8 @@ import {
   EndShoppingEventRequestSchema,
   GetMarketListController,
   getMarketListRequestSchema,
+  GetShoppingEventByIdController,
+  getShoppingEventByIdRequestSchema,
   GetShoppingEventListController,
   getShoppingEventListRequestSchema,
   NewMarketController,
@@ -55,6 +59,7 @@ container.register<GetMarketList>(usecases.getMarketList, DbGetMarketList);
 container.register<StartShoppingEvent>(usecases.startShoppingEvent, DbStartShoppingEvent);
 container.register<EndShoppingEvent>(usecases.endShoppingEvent, DbEndShoppingEvent);
 container.register<GetShoppingEventList>(usecases.getShoppingEventList, DbGetShoppingEventList);
+container.register<GetShoppingEventById>(usecases.getShoppingEventById, DbGetShoppingEventById);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -107,6 +112,15 @@ container.register<Controller>(controllers.getShoppingEventList, {
     new ValidationControllerDecorator(
       new GetShoppingEventListController(container.resolve(usecases.getShoppingEventList)),
       getShoppingEventListRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.getShoppingEventById, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new GetShoppingEventByIdController(container.resolve(usecases.getShoppingEventById)),
+      getShoppingEventByIdRequestSchema,
     ),
   ),
 });

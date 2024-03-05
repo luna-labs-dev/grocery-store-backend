@@ -10,6 +10,7 @@ export const injection = {
     startShoppingEvent: 'start-shopping-event-usecase',
     endShoppingEvent: 'end-shopping-event-usecase',
     getShoppingEventList: 'get-shopping-event-list-usecase',
+    getShoppingEventById: 'get-shopping-event-by-id-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
@@ -18,5 +19,6 @@ export const injection = {
     startShoppingEvent: 'start-shopping-event-controller',
     endShoppingEvent: 'end-shopping-event-controller',
     getShoppingEventList: 'get-shopping-event-list-controller',
+    getShoppingEventById: 'get-shopping-event-by-id-controller',
   },
 };
