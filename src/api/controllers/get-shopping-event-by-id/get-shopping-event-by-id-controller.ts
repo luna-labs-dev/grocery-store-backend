@@ -1,15 +1,24 @@
 import { z } from 'zod';
+import { inject, injectable } from 'tsyringe';
 
 import { getShoppingEventByIdRequestSchema } from './get-shopping-event-by-id-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { GetShoppingEventById } from '@/domain';
 import { mapErrorByCode, ok } from '@/api/helpers';
+import { injection } from '@/main/di/injection-codes';
 
 type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdRequestSchema>;
 
+const { usecases } = injection;
+
+@injectable()
 export class GetShoppingEventByIdController implements Controller {
-  constructor(private readonly getShoppingEventById: GetShoppingEventById) {}
+  constructor(
+    @inject(usecases.getShoppingEventById)
+    private readonly getShoppingEventById: GetShoppingEventById,
+  ) {}
+
   handle = async ({
     shoppingEventId,
   }: GetShoppingEventByIdControllerParams): Promise<HttpResponse> => {
