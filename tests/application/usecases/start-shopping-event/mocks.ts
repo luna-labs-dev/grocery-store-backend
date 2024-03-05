@@ -50,6 +50,7 @@ export const MockedStartShoppingEventData = (): MockedStartShoppingEventDataType
     status: 'ONGOING',
     createdAt: new Date(),
     createdBy: user,
+    products: [],
   });
 
   return {

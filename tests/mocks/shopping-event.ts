@@ -19,6 +19,7 @@ export const mockShoppingEvent = (id?: string): MockShoppingEventResult => {
       marketId,
       market,
       status: 'ONGOING',
+      products: [],
       createdAt: new Date(),
       createdBy: user,
     },
@@ -29,6 +30,7 @@ export const mockShoppingEvent = (id?: string): MockShoppingEventResult => {
     marketId,
     market,
     status: 'ONGOING',
+    products: [],
     createdAt: new Date(),
     createdBy: user,
   });

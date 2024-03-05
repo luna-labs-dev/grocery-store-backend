@@ -1,7 +1,7 @@
 import { Entity } from '../core';
 
 import { Market } from './market';
-import { Products } from './products';
+import { Product } from './product';
 
 export const validShoppingEventStatus = ['CANCELED', 'FINISHED', 'ONGOING'] as const;
 export type ShoppingEventStatus = (typeof validShoppingEventStatus)[number];
@@ -14,7 +14,7 @@ export interface ShoppingEventProps {
   wholesaleTotal?: number;
   retailTotal?: number;
   status: ShoppingEventStatus;
-  products: Products;
+  products: Product[];
   createdAt: Date;
   finishedAt?: Date;
   createdBy: string;
@@ -57,7 +57,7 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     this.props.status = status;
   }
 
-  get products(): Products {
+  get products(): Product[] {
     return this.props.products;
   }
 

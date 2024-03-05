@@ -40,7 +40,7 @@ export class GetShoppingEventByIdController implements Controller {
         name: shoppingEvent.market?.name,
       },
       calculatedTotals: shoppingEvent.getCalculatedTotals(),
-      producs: shoppingEvent.products.getItems().map((prod) => ({
+      producs: shoppingEvent.products.map((prod) => ({
         id: prod.id,
         name: prod.name,
         amount: prod.amount,
