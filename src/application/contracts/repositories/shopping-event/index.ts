@@ -12,3 +12,4 @@ export * from './add-shopping-event-repository';
 export * from './update-shopping-event-repository';
 export * from './get-shopping-event-by-id-repository';
 export * from './get-shopping-event-list-repository';
+export * from './cart';
