@@ -1,6 +1,7 @@
 import { Entity } from '../core';
 
 import { Market } from './market';
+import { Product } from './product';
 import { Products } from './products';
 
 export const validShoppingEventStatus = ['CANCELED', 'FINISHED', 'ONGOING'] as const;
@@ -45,8 +46,16 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return this.props.wholesaleTotal;
   }
 
+  set wholesaleTotal(wholesaleTotal: number) {
+    this.props.wholesaleTotal = wholesaleTotal;
+  }
+
   get retailTotal(): number | undefined {
     return this.props.retailTotal;
+  }
+
+  set retailTotal(retailTotal: number) {
+    this.props.retailTotal = retailTotal;
   }
 
   get status(): ShoppingEventStatus {
@@ -87,7 +96,32 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     this.props.finishedAt = new Date();
   };
 
+  addProduct = (product: Product): void => {
+    this.props.products.add(product);
+  };
+
+  private calculateTotals(): void {
+    const summed = {
+      wholesaleTotal: 0,
+      retailTotal: 0,
+    };
+
+    this.props.products.getItems().forEach((prod) => {
+      summed.retailTotal += prod.amount * prod.price;
+
+      summed.wholesaleTotal +=
+        prod.wholesaleMinAmount && prod.wholesalePrice && prod.amount >= prod.wholesaleMinAmount
+          ? prod.amount * prod.wholesalePrice
+          : prod.amount * prod.price;
+    });
+
+    this.retailTotal = summed.retailTotal;
+    this.wholesaleTotal = summed.wholesaleTotal;
+  }
+
   public getCalculatedTotals(): object {
+    this.calculateTotals();
+
     const wholesaleSavingValue =
       !!this.retailTotal && !!this.wholesaleTotal ? this.retailTotal - this.wholesaleTotal : 0;
 
