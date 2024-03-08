@@ -14,6 +14,7 @@ import {
   UnexpectedError,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
+import { Products } from '@/domain/entities/products';
 
 const { infra } = injection;
 @injectable()
@@ -46,7 +47,7 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
         status: 'ONGOING',
         createdAt: new Date(),
         createdBy: user,
-        products: [],
+        products: Products.create([]),
       });
 
       // Calls AddShoppingEvent repository
