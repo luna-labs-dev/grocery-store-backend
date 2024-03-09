@@ -2,6 +2,7 @@ export const injection = {
   infra: {
     marketRepositories: 'market-repositories',
     shoppingEventRepositories: 'shopping-event-repositories',
+    productRepositories: 'product-repositories',
   },
   usecases: {
     newMarket: 'new-market-usecase',
@@ -11,6 +12,7 @@ export const injection = {
     endShoppingEvent: 'end-shopping-event-usecase',
     getShoppingEventList: 'get-shopping-event-list-usecase',
     getShoppingEventById: 'get-shopping-event-by-id-usecase',
+    addProductToCart: 'add-product-to-cart-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
@@ -20,5 +22,6 @@ export const injection = {
     endShoppingEvent: 'end-shopping-event-controller',
     getShoppingEventList: 'get-shopping-event-list-controller',
     getShoppingEventById: 'get-shopping-event-by-id-controller',
+    addProductToCart: 'add-product-to-cart-controller',
   },
 };

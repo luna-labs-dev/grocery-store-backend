@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import {
   AddProductToCart,
   AddProductToCartErrors,
@@ -10,11 +12,18 @@ import {
   UnexpectedError,
 } from '@/domain';
 import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '@/application';
+import { injection } from '@/main/di/injection-codes';
 
 type ShoppingEventRepositories = GetShoppingEventByIdRepository & UpdateShoppingEventRepository;
 
+const { infra } = injection;
+
+@injectable()
 export class DbAddProductToCart implements AddProductToCart {
-  constructor(private readonly shoppingEventRepository: ShoppingEventRepositories) {}
+  constructor(
+    @inject(infra.shoppingEventRepositories)
+    private readonly shoppingEventRepository: ShoppingEventRepositories,
+  ) {}
 
   execute = async ({
     user,

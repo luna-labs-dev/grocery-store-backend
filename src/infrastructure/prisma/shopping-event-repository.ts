@@ -1,3 +1,5 @@
+import { inject, injectable } from 'tsyringe';
+
 import { ShoppingEventMapper } from './mappers';
 
 import {
@@ -8,10 +10,16 @@ import {
   ShoppingEventRepositories,
 } from '@/application';
 import { ShoppingEvent } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 import { prisma } from '@/main/prisma/client';
 
+const { infra } = injection;
+@injectable()
 export class PrismaShoppingEventRepository implements ShoppingEventRepositories {
-  constructor(private readonly productRepository: ProductRepositories) {}
+  constructor(
+    @inject(infra.productRepositories) private readonly productRepository: ProductRepositories,
+  ) {}
+
   count = async ({ status, period }: CountShoppingEventListRepositoryParams): Promise<number> => {
     const count = await prisma.shopping_event.count({
       where: {
