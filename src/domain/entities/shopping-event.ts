@@ -98,6 +98,7 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
 
   addProduct = (product: Product): void => {
     this.props.products.add(product);
+    this.calculateTotals();
   };
 
   private calculateTotals(): void {
