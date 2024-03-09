@@ -25,3 +25,8 @@ shoppingEventRouter.get(
   '/:shoppingEventId',
   adaptRoute(container.resolve(injection.controllers.getShoppingEventById)),
 );
+
+shoppingEventRouter.post(
+  '/:shoppingEventId/cart',
+  adaptRoute(container.resolve(injection.controllers.addProductToCart)),
+);

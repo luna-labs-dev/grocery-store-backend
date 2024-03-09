@@ -1,15 +1,25 @@
+import { inject, injectable } from 'tsyringe';
+
 import { ShoppingEventMapper } from './mappers';
 
 import {
   CountShoppingEventListRepositoryParams,
   GetShoppingEventByIdRepositoryProps,
   GetShoppingEventListRepositoryParams,
+  ProductRepositories,
   ShoppingEventRepositories,
 } from '@/application';
 import { ShoppingEvent } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 import { prisma } from '@/main/prisma/client';
 
+const { infra } = injection;
+@injectable()
 export class PrismaShoppingEventRepository implements ShoppingEventRepositories {
+  constructor(
+    @inject(infra.productRepositories) private readonly productRepository: ProductRepositories,
+  ) {}
+
   count = async ({ status, period }: CountShoppingEventListRepositoryParams): Promise<number> => {
     const count = await prisma.shopping_event.count({
       where: {
@@ -91,5 +101,14 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       },
       data: ShoppingEventMapper.toUpdatePersistence(shoppingEvent),
     });
+
+    const newProducts = shoppingEvent.products.getNewItems();
+    if (newProducts.length > 0) {
+      const promisses = newProducts.map(async (prod) => {
+        await this.productRepository.add(prod);
+      });
+
+      await Promise.allSettled(promisses);
+    }
   };
 }

@@ -1,5 +1,6 @@
 import { mockMarket } from './market';
 
+import { Products } from '@/domain/entities/products';
 import { ShoppingEvent } from '@/domain';
 
 interface MockShoppingEventResult {
@@ -19,6 +20,7 @@ export const mockShoppingEvent = (id?: string): MockShoppingEventResult => {
       marketId,
       market,
       status: 'ONGOING',
+      products: Products.create([]),
       createdAt: new Date(),
       createdBy: user,
     },
@@ -29,6 +31,7 @@ export const mockShoppingEvent = (id?: string): MockShoppingEventResult => {
     marketId,
     market,
     status: 'ONGOING',
+    products: Products.create([]),
     createdAt: new Date(),
     createdBy: user,
   });

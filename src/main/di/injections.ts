@@ -4,8 +4,13 @@ import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from 
 
 import { injection } from './injection-codes';
 
-import { PrismaMarketRepository } from '@/infrastructure';
 import {
+  PrismaMarketRepository,
+  PrismaProductRepository,
+  PrismaShoppingEventRepository,
+} from '@/infrastructure';
+import {
+  AddProductToCart,
   EndShoppingEvent,
   GetMarketList,
   GetShoppingEventById,
@@ -15,6 +20,7 @@ import {
   UpdateMarket,
 } from '@/domain';
 import {
+  DbAddProductToCart,
   DbEndShoppingEvent,
   DbGetMarketList,
   DbGetShoppingEventById,
@@ -22,10 +28,15 @@ import {
   DbNewMarket,
   DbStartShoppingEvent,
   DbUpdateMarket,
-  MarketRepositories,
-  ShoppingEventRepositories,
 } from '@/application';
 import {
+  MarketRepositories,
+  ProductRepositories,
+  ShoppingEventRepositories,
+} from '@/application/contracts';
+import {
+  AddProductToCartController,
+  addProductToCartRequestSchema,
   Controller,
   EndShoppingEventController,
   EndShoppingEventRequestSchema,
@@ -42,7 +53,6 @@ import {
   UpdateMarketController,
   updateMarketRequestSchema,
 } from '@/api';
-import { PrismaShoppingEventRepository } from '@/infrastructure/prisma/shopping-event-repository';
 
 const { infra, usecases, controllers } = injection;
 // Infra
@@ -51,6 +61,7 @@ container.register<ShoppingEventRepositories>(
   infra.shoppingEventRepositories,
   PrismaShoppingEventRepository,
 );
+container.register<ProductRepositories>(infra.productRepositories, PrismaProductRepository);
 
 // Usecases
 container.register<NewMarket>(usecases.newMarket, DbNewMarket);
@@ -60,6 +71,7 @@ container.register<StartShoppingEvent>(usecases.startShoppingEvent, DbStartShopp
 container.register<EndShoppingEvent>(usecases.endShoppingEvent, DbEndShoppingEvent);
 container.register<GetShoppingEventList>(usecases.getShoppingEventList, DbGetShoppingEventList);
 container.register<GetShoppingEventById>(usecases.getShoppingEventById, DbGetShoppingEventById);
+container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCart);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -121,6 +133,15 @@ container.register<Controller>(controllers.getShoppingEventById, {
     new ValidationControllerDecorator(
       new GetShoppingEventByIdController(container.resolve(usecases.getShoppingEventById)),
       getShoppingEventByIdRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.addProductToCart, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new AddProductToCartController(container.resolve(usecases.addProductToCart)),
+      addProductToCartRequestSchema,
     ),
   ),
 });

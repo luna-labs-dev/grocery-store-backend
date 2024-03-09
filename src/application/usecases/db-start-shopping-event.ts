@@ -1,12 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 
-import { AddShoppingEventRepository, GetMarketByIdRepository } from '../contracts';
-
+import { AddShoppingEventRepository, GetMarketByIdRepository } from '@/application/contracts';
 import {
   Either,
   left,
   MarketNotFoundError,
-  Products,
   right,
   ShoppingEvent,
   StartShoppingEvent,
@@ -15,6 +13,7 @@ import {
   UnexpectedError,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
+import { Products } from '@/domain/entities/products';
 
 const { infra } = injection;
 @injectable()

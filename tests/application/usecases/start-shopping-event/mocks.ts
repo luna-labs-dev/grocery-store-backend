@@ -7,6 +7,7 @@ import {
   GetMarketByIdRepository,
 } from '@/application';
 import { ShoppingEvent, StartShoppingEvent, StartShoppingEventParams } from '@/domain';
+import { Products } from '@/domain/entities/products';
 
 interface SutResult {
   sut: StartShoppingEvent;
@@ -50,6 +51,7 @@ export const MockedStartShoppingEventData = (): MockedStartShoppingEventDataType
     status: 'ONGOING',
     createdAt: new Date(),
     createdBy: user,
+    products: Products.create([]),
   });
 
   return {

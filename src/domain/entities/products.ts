@@ -1,6 +1,6 @@
 import { WatchedList } from '../core';
 
-import { Product } from './product';
+import { Product, ProductProps } from './product';
 
 export class Products extends WatchedList<Product> {
   compareItems(a: Product, b: Product): boolean {
@@ -8,7 +8,17 @@ export class Products extends WatchedList<Product> {
   }
 
   compareProps(a: Product, b: Product): boolean {
-    throw new Error('Method not implemented.');
+    const propsToCompare = [
+      'name',
+      'amount',
+      'price',
+      'wholesaleMinAmount',
+      'wholesalePrice',
+    ] as Array<keyof ProductProps>;
+
+    return !propsToCompare.every((prop) => {
+      return a[prop] === b[prop];
+    });
   }
 
   private constructor(products: Product[]) {

@@ -2,7 +2,8 @@ import { market, Prisma, product, shopping_event } from '@prisma/client';
 
 import { MarketMapper } from './market-mapper';
 
-import { Market, Product, Products, ShoppingEvent } from '@/domain';
+import { Market, Product, ShoppingEvent } from '@/domain';
+import { Products } from '@/domain/entities/products';
 
 type ShoppingEventPersistence = shopping_event & { market?: market; product?: product[] };
 type ShoppingEventCreatePersistence = Prisma.shopping_eventCreateInput;
@@ -20,21 +21,23 @@ export class ShoppingEventMapper {
         retailTotal: Number(raw.retailTotal ?? 0),
         status: raw.status,
         products: Products.create(
-          raw.product?.map((prod) =>
-            Product.create(
-              {
-                shoppingEventId: raw.id,
-                name: prod.name,
-                amount: prod.amount,
-                wholesaleMinAmount: prod.wholesaleAmount ?? undefined,
-                price: Number(prod.price),
-                wholesalePrice: Number(prod.wholesalePrice ?? 0),
-                addedAt: prod.addedAt,
-                addedBy: prod.addedBy,
-              },
-              prod.id,
-            ),
-          ),
+          raw.product
+            ? raw.product?.map((prod) =>
+                Product.create(
+                  {
+                    shoppingEventId: raw.id,
+                    name: prod.name,
+                    amount: prod.amount,
+                    wholesaleMinAmount: prod.wholesaleAmount ?? undefined,
+                    price: Number(prod.price),
+                    wholesalePrice: Number(prod.wholesalePrice ?? 0),
+                    addedAt: prod.addedAt,
+                    addedBy: prod.addedBy,
+                  },
+                  prod.id,
+                ),
+              )
+            : [],
         ),
         createdAt: raw.createdAt,
         finishedAt: raw.finishedAt ?? undefined,

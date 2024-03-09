@@ -9,7 +9,7 @@ export interface ProductProps {
   amount: number;
   wholesaleMinAmount?: number;
   price: number;
-  wholesalePrice: number;
+  wholesalePrice?: number;
   addedAt: Date;
   addedBy: string;
 }
