@@ -10,4 +10,16 @@ export class PrismaProductRepository implements ProductRepositories {
       data: ProductMapper.toCreatePersistence(product),
     });
   };
+
+  update = async (product: Product): Promise<void> => {
+    await prisma.product.update({
+      where: {
+        shoppingEvent: {
+          id: product.shoppingEventId,
+        },
+        id: product.id,
+      },
+      data: ProductMapper.toUpdatePersistence(product),
+    });
+  };
 }

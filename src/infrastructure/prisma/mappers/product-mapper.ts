@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { Product } from '@/domain';
 
 type ProductCreatePersistence = Prisma.productCreateInput;
+type ProductUpdatePersistence = Prisma.productUpdateInput;
 
 export class ProductMapper {
   static toCreatePersistence(product: Product): ProductCreatePersistence {
@@ -22,5 +23,15 @@ export class ProductMapper {
       addedBy: product.addedBy,
     };
     return persistence;
+  }
+
+  static toUpdatePersistence(product: Product): ProductUpdatePersistence {
+    return {
+      name: product.name,
+      amount: product.amount,
+      wholesaleAmount: product.wholesaleMinAmount,
+      price: product.price,
+      wholesalePrice: product.wholesalePrice,
+    };
   }
 }
