@@ -18,6 +18,7 @@ import {
   NewMarket,
   StartShoppingEvent,
   UpdateMarket,
+  UpdateProductInCart,
 } from '@/domain';
 import {
   DbAddProductToCart,
@@ -52,7 +53,10 @@ import {
   StartShoppingEventRequestSchema,
   UpdateMarketController,
   updateMarketRequestSchema,
+  UpdateProductInCartController,
+  updateProductInCartRequestSchema,
 } from '@/api';
+import { DbUpdateProductInCart } from '@/application/usecases/db-update-product-in-cart';
 
 const { infra, usecases, controllers } = injection;
 // Infra
@@ -72,6 +76,7 @@ container.register<EndShoppingEvent>(usecases.endShoppingEvent, DbEndShoppingEve
 container.register<GetShoppingEventList>(usecases.getShoppingEventList, DbGetShoppingEventList);
 container.register<GetShoppingEventById>(usecases.getShoppingEventById, DbGetShoppingEventById);
 container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCart);
+container.register<UpdateProductInCart>(usecases.updateProductInCart, DbUpdateProductInCart);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -142,6 +147,15 @@ container.register<Controller>(controllers.addProductToCart, {
     new ValidationControllerDecorator(
       new AddProductToCartController(container.resolve(usecases.addProductToCart)),
       addProductToCartRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.updateProductInCart, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new UpdateProductInCartController(container.resolve(usecases.updateProductInCart)),
+      updateProductInCartRequestSchema,
     ),
   ),
 });

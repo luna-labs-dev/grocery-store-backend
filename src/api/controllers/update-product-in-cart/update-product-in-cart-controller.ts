@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { UpdateProductInCartRequestSchema } from './update-product-in-cart-controller-validation-schema';
+import { updateProductInCartRequestSchema } from './update-product-in-cart-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { UpdateProductInCart } from '@/domain';
 import { mapErrorByCode, noContent } from '@/api/helpers';
 
-export type UpdateProductInCartParams = z.infer<typeof UpdateProductInCartRequestSchema>;
+export type UpdateProductInCartParams = z.infer<typeof updateProductInCartRequestSchema>;
 
 export class UpdateProductInCartController implements Controller {
   constructor(private readonly updateProductInCart: UpdateProductInCart) {}

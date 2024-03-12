@@ -13,6 +13,7 @@ export const injection = {
     getShoppingEventList: 'get-shopping-event-list-usecase',
     getShoppingEventById: 'get-shopping-event-by-id-usecase',
     addProductToCart: 'add-product-to-cart-usecase',
+    updateProductInCart: 'update-product-in-cart-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
@@ -23,5 +24,6 @@ export const injection = {
     getShoppingEventList: 'get-shopping-event-list-controller',
     getShoppingEventById: 'get-shopping-event-by-id-controller',
     addProductToCart: 'add-product-to-cart-controller',
+    updateProductInCart: 'update-product-in-cart-controller',
   },
 };
