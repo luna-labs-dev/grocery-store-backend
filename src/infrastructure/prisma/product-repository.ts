@@ -1,6 +1,6 @@
 import { ProductMapper } from './mappers';
 
-import { ProductRepositories } from '@/application';
+import { ProductRepositories, RemoveProductRepositoryParams } from '@/application';
 import { Product } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
@@ -20,6 +20,17 @@ export class PrismaProductRepository implements ProductRepositories {
         id: product.id,
       },
       data: ProductMapper.toUpdatePersistence(product),
+    });
+  };
+
+  remove = async ({ shoppingEventId, productId }: RemoveProductRepositoryParams): Promise<void> => {
+    await prisma.product.delete({
+      where: {
+        shoppingEvent: {
+          id: shoppingEventId,
+        },
+        id: productId,
+      },
     });
   };
 }
