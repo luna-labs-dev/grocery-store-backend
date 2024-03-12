@@ -48,13 +48,15 @@ export class DbUpdateProductInCart implements UpdateProductInCart {
       }
 
       // Return productNotFoundError if product not in list
-      const product = shoppingEvent.products.getItemById(productId);
+      const currentProduct = shoppingEvent.products.getItemById(productId);
 
-      if (!product) {
+      if (!currentProduct) {
         return left(new ProductNotFoundError());
       }
 
       // Update product with new values
+      const product = Product.create({ ...currentProduct.props }, currentProduct.id);
+
       product.update({
         name,
         amount,
