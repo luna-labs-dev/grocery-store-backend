@@ -21,6 +21,10 @@ export class Products extends WatchedList<Product> {
     });
   }
 
+  getItemById(id: string): Product | undefined {
+    return this.currentItems.find((prod) => prod.id === id);
+  }
+
   private constructor(products: Product[]) {
     super(products);
   }

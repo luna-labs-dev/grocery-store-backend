@@ -14,6 +14,14 @@ export interface ProductProps {
   addedBy: string;
 }
 
+export interface UpdateProps {
+  name: string;
+  amount: number;
+  wholesaleMinAmount?: number;
+  price: number;
+  wholesalePrice?: number;
+}
+
 export class Product extends Entity<ProductProps> {
   private constructor(props: ProductProps, id?: string) {
     super(props, id);
@@ -53,6 +61,14 @@ export class Product extends Entity<ProductProps> {
 
   get addedBy(): string {
     return this.props.addedBy;
+  }
+
+  update({ name, amount, price, wholesaleMinAmount, wholesalePrice }: UpdateProps): void {
+    this.props.name = name;
+    this.props.amount = amount;
+    this.props.price = price;
+    this.props.wholesaleMinAmount = wholesaleMinAmount;
+    this.props.wholesalePrice = wholesalePrice;
   }
 
   public static create(props: ProductProps, id?: string): Product {

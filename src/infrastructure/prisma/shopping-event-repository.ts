@@ -103,12 +103,23 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
     });
 
     const newProducts = shoppingEvent.products.getNewItems();
+    const updateProducts = shoppingEvent.products.getUpdatedItems();
+
+    const promisses: any = [];
     if (newProducts.length > 0) {
-      const promisses = newProducts.map(async (prod) => {
+      const newProductPromisses = newProducts.map(async (prod) => {
         await this.productRepository.add(prod);
       });
-
-      await Promise.allSettled(promisses);
+      promisses.push(newProductPromisses);
     }
+
+    if (updateProducts.length > 0) {
+      const updateProductPromisses = updateProducts.map(async (prod) => {
+        await this.productRepository.update(prod);
+      });
+      promisses.push(updateProductPromisses);
+    }
+
+    await Promise.allSettled(promisses);
   };
 }
