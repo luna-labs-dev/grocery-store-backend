@@ -30,3 +30,8 @@ shoppingEventRouter.post(
   '/:shoppingEventId/cart',
   adaptRoute(container.resolve(injection.controllers.addProductToCart)),
 );
+
+shoppingEventRouter.put(
+  '/:shoppingEventId/cart/:productId',
+  adaptRoute(container.resolve(injection.controllers.updateProductInCart)),
+);
