@@ -35,3 +35,8 @@ shoppingEventRouter.put(
   '/:shoppingEventId/cart/:productId',
   adaptRoute(container.resolve(injection.controllers.updateProductInCart)),
 );
+
+shoppingEventRouter.delete(
+  '/:shoppingEventId/cart/:productId',
+  adaptRoute(container.resolve(injection.controllers.removeProductFromCart)),
+);
