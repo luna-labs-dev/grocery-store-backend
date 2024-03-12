@@ -1,5 +1,8 @@
+import { inject, injectable } from 'tsyringe';
+
 import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '../contracts';
 
+import { injection } from '@/main/di/injection-codes';
 import {
   Either,
   left,
@@ -15,8 +18,14 @@ import {
 type RemoveProductFromCartRepositories = GetShoppingEventByIdRepository &
   UpdateShoppingEventRepository;
 
+const { infra } = injection;
+
+@injectable()
 export class DbRemoveProductFromCart implements RemoveProductFromCart {
-  constructor(private readonly repository: RemoveProductFromCartRepositories) {}
+  constructor(
+    @inject(infra.shoppingEventRepositories)
+    private readonly repository: RemoveProductFromCartRepositories,
+  ) {}
 
   execute = async ({
     shoppingEventId,
