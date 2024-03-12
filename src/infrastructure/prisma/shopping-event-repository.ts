@@ -104,6 +104,7 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
 
     const newProducts = shoppingEvent.products.getNewItems();
     const updateProducts = shoppingEvent.products.getUpdatedItems();
+    const deleteProducts = shoppingEvent.products.getRemovedItems();
 
     const promisses: any = [];
     if (newProducts.length > 0) {
@@ -118,6 +119,17 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
         await this.productRepository.update(prod);
       });
       promisses.push(updateProductPromisses);
+    }
+
+    if (deleteProducts.length > 0) {
+      const deleteProductPromisses = deleteProducts.map(async (prod) => {
+        await this.productRepository.remove({
+          shoppingEventId: shoppingEvent.id,
+          productId: prod.id,
+        });
+      });
+
+      promisses.push(deleteProductPromisses);
     }
 
     await Promise.allSettled(promisses);
