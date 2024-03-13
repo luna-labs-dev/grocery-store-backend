@@ -24,10 +24,13 @@ export class DbAddMarket implements AddMarket {
     @inject(infra.marketRepositories) private readonly repository: AddMarketRepositories,
   ) {}
 
-  execute = async ({ name, user }: AddMarketParams): Promise<Either<AddMarketErrors, Market>> => {
+  execute = async ({
+    marketName,
+    user,
+  }: AddMarketParams): Promise<Either<AddMarketErrors, Market>> => {
     try {
       const market = Market.create({
-        name,
+        name: marketName,
         createdAt: new Date(),
         createdBy: user,
       });

@@ -17,7 +17,7 @@ describe('DbNewMarket', () => {
     await sut.execute(newMarketParams);
 
     // Assert
-    expect(repositorySpy).toHaveBeenCalledWith({ code: nameToCode(newMarketParams.name) });
+    expect(repositorySpy).toHaveBeenCalledWith({ code: nameToCode(newMarketParams.marketName) });
   });
 
   it('should return MarketAlreadyExistsError when code is found on database', async () => {
@@ -74,7 +74,7 @@ describe('DbNewMarket', () => {
     // Assert
     expect(response.isRight()).toBe(true);
     expect(response.value).instanceOf(Market);
-    expect((response.value as Market).code).toBe(nameToCode(newMarketParams.name));
-    expect((response.value as Market).name).toBe(newMarketParams.name);
+    expect((response.value as Market).code).toBe(nameToCode(newMarketParams.marketName));
+    expect((response.value as Market).name).toBe(newMarketParams.marketName);
   });
 });

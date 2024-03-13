@@ -22,7 +22,7 @@ interface MockParams {
 export const mockParams = (): MockParams => {
   return {
     newMarketParams: {
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
       user: 'tiagoluizpoli@gmail.com',
     },
   };

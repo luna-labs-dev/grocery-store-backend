@@ -6,7 +6,7 @@ import { UnexpectedError } from './errors';
 export type AddMarketErrors = UnexpectedError;
 
 export interface AddMarketParams {
-  name: string;
+  marketName: string;
   user: string;
 }
 

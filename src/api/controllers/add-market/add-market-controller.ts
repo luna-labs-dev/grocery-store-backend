@@ -17,10 +17,10 @@ export class AddMarketController implements Controller {
   constructor(@inject(usecases.newMarket) private readonly newMarket: AddMarket) {}
 
   handle = async (request: AddMarketControllerRequest): Promise<HttpResponse> => {
-    const { name, user } = request;
+    const { marketName, user } = request;
 
     const result = await this.newMarket.execute({
-      name,
+      marketName,
       user,
     });
 
