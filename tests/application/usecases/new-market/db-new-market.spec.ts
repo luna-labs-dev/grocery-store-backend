@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { makeSut, mockParams } from './mocks';
 
 import { nameToCode } from '@/domain/helper';
-import { Market, MarketAlreadyExistsError, NewMarketErrors, UnexpectedError } from '@/domain';
+import { AddMarketErrors, Market, MarketAlreadyExistsError, UnexpectedError } from '@/domain';
 
 describe('DbNewMarket', () => {
   it('shoud call GetMarketByCode with correct values', async () => {
@@ -40,14 +40,14 @@ describe('DbNewMarket', () => {
     // Assert
 
     expect(response.isLeft()).toBe(true);
-    expect(response.value as NewMarketErrors).toEqual(new MarketAlreadyExistsError());
+    expect(response.value as AddMarketErrors).toEqual(new MarketAlreadyExistsError());
   });
 
   it('should return UnexpectedError if repository throws', async () => {
     // Arrange
     const { sut, mockedMarketRepository } = makeSut();
 
-    vi.spyOn(mockedMarketRepository, 'new').mockImplementationOnce(() => {
+    vi.spyOn(mockedMarketRepository, 'add').mockImplementationOnce(() => {
       throw new Error('Something went wrong with the database');
     });
 
@@ -59,7 +59,7 @@ describe('DbNewMarket', () => {
     // Assert
 
     expect(response.isLeft()).toBe(true);
-    expect(response.value as NewMarketErrors).toEqual(new UnexpectedError());
+    expect(response.value as AddMarketErrors).toEqual(new UnexpectedError());
   });
 
   it('shoud create a new Market and return success', async () => {
