@@ -5,8 +5,8 @@ import { GetShoppingEventListRepository } from '../contracts';
 import {
   Either,
   GetShoppingEventList,
+  GetShoppingEventListErrors,
   GetShoppingEventListParams,
-  GetShoppingEventListPossibleErrors,
   GetShoppingEventListResult,
   left,
   right,
@@ -30,7 +30,7 @@ export class DbGetShoppingEventList implements GetShoppingEventList {
     orderBy,
     orderDirection,
   }: GetShoppingEventListParams): Promise<
-    Either<GetShoppingEventListPossibleErrors, GetShoppingEventListResult>
+    Either<GetShoppingEventListErrors, GetShoppingEventListResult>
   > => {
     try {
       // Get the ShoppingEvent List count based on the filters

@@ -1,9 +1,11 @@
 import { Either } from '../core';
 import { Product } from '../entities';
 
-import { ProductNotFoundError, UnexpectedError } from './errors';
+import { ProductNotFoundError, ShoppingEventNotFoundError, UnexpectedError } from './errors';
 
-export type UpdateProductInCartErrors = UnexpectedError & ProductNotFoundError;
+export type UpdateProductInCartErrors = UnexpectedError &
+  ShoppingEventNotFoundError &
+  ProductNotFoundError;
 
 export interface UpdateProductInCartParams {
   shoppingEventId: string;

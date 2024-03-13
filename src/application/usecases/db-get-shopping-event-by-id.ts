@@ -5,8 +5,8 @@ import { GetShoppingEventByIdRepository } from '../contracts';
 import {
   Either,
   GetShoppingEventById,
+  GetShoppingEventByIdErrors,
   GetShoppingEventByIdParams,
-  GetShoppingEventByIdPossibleErrors,
   left,
   right,
   ShoppingEvent,
@@ -26,9 +26,7 @@ export class DbGetShoppingEventById implements GetShoppingEventById {
 
   execute = async ({
     shoppingEventId,
-  }: GetShoppingEventByIdParams): Promise<
-    Either<GetShoppingEventByIdPossibleErrors, ShoppingEvent>
-  > => {
+  }: GetShoppingEventByIdParams): Promise<Either<GetShoppingEventByIdErrors, ShoppingEvent>> => {
     try {
       const shoppingEvent = await this.repository.getById({
         shoppingEventId,

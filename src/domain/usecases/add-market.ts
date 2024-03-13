@@ -1,9 +1,9 @@
 import { Either } from '../core';
 import { Market } from '../entities';
 
-import { UnexpectedError } from './errors';
+import { MarketAlreadyExistsError, UnexpectedError } from './errors';
 
-export type AddMarketErrors = UnexpectedError;
+export type AddMarketErrors = UnexpectedError & MarketAlreadyExistsError;
 
 export interface AddMarketParams {
   marketName: string;
