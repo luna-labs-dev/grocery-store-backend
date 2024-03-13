@@ -16,6 +16,7 @@ import {
   GetShoppingEventById,
   GetShoppingEventList,
   NewMarket,
+  RemoveProductFromCart,
   StartShoppingEvent,
   UpdateMarket,
   UpdateProductInCart,
@@ -27,6 +28,7 @@ import {
   DbGetShoppingEventById,
   DbGetShoppingEventList,
   DbNewMarket,
+  DbRemoveProductFromCart,
   DbStartShoppingEvent,
   DbUpdateMarket,
 } from '@/application';
@@ -49,6 +51,8 @@ import {
   getShoppingEventListRequestSchema,
   NewMarketController,
   newMarketRequestSchema,
+  RemoveProductFromCartController,
+  removeProductFromCartRequestSchema,
   StartShoppingEventController,
   StartShoppingEventRequestSchema,
   UpdateMarketController,
@@ -77,6 +81,7 @@ container.register<GetShoppingEventList>(usecases.getShoppingEventList, DbGetSho
 container.register<GetShoppingEventById>(usecases.getShoppingEventById, DbGetShoppingEventById);
 container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCart);
 container.register<UpdateProductInCart>(usecases.updateProductInCart, DbUpdateProductInCart);
+container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemoveProductFromCart);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -156,6 +161,15 @@ container.register<Controller>(controllers.updateProductInCart, {
     new ValidationControllerDecorator(
       new UpdateProductInCartController(container.resolve(usecases.updateProductInCart)),
       updateProductInCartRequestSchema,
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.removeProductFromCart, {
+  useValue: new ErrorHandlingControllerDecorator(
+    new ValidationControllerDecorator(
+      new RemoveProductFromCartController(container.resolve(usecases.removeProductFromCart)),
+      removeProductFromCartRequestSchema,
     ),
   ),
 });

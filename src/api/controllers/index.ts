@@ -7,3 +7,4 @@ export * from './get-shopping-event-list';
 export * from './get-shopping-event-by-id';
 export * from './add-product-to-cart';
 export * from './update-product-in-cart';
+export * from './remove-product-from-cart';
