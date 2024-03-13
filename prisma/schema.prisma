@@ -24,6 +24,7 @@ model shopping_event {
   wholesaleTotal Decimal                 @db.Money
   retailTotal    Decimal                 @db.Money
   status         shoppingEventStatusEnum @default(ONGOING)
+  elapsedTime    Int?
   createdAt      DateTime                @default(now()) @db.Timestamp(6)
   finishedAt     DateTime?               @db.Timestamp(6)
   createdBy      String                  @db.VarChar(320)
@@ -32,16 +33,16 @@ model shopping_event {
 }
 
 model product {
-  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  shoppingEventId String         @db.Uuid
-  name            String         @unique @db.VarChar(256)
-  amount          Int            @db.Integer
-  wholesaleAmount Int?           @db.Integer
-  price           Decimal        @db.Money
-  wholesalePrice  Decimal?       @db.Money
-  addedAt         DateTime       @db.Timestamp(6)
-  addedBy         String         @db.VarChar(320)
-  shoppingEvent   shopping_event @relation(fields: [shoppingEventId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_shoppingEventId_shopping_event_id_fk")
+  id                 String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  shoppingEventId    String         @db.Uuid
+  name               String         @unique @db.VarChar(256)
+  amount             Int            @db.Integer
+  price              Decimal        @db.Money
+  wholesaleMinAmount Int?           @db.Integer
+  wholesalePrice     Decimal?       @db.Money
+  addedAt            DateTime       @db.Timestamp(6)
+  addedBy            String         @db.VarChar(320)
+  shoppingEvent      shopping_event @relation(fields: [shoppingEventId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_shoppingEventId_shopping_event_id_fk")
 }
 
 enum shoppingEventStatusEnum {

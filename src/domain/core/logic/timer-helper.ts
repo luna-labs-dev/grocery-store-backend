@@ -5,9 +5,16 @@ export class TimerHelper {
     this.start = performance.now();
   }
 
-  public stop = (): number => {
+  public stopTimer = (): number => {
     const stop = performance.now();
     const duration = Number(stop - this.start);
     return duration;
+  };
+
+  static calculateDuration = (startDate: Date): number => {
+    const start = startDate.getTime();
+    const now = new Date().getTime();
+
+    return now - start;
   };
 }
