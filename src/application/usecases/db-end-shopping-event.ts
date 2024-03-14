@@ -29,6 +29,7 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
 
   execute = async ({
     shoppingEventId,
+    totalPaid,
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
     try {
       // Get Shopping Event by Id
@@ -50,7 +51,7 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
       }
 
       // Update ShoppingEvent object with new values
-      shoppingEvent.end();
+      shoppingEvent.end(totalPaid);
 
       // Update ShoppingEvent to the database
       await this.repository.update(shoppingEvent);

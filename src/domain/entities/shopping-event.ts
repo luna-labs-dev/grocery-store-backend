@@ -43,6 +43,10 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return this.props.totalPaid;
   }
 
+  set totalPaid(totalPaid: number) {
+    this.props.totalPaid = totalPaid;
+  }
+
   get wholesaleTotal(): number | undefined {
     return this.props.wholesaleTotal;
   }
@@ -96,11 +100,8 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return entity;
   }
 
-  end = (): ShoppingEventStatus | undefined => {
-    if (this.props.status !== 'ONGOING') {
-      return this.props.status;
-    }
-
+  end = (totalPaid: number): void => {
+    this.props.totalPaid = totalPaid;
     this.props.status = 'FINISHED';
     this.props.finishedAt = new Date();
     this.props.elapsedTime = TimerHelper.calculateDuration(this.props.createdAt);
