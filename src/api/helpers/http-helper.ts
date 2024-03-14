@@ -1,9 +1,12 @@
 import { Readable } from 'stream';
 
+import { NotFoundError } from '../errors/not-found-error';
+
 import { HttpResponse } from '@/api/contracts';
 import {
   BadRequestError,
-  HttpError,
+  ConflictError,
+  IHttpError,
   ServerError,
   UnauthorizedError,
   UnprocessableEntityError,
@@ -25,9 +28,9 @@ export const ok = <T>(data?: T): HttpResponse => ({
   body: data,
 });
 
-export const created = (): HttpResponse => ({
+export const created = <T>(data?: T): HttpResponse => ({
   statusCode: 201,
-  body: undefined,
+  body: data,
 });
 
 export const noContent = (): HttpResponse => ({
@@ -42,7 +45,7 @@ export const badRequest = (error: UseCaseError): HttpResponse => ({
 
 export const notFound = (error: UseCaseError): HttpResponse => ({
   statusCode: 404,
-  body: error,
+  body: new NotFoundError(error),
 });
 
 export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({
@@ -55,11 +58,17 @@ export const unauthorized = (): HttpResponse => ({
   body: new UnauthorizedError(),
 });
 
-export const forbidden = (error: HttpError): HttpResponse => ({
+export const forbidden = (error: IHttpError): HttpResponse => ({
   statusCode: 403,
   body: error,
 });
-type ServerErrors = HttpError | UnexpectedError;
+
+export const conflict = (error: UseCaseError): HttpResponse => ({
+  statusCode: 409,
+  body: new ConflictError(error),
+});
+
+type ServerErrors = IHttpError | UnexpectedError;
 export const serverError = (error: ServerErrors): HttpResponse => ({
   statusCode: 500,
   body: new ServerError(error.stack ?? ''),
