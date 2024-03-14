@@ -8,6 +8,7 @@ import {
   left,
   Product,
   right,
+  ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
 } from '@/domain';
@@ -43,6 +44,10 @@ export class DbAddProductToCart implements AddProductToCart {
       // Returns ShoppingEventNotFoundError fetch returns undefined
       if (!shoppingEvent) {
         return left(new ShoppingEventNotFoundError());
+      }
+
+      if (shoppingEvent.status !== 'ONGOING') {
+        return left(new ShoppingEventAlreadyEndedError(shoppingEvent.status, shoppingEvent.id));
       }
 
       // Created the Product Entity
