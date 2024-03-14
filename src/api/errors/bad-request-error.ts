@@ -1,21 +1,7 @@
-import { HttpError, HttpErrorResult } from './http-error';
+import { HttpError } from './http-error';
 
-export class BadRequestError extends Error implements HttpError {
+export class BadRequestError extends HttpError {
   constructor(code: string, message: string, uuid?: string) {
-    super(message);
-    this.name = 'BadRequestError';
-    this.code = code;
-    this.uuid = uuid;
+    super({ message, name: 'BadRequestError', code, uuid });
   }
-
-  toResult = (): HttpErrorResult => {
-    return {
-      code: this.code,
-      message: this.message,
-      uuid: this.uuid,
-    };
-  };
-
-  code: string;
-  uuid?: string;
 }

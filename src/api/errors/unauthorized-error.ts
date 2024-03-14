@@ -1,20 +1,11 @@
-import { HttpError, HttpErrorResult } from '@/api/errors';
+import { HttpError } from './http-error';
 
-export class UnauthorizedError extends Error implements HttpError {
+export class UnauthorizedError extends HttpError {
   constructor() {
-    super('Unauthorized');
-    this.name = 'UnauthorizedError';
-    this.code = 'UNAUTHORIZED_ERROR';
+    super({
+      message: 'Unauthorized',
+      name: 'UnauthorizedError',
+      code: 'UNAUTHORIZED_ERROR',
+    });
   }
-
-  toResult = (): HttpErrorResult => {
-    return {
-      code: this.code,
-      message: this.message,
-      uuid: this.uuid,
-    };
-  };
-
-  code: string;
-  uuid?: string;
 }

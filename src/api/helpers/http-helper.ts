@@ -6,7 +6,7 @@ import { HttpResponse } from '@/api/contracts';
 import {
   BadRequestError,
   ConflictError,
-  HttpError,
+  IHttpError,
   ServerError,
   UnauthorizedError,
   UnprocessableEntityError,
@@ -58,7 +58,7 @@ export const unauthorized = (): HttpResponse => ({
   body: new UnauthorizedError(),
 });
 
-export const forbidden = (error: HttpError): HttpResponse => ({
+export const forbidden = (error: IHttpError): HttpResponse => ({
   statusCode: 403,
   body: error,
 });
@@ -68,7 +68,7 @@ export const conflict = (error: UseCaseError): HttpResponse => ({
   body: new ConflictError(error),
 });
 
-type ServerErrors = HttpError | UnexpectedError;
+type ServerErrors = IHttpError | UnexpectedError;
 export const serverError = (error: ServerErrors): HttpResponse => ({
   statusCode: 500,
   body: new ServerError(error.stack ?? ''),

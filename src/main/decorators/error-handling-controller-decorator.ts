@@ -1,4 +1,4 @@
-import { Controller, HttpError, HttpResponse, serverError } from '@/api';
+import { Controller, HttpResponse, IHttpError, serverError } from '@/api';
 
 export class ErrorHandlingControllerDecorator implements Controller {
   constructor(private readonly controller: Controller) {}
@@ -15,7 +15,7 @@ export class ErrorHandlingControllerDecorator implements Controller {
     } catch (error) {
       console.error('an unhadled error occurred');
       console.error(error);
-      return serverError(error as HttpError);
+      return serverError(error as IHttpError);
     }
   };
 }
