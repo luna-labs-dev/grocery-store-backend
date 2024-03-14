@@ -8,6 +8,7 @@ import {
   Product,
   ProductNotFoundError,
   right,
+  ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
   UpdateProductInCart,
@@ -45,6 +46,10 @@ export class DbUpdateProductInCart implements UpdateProductInCart {
       // Return shoppingEventNotFoundError if shoppingEvent is undefined
       if (!shoppingEvent) {
         return left(new ShoppingEventNotFoundError());
+      }
+
+      if (shoppingEvent.status !== 'ONGOING') {
+        return left(new ShoppingEventAlreadyEndedError(shoppingEvent.status, shoppingEvent.id));
       }
 
       // Return productNotFoundError if product not in list
