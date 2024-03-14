@@ -10,16 +10,10 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": [
-      "vitest/globals"
-    ],
+    "types": ["vitest/globals"],
     "paths": {
-      "@/tests/*": [
-        "../tests/*"
-      ],
-      "@/*": [
-        "./src/*"
-      ]
+      "@/tests/*": ["../tests/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": [

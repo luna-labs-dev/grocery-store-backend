@@ -49,6 +49,7 @@ export class GetShoppingEventByIdController implements Controller {
         whosalePrice: prod.wholesalePrice,
         addedAt: prod.addedAt,
       })),
+      elapsedTime: shoppingEvent.elapsedTime,
       createdAt: shoppingEvent.createdAt,
       finishedAt: shoppingEvent.finishedAt,
       createdBy: shoppingEvent.createdBy,

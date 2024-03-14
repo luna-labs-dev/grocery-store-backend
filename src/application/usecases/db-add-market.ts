@@ -1,33 +1,36 @@
 import { inject, injectable } from 'tsyringe';
 
 import {
+  AddMarket,
+  AddMarketErrors,
+  AddMarketParams,
   Either,
   left,
   Market,
   MarketAlreadyExistsError,
-  NewMarket,
-  NewMarketErrors,
-  NewMarketParams,
   right,
   UnexpectedError,
 } from '@/domain';
-import { GetMarketByCodeRepository, NewMarketRepository } from '@/application';
+import { AddMarketRepository, GetMarketByCodeRepository } from '@/application';
 import { injection } from '@/main/di/injection-codes';
 
-export type NewMarketRepositories = NewMarketRepository & GetMarketByCodeRepository;
+export type AddMarketRepositories = AddMarketRepository & GetMarketByCodeRepository;
 
 const { infra } = injection;
 
 @injectable()
-export class DbNewMarket implements NewMarket {
+export class DbAddMarket implements AddMarket {
   constructor(
-    @inject(infra.marketRepositories) private readonly repository: NewMarketRepositories,
+    @inject(infra.marketRepositories) private readonly repository: AddMarketRepositories,
   ) {}
 
-  execute = async ({ name, user }: NewMarketParams): Promise<Either<NewMarketErrors, Market>> => {
+  execute = async ({
+    marketName,
+    user,
+  }: AddMarketParams): Promise<Either<AddMarketErrors, Market>> => {
     try {
       const market = Market.create({
-        name,
+        name: marketName,
         createdAt: new Date(),
         createdBy: user,
       });
@@ -40,7 +43,7 @@ export class DbNewMarket implements NewMarket {
         return left(new MarketAlreadyExistsError());
       }
 
-      await this.repository.new(market);
+      await this.repository.add(market);
 
       return right(market);
     } catch (error) {

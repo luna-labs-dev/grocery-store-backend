@@ -18,9 +18,11 @@ export class EndShoppingEventController implements Controller {
 
   handle = async ({
     shoppingEventId,
+    totalPaid,
   }: EndShoppingEventControllerRequest): Promise<HttpResponse> => {
     const endShoppingEventResult = await this.endShoppingEvent.execute({
       shoppingEventId,
+      totalPaid,
     });
 
     if (endShoppingEventResult.isLeft()) {

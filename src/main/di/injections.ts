@@ -10,24 +10,24 @@ import {
   PrismaShoppingEventRepository,
 } from '@/infrastructure';
 import {
+  AddMarket,
   AddProductToCart,
   EndShoppingEvent,
   GetMarketList,
   GetShoppingEventById,
   GetShoppingEventList,
-  NewMarket,
   RemoveProductFromCart,
   StartShoppingEvent,
   UpdateMarket,
   UpdateProductInCart,
 } from '@/domain';
 import {
+  DbAddMarket,
   DbAddProductToCart,
   DbEndShoppingEvent,
   DbGetMarketList,
   DbGetShoppingEventById,
   DbGetShoppingEventList,
-  DbNewMarket,
   DbRemoveProductFromCart,
   DbStartShoppingEvent,
   DbUpdateMarket,
@@ -38,6 +38,8 @@ import {
   ShoppingEventRepositories,
 } from '@/application/contracts';
 import {
+  AddMarketController,
+  addMarketRequestSchema,
   AddProductToCartController,
   addProductToCartRequestSchema,
   Controller,
@@ -49,8 +51,6 @@ import {
   getShoppingEventByIdRequestSchema,
   GetShoppingEventListController,
   getShoppingEventListRequestSchema,
-  NewMarketController,
-  newMarketRequestSchema,
   RemoveProductFromCartController,
   removeProductFromCartRequestSchema,
   StartShoppingEventController,
@@ -72,7 +72,7 @@ container.register<ShoppingEventRepositories>(
 container.register<ProductRepositories>(infra.productRepositories, PrismaProductRepository);
 
 // Usecases
-container.register<NewMarket>(usecases.newMarket, DbNewMarket);
+container.register<AddMarket>(usecases.newMarket, DbAddMarket);
 container.register<UpdateMarket>(usecases.updateMarket, DbUpdateMarket);
 container.register<GetMarketList>(usecases.getMarketList, DbGetMarketList);
 container.register<StartShoppingEvent>(usecases.startShoppingEvent, DbStartShoppingEvent);
@@ -87,8 +87,8 @@ container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemo
 container.register<Controller>(controllers.newMarket, {
   useValue: new ErrorHandlingControllerDecorator(
     new ValidationControllerDecorator(
-      new NewMarketController(container.resolve(usecases.newMarket)),
-      newMarketRequestSchema,
+      new AddMarketController(container.resolve(usecases.newMarket)),
+      addMarketRequestSchema,
     ),
   ),
 });

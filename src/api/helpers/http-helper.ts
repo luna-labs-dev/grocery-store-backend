@@ -5,7 +5,8 @@ import { NotFoundError } from '../errors/not-found-error';
 import { HttpResponse } from '@/api/contracts';
 import {
   BadRequestError,
-  HttpError,
+  ConflictError,
+  IHttpError,
   ServerError,
   UnauthorizedError,
   UnprocessableEntityError,
@@ -57,11 +58,17 @@ export const unauthorized = (): HttpResponse => ({
   body: new UnauthorizedError(),
 });
 
-export const forbidden = (error: HttpError): HttpResponse => ({
+export const forbidden = (error: IHttpError): HttpResponse => ({
   statusCode: 403,
   body: error,
 });
-type ServerErrors = HttpError | UnexpectedError;
+
+export const conflict = (error: UseCaseError): HttpResponse => ({
+  statusCode: 409,
+  body: new ConflictError(error),
+});
+
+type ServerErrors = IHttpError | UnexpectedError;
 export const serverError = (error: ServerErrors): HttpResponse => ({
   statusCode: 500,
   body: new ServerError(error.stack ?? ''),

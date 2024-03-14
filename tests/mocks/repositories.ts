@@ -40,7 +40,7 @@ class MockedMarketRepository implements MarketRepositories {
     return Promise.resolve(undefined);
   };
 
-  new = (market: Market): Promise<void> => {
+  add = (market: Market): Promise<void> => {
     return Promise.resolve();
   };
 

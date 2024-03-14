@@ -1,13 +1,23 @@
 import { Either } from '../core';
 import { ShoppingEvent } from '../entities';
 
-import { UnexpectedError } from './errors';
+import {
+  EmptyCartError,
+  ShoppingEventAlreadyEndedError,
+  ShoppingEventNotFoundError,
+  UnexpectedError,
+} from './errors';
 
 export interface EndShoppingEventParams {
   shoppingEventId: string;
+  totalPaid: number;
 }
 
-export type EndShoppingEventErrors = UnexpectedError;
+export type EndShoppingEventErrors =
+  | UnexpectedError
+  | ShoppingEventNotFoundError
+  | ShoppingEventAlreadyEndedError
+  | EmptyCartError;
 
 export interface EndShoppingEvent {
   execute: (

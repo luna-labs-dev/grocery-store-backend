@@ -15,13 +15,13 @@ describe('NewMarketController', () => {
     // Act
     await sut.handle({
       user: 'tiagoluizpoli@gmail.com',
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
     });
 
     // Assert
     expect(newMarketSpy).toHaveBeenCalledWith({
       user: 'tiagoluizpoli@gmail.com',
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
     });
   });
 
@@ -40,7 +40,7 @@ describe('NewMarketController', () => {
     // Act
     const response = await sut.handle({
       user: 'tiagoluizpoli@gmail.com',
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
     });
 
     // Assert
@@ -56,7 +56,7 @@ describe('NewMarketController', () => {
     // Act
     const response = await sut.handle({
       user: 'tiagoluizpoli@gmail.com',
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
     });
 
     // Assert
@@ -70,7 +70,7 @@ describe('NewMarketController', () => {
     // Act
     const response = await sut.handle({
       user: 'tiagoluizpoli@gmail.com',
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
     });
 
     // Assert

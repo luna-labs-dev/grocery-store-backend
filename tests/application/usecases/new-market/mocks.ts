@@ -1,28 +1,28 @@
 import { mockRepositories } from 'tests/mocks/repositories';
 
-import { DbNewMarket, NewMarketRepositories } from '@/application';
-import { NewMarket, NewMarketParams } from '@/domain';
+import { AddMarketRepositories, DbAddMarket } from '@/application';
+import { AddMarket, AddMarketParams } from '@/domain';
 
 interface SutResult {
-  sut: NewMarket;
-  mockedMarketRepository: NewMarketRepositories;
+  sut: AddMarket;
+  mockedMarketRepository: AddMarketRepositories;
 }
 
 export const makeSut = (): SutResult => {
   const { mockedMarketRepository } = mockRepositories();
-  const sut = new DbNewMarket(mockedMarketRepository);
+  const sut = new DbAddMarket(mockedMarketRepository);
 
   return { sut, mockedMarketRepository };
 };
 
 interface MockParams {
-  newMarketParams: NewMarketParams;
+  newMarketParams: AddMarketParams;
 }
 
 export const mockParams = (): MockParams => {
   return {
     newMarketParams: {
-      name: 'Assai Carapicuiba',
+      marketName: 'Assai Carapicuiba',
       user: 'tiagoluizpoli@gmail.com',
     },
   };

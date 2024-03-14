@@ -1,22 +1,15 @@
-import { HttpError, HttpErrorResult } from './http-error';
+import { HttpError } from './http-error';
 
 import { UseCaseError } from '@/domain';
 
-export class NotFoundError extends Error implements HttpError {
-  code: string;
-  uuid?: string;
+export class NotFoundError extends HttpError {
   constructor(error: UseCaseError) {
-    super(error.message);
-    this.name = error.name;
-    this.code = error.code;
-    this.uuid = error.uuid;
+    super({
+      message: error.message,
+      code: error.code,
+      name: error.name,
+      uuid: error.uuid,
+      extras: error.extras,
+    });
   }
-
-  toResult = (): HttpErrorResult => {
-    return {
-      code: this.code,
-      message: this.message,
-      uuid: this.uuid,
-    };
-  };
 }

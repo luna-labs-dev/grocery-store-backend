@@ -1,26 +1,26 @@
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
-import { newMarketRequestSchema } from './new-market-controller-validation-schema';
+import { addMarketRequestSchema } from './add-market-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
-import { NewMarket } from '@/domain';
+import { AddMarket } from '@/domain';
 import { created, mapErrorByCode } from '@/api/helpers';
 import { injection } from '@/main/di/injection-codes';
 
-type NewMarketControllerRequest = z.infer<typeof newMarketRequestSchema>;
+type AddMarketControllerRequest = z.infer<typeof addMarketRequestSchema>;
 
 const { usecases } = injection;
 
 @injectable()
-export class NewMarketController implements Controller {
-  constructor(@inject(usecases.newMarket) private readonly newMarket: NewMarket) {}
+export class AddMarketController implements Controller {
+  constructor(@inject(usecases.newMarket) private readonly newMarket: AddMarket) {}
 
-  handle = async (request: NewMarketControllerRequest): Promise<HttpResponse> => {
-    const { name, user } = request;
+  handle = async (request: AddMarketControllerRequest): Promise<HttpResponse> => {
+    const { marketName, user } = request;
 
     const result = await this.newMarket.execute({
-      name,
+      marketName,
       user,
     });
 

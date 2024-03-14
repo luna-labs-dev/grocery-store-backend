@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { makeSut, mockParams } from './mocks';
 
 import { nameToCode } from '@/domain/helper';
-import { Market, MarketAlreadyExistsError, NewMarketErrors, UnexpectedError } from '@/domain';
+import { AddMarketErrors, Market, MarketAlreadyExistsError, UnexpectedError } from '@/domain';
 
 describe('DbNewMarket', () => {
   it('shoud call GetMarketByCode with correct values', async () => {
@@ -17,7 +17,7 @@ describe('DbNewMarket', () => {
     await sut.execute(newMarketParams);
 
     // Assert
-    expect(repositorySpy).toHaveBeenCalledWith({ code: nameToCode(newMarketParams.name) });
+    expect(repositorySpy).toHaveBeenCalledWith({ code: nameToCode(newMarketParams.marketName) });
   });
 
   it('should return MarketAlreadyExistsError when code is found on database', async () => {
@@ -40,14 +40,14 @@ describe('DbNewMarket', () => {
     // Assert
 
     expect(response.isLeft()).toBe(true);
-    expect(response.value as NewMarketErrors).toEqual(new MarketAlreadyExistsError());
+    expect(response.value as AddMarketErrors).toEqual(new MarketAlreadyExistsError());
   });
 
   it('should return UnexpectedError if repository throws', async () => {
     // Arrange
     const { sut, mockedMarketRepository } = makeSut();
 
-    vi.spyOn(mockedMarketRepository, 'new').mockImplementationOnce(() => {
+    vi.spyOn(mockedMarketRepository, 'add').mockImplementationOnce(() => {
       throw new Error('Something went wrong with the database');
     });
 
@@ -59,7 +59,7 @@ describe('DbNewMarket', () => {
     // Assert
 
     expect(response.isLeft()).toBe(true);
-    expect(response.value as NewMarketErrors).toEqual(new UnexpectedError());
+    expect(response.value as AddMarketErrors).toEqual(new UnexpectedError());
   });
 
   it('shoud create a new Market and return success', async () => {
@@ -74,7 +74,7 @@ describe('DbNewMarket', () => {
     // Assert
     expect(response.isRight()).toBe(true);
     expect(response.value).instanceOf(Market);
-    expect((response.value as Market).code).toBe(nameToCode(newMarketParams.name));
-    expect((response.value as Market).name).toBe(newMarketParams.name);
+    expect((response.value as Market).code).toBe(nameToCode(newMarketParams.marketName));
+    expect((response.value as Market).name).toBe(newMarketParams.marketName);
   });
 });

@@ -3,7 +3,7 @@ import { ShoppingEvent } from '../entities';
 
 import { ShoppingEventNotFoundError, UnexpectedError } from './errors';
 
-export type GetShoppingEventByIdPossibleErrors = UnexpectedError & ShoppingEventNotFoundError;
+export type GetShoppingEventByIdErrors = UnexpectedError & ShoppingEventNotFoundError;
 
 export interface GetShoppingEventByIdParams {
   shoppingEventId: string;
@@ -12,5 +12,5 @@ export interface GetShoppingEventByIdParams {
 export interface GetShoppingEventById {
   execute: (
     params: GetShoppingEventByIdParams,
-  ) => Promise<Either<GetShoppingEventByIdPossibleErrors, ShoppingEvent>>;
+  ) => Promise<Either<GetShoppingEventByIdErrors, ShoppingEvent>>;
 }

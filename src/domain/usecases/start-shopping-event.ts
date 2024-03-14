@@ -1,9 +1,9 @@
 import { Either } from '../core';
 import { ShoppingEvent } from '../entities';
 
-import { UnexpectedError } from './errors';
+import { MarketNotFoundError, UnexpectedError } from './errors';
 
-export type StartShoppingEventErrors = UnexpectedError;
+export type StartShoppingEventErrors = UnexpectedError & MarketNotFoundError;
 
 export interface StartShoppingEventParams {
   user: string;

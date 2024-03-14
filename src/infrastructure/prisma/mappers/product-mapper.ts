@@ -16,7 +16,7 @@ export class ProductMapper {
       },
       name: product.name,
       amount: product.amount,
-      wholesaleAmount: product.wholesaleMinAmount,
+      wholesaleMinAmount: product.wholesaleMinAmount,
       price: product.price,
       wholesalePrice: product.wholesalePrice,
       addedAt: product.addedAt,
@@ -29,7 +29,7 @@ export class ProductMapper {
     return {
       name: product.name,
       amount: product.amount,
-      wholesaleAmount: product.wholesaleMinAmount,
+      wholesaleMinAmount: product.wholesaleMinAmount,
       price: product.price,
       wholesalePrice: product.wholesalePrice,
     };

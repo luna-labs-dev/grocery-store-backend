@@ -4,12 +4,14 @@ import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '.
 
 import {
   Either,
+  EmptyCartError,
   EndShoppingEvent,
   EndShoppingEventErrors,
   EndShoppingEventParams,
   left,
   right,
   ShoppingEvent,
+  ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
 } from '@/domain';
@@ -27,6 +29,7 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
 
   execute = async ({
     shoppingEventId,
+    totalPaid,
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
     try {
       // Get Shopping Event by Id
@@ -39,8 +42,16 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
         return left(new ShoppingEventNotFoundError());
       }
 
+      if (shoppingEvent.status !== 'ONGOING') {
+        return left(new ShoppingEventAlreadyEndedError(shoppingEvent.status, shoppingEvent.id));
+      }
+
+      if (shoppingEvent.products.getItems().length <= 0) {
+        return left(new EmptyCartError());
+      }
+
       // Update ShoppingEvent object with new values
-      shoppingEvent.end();
+      shoppingEvent.end(totalPaid);
 
       // Update ShoppingEvent to the database
       await this.repository.update(shoppingEvent);

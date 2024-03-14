@@ -1,21 +1,12 @@
-import { HttpError, HttpErrorResult } from '@/api/errors';
+import { HttpError } from './http-error';
 
-export class ServerError extends Error implements HttpError {
+export class ServerError extends HttpError {
   constructor(stack: string) {
-    super('Internal server error');
-    this.name = 'ServerError';
-    this.code = 'SERVER_ERROR';
-    this.stack = stack;
+    super({
+      message: 'Internal server error',
+      name: 'ServerError',
+      code: 'SERVER_ERROR',
+      stack,
+    });
   }
-
-  toResult = (): HttpErrorResult => {
-    return {
-      code: this.code,
-      message: this.message,
-      uuid: this.uuid,
-    };
-  };
-
-  code: string;
-  uuid?: string;
 }

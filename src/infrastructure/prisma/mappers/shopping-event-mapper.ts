@@ -28,7 +28,7 @@ export class ShoppingEventMapper {
                     shoppingEventId: raw.id,
                     name: prod.name,
                     amount: prod.amount,
-                    wholesaleMinAmount: prod.wholesaleAmount ?? undefined,
+                    wholesaleMinAmount: prod.wholesaleMinAmount ?? undefined,
                     price: Number(prod.price),
                     wholesalePrice: Number(prod.wholesalePrice ?? 0),
                     addedAt: prod.addedAt,
@@ -39,6 +39,7 @@ export class ShoppingEventMapper {
               )
             : [],
         ),
+        elapsedTime: raw.elapsedTime ?? undefined,
         createdAt: raw.createdAt,
         finishedAt: raw.finishedAt ?? undefined,
         createdBy: raw.createdBy,
@@ -74,6 +75,7 @@ export class ShoppingEventMapper {
       wholesaleTotal: new Prisma.Decimal(shoppingEvent.wholesaleTotal ?? 0),
       retailTotal: new Prisma.Decimal(shoppingEvent.retailTotal ?? 0),
       status: shoppingEvent.status,
+      elapsedTime: shoppingEvent.elapsedTime ?? null,
       finishedAt: shoppingEvent.finishedAt ?? null,
     };
     return persistence;

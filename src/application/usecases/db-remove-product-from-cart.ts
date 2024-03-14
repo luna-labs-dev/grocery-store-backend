@@ -11,6 +11,7 @@ import {
   RemoveProductFromCartErrors,
   RemoveProductFromCartParams,
   right,
+  ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
 } from '@/domain';
@@ -40,6 +41,10 @@ export class DbRemoveProductFromCart implements RemoveProductFromCart {
       // Return ShoppingEventNotFoundError if shoppingEvent is undefined
       if (!shoppingEvent) {
         return left(new ShoppingEventNotFoundError());
+      }
+
+      if (shoppingEvent.status !== 'ONGOING') {
+        return left(new ShoppingEventAlreadyEndedError(shoppingEvent.status, shoppingEvent.id));
       }
 
       // Retrieve Product from shoppingEvent

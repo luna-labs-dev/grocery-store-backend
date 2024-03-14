@@ -1,4 +1,4 @@
-import { Entity } from '../core';
+import { Entity, TimerHelper } from '../core';
 
 import { Market } from './market';
 import { Product } from './product';
@@ -16,6 +16,7 @@ export interface ShoppingEventProps {
   retailTotal?: number;
   status: ShoppingEventStatus;
   products: Products;
+  elapsedTime?: number;
   createdAt: Date;
   finishedAt?: Date;
   createdBy: string;
@@ -40,6 +41,10 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
 
   get totalPaid(): number | undefined {
     return this.props.totalPaid;
+  }
+
+  set totalPaid(totalPaid: number) {
+    this.props.totalPaid = totalPaid;
   }
 
   get wholesaleTotal(): number | undefined {
@@ -70,6 +75,10 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return this.props.products;
   }
 
+  get elapsedTime(): number | undefined {
+    return this.props.elapsedTime;
+  }
+
   get createdAt(): Date {
     return this.props.createdAt;
   }
@@ -91,9 +100,11 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return entity;
   }
 
-  end = (): void => {
+  end = (totalPaid: number): void => {
+    this.props.totalPaid = totalPaid;
     this.props.status = 'FINISHED';
     this.props.finishedAt = new Date();
+    this.props.elapsedTime = TimerHelper.calculateDuration(this.props.createdAt);
   };
 
   addProduct = (product: Product): void => {
