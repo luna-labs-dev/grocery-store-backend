@@ -20,7 +20,7 @@ export interface IHttpError extends Error {
   toResult: () => HttpErrorResult;
 }
 
-export class HttpError extends Error implements HttpError {
+export class HttpError extends Error implements IHttpError {
   code: string;
   uuid?: string;
   extras?: any;
