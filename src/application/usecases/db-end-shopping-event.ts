@@ -10,6 +10,7 @@ import {
   left,
   right,
   ShoppingEvent,
+  ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
 } from '@/domain';
@@ -37,6 +38,10 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
       // Returns ShoppingEventNotFoundError if ShoppingEvent is undefined
       if (!shoppingEvent) {
         return left(new ShoppingEventNotFoundError());
+      }
+
+      if (shoppingEvent.status !== 'ONGOING') {
+        return left(new ShoppingEventAlreadyEndedError(shoppingEvent.status, shoppingEvent.id));
       }
 
       // Update ShoppingEvent object with new values

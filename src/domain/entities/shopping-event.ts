@@ -96,7 +96,11 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return entity;
   }
 
-  end = (): void => {
+  end = (): ShoppingEventStatus | undefined => {
+    if (this.props.status !== 'ONGOING') {
+      return this.props.status;
+    }
+
     this.props.status = 'FINISHED';
     this.props.finishedAt = new Date();
     this.props.elapsedTime = TimerHelper.calculateDuration(this.props.createdAt);
