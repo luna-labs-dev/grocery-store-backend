@@ -35,7 +35,7 @@ model shopping_event {
 model product {
   id                 String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   shoppingEventId    String         @db.Uuid
-  name               String         @unique @db.VarChar(256)
+  name               String         @db.VarChar(256)
   amount             Int            @db.Integer
   price              Decimal        @db.Money
   wholesaleMinAmount Int?           @db.Integer

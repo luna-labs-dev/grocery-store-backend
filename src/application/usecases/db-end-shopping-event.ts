@@ -4,6 +4,7 @@ import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '.
 
 import {
   Either,
+  EmptyCartError,
   EndShoppingEvent,
   EndShoppingEventErrors,
   EndShoppingEventParams,
@@ -42,6 +43,10 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
 
       if (shoppingEvent.status !== 'ONGOING') {
         return left(new ShoppingEventAlreadyEndedError(shoppingEvent.status, shoppingEvent.id));
+      }
+
+      if (shoppingEvent.products.getItems().length <= 0) {
+        return left(new EmptyCartError());
       }
 
       // Update ShoppingEvent object with new values

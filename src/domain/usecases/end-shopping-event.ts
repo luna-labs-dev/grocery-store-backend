@@ -2,6 +2,7 @@ import { Either } from '../core';
 import { ShoppingEvent } from '../entities';
 
 import {
+  EmptyCartError,
   ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
@@ -14,7 +15,8 @@ export interface EndShoppingEventParams {
 export type EndShoppingEventErrors =
   | UnexpectedError
   | ShoppingEventNotFoundError
-  | ShoppingEventAlreadyEndedError;
+  | ShoppingEventAlreadyEndedError
+  | EmptyCartError;
 
 export interface EndShoppingEvent {
   execute: (
