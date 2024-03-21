@@ -1,6 +1,10 @@
 import { container } from 'tsyringe';
 
-import { ErrorHandlingControllerDecorator, ValidationControllerDecorator } from '../decorators';
+import {
+  AuthorizationControllerDecorator,
+  ErrorHandlingControllerDecorator,
+  ValidationControllerDecorator,
+} from '../decorators';
 
 import { injection } from './injection-codes';
 
@@ -85,10 +89,12 @@ container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemo
 
 // Api
 container.register<Controller>(controllers.newMarket, {
-  useValue: new ErrorHandlingControllerDecorator(
-    new ValidationControllerDecorator(
-      new AddMarketController(container.resolve(usecases.newMarket)),
-      addMarketRequestSchema,
+  useValue: new AuthorizationControllerDecorator(
+    new ErrorHandlingControllerDecorator(
+      new ValidationControllerDecorator(
+        new AddMarketController(container.resolve(usecases.newMarket)),
+        addMarketRequestSchema,
+      ),
     ),
   ),
 });

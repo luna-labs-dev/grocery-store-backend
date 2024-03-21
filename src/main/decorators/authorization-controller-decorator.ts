@@ -1,6 +1,4 @@
-import { initializeApp } from 'firebase-admin';
-import { applicationDefault } from 'firebase-admin/app';
-
+import { firebaseApp } from '@/main/firebase/client';
 import { Controller, HttpResponse, unauthorized } from '@/api';
 
 export class AuthorizationControllerDecorator implements Controller {
@@ -15,11 +13,7 @@ export class AuthorizationControllerDecorator implements Controller {
     }
 
     try {
-      const app = initializeApp({
-        credential: applicationDefault(),
-      });
-
-      const decodedToken = await app.auth().verifyIdToken(authToken);
+      const decodedToken = await firebaseApp.auth().verifyIdToken(authToken);
       request.user = decodedToken.uid;
 
       const httpResponse = await this.controller.handle(request);
