@@ -60,7 +60,7 @@
     "tsx": "^3.12.10",
     "typescript": "^5.1.6",
     "vite-tsconfig-paths": "^4.2.1",
-    "vitest": "^0.34.5"
+    "vitest": "^1.6.0"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
