@@ -38,7 +38,7 @@ export class GetMarketListController implements Controller {
 
     const response = {
       total: market.total,
-      markets: market.markets.map((mkt) => ({
+      items: market.markets.map((mkt) => ({
         id: mkt.id,
         code: mkt.code,
         name: mkt.name,

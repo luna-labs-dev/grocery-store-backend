@@ -53,9 +53,9 @@ export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({
   body: new UnprocessableEntityError(error.code, error.message, error.uuid),
 });
 
-export const unauthorized = (): HttpResponse => ({
+export const unauthorized = (extra?: any): HttpResponse => ({
   statusCode: 401,
-  body: new UnauthorizedError(),
+  body: new UnauthorizedError(extra),
 });
 
 export const forbidden = (error: IHttpError): HttpResponse => ({

@@ -38,7 +38,7 @@ export class GetShoppingEventListController implements Controller {
 
     const response = {
       total: shoppingEvent.total,
-      shoppingEvents: shoppingEvent.shoppingEvents.map((se) => ({
+      items: shoppingEvent.shoppingEvents.map((se) => ({
         id: se.id,
         status: se.status,
         market: se.market?.name,

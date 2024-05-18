@@ -9,11 +9,18 @@
     "strict": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
-    "types": ["vitest/globals"],
+    "types": [
+      "vitest/globals"
+    ],
     "paths": {
-      "@/tests/*": ["../tests/*"],
-      "@/*": ["./src/*"]
+      "@/tests/*": [
+        "../tests/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
