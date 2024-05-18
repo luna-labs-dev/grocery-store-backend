@@ -3,7 +3,7 @@ import { ShoppingEvent } from '../entities';
 
 import { ShoppingEventNotFoundError, UnexpectedError } from './errors';
 
-export type GetShoppingEventByIdErrors = UnexpectedError & ShoppingEventNotFoundError;
+export type GetShoppingEventByIdErrors = UnexpectedError | ShoppingEventNotFoundError;
 
 export interface GetShoppingEventByIdParams {
   shoppingEventId: string;
