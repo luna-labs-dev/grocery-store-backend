@@ -9,39 +9,6 @@ import {
 import { injection } from './injection-codes';
 
 import {
-  PrismaMarketRepository,
-  PrismaProductRepository,
-  PrismaShoppingEventRepository,
-} from '@/infrastructure';
-import {
-  AddMarket,
-  AddProductToCart,
-  EndShoppingEvent,
-  GetMarketList,
-  GetShoppingEventById,
-  GetShoppingEventList,
-  RemoveProductFromCart,
-  StartShoppingEvent,
-  UpdateMarket,
-  UpdateProductInCart,
-} from '@/domain';
-import {
-  DbAddMarket,
-  DbAddProductToCart,
-  DbEndShoppingEvent,
-  DbGetMarketList,
-  DbGetShoppingEventById,
-  DbGetShoppingEventList,
-  DbRemoveProductFromCart,
-  DbStartShoppingEvent,
-  DbUpdateMarket,
-} from '@/application';
-import {
-  MarketRepositories,
-  ProductRepositories,
-  ShoppingEventRepositories,
-} from '@/application/contracts';
-import {
   AddMarketController,
   addMarketRequestSchema,
   AddProductToCartController,
@@ -49,6 +16,8 @@ import {
   Controller,
   EndShoppingEventController,
   EndShoppingEventRequestSchema,
+  GetMarketByIdController,
+  getMarketByIdRequestSchema,
   GetMarketListController,
   getMarketListRequestSchema,
   GetShoppingEventByIdController,
@@ -64,7 +33,42 @@ import {
   UpdateProductInCartController,
   updateProductInCartRequestSchema,
 } from '@/api';
+import {
+  DbAddMarket,
+  DbAddProductToCart,
+  DbEndShoppingEvent,
+  DbGetMarketById,
+  DbGetMarketList,
+  DbGetShoppingEventById,
+  DbGetShoppingEventList,
+  DbRemoveProductFromCart,
+  DbStartShoppingEvent,
+  DbUpdateMarket,
+} from '@/application';
+import {
+  MarketRepositories,
+  ProductRepositories,
+  ShoppingEventRepositories,
+} from '@/application/contracts';
 import { DbUpdateProductInCart } from '@/application/usecases/db-update-product-in-cart';
+import {
+  AddMarket,
+  AddProductToCart,
+  EndShoppingEvent,
+  GetMarketById,
+  GetMarketList,
+  GetShoppingEventById,
+  GetShoppingEventList,
+  RemoveProductFromCart,
+  StartShoppingEvent,
+  UpdateMarket,
+  UpdateProductInCart,
+} from '@/domain';
+import {
+  PrismaMarketRepository,
+  PrismaProductRepository,
+  PrismaShoppingEventRepository,
+} from '@/infrastructure';
 
 const { infra, usecases, controllers } = injection;
 // Infra
@@ -79,6 +83,7 @@ container.register<ProductRepositories>(infra.productRepositories, PrismaProduct
 container.register<AddMarket>(usecases.newMarket, DbAddMarket);
 container.register<UpdateMarket>(usecases.updateMarket, DbUpdateMarket);
 container.register<GetMarketList>(usecases.getMarketList, DbGetMarketList);
+container.register<GetMarketById>(usecases.getMarketById, DbGetMarketById);
 container.register<StartShoppingEvent>(usecases.startShoppingEvent, DbStartShoppingEvent);
 container.register<EndShoppingEvent>(usecases.endShoppingEvent, DbEndShoppingEvent);
 container.register<GetShoppingEventList>(usecases.getShoppingEventList, DbGetShoppingEventList);
@@ -116,6 +121,17 @@ container.register<Controller>(controllers.getMarketList, {
       new ValidationControllerDecorator(
         new GetMarketListController(container.resolve(usecases.getMarketList)),
         getMarketListRequestSchema,
+      ),
+    ),
+  ),
+});
+
+container.register<Controller>(controllers.getMarketById, {
+  useValue: new AuthorizationControllerDecorator(
+    new ErrorHandlingControllerDecorator(
+      new ValidationControllerDecorator(
+        new GetMarketByIdController(container.resolve(usecases.getMarketById)),
+        getMarketByIdRequestSchema,
       ),
     ),
   ),
