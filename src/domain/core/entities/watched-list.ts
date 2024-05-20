@@ -1,3 +1,5 @@
+type GetItemsCountParams = 'currentItems' | 'new' | 'removed' | 'updated';
+
 export abstract class WatchedList<T> {
   public currentItems: T[];
   private readonly initial: T[];
@@ -21,8 +23,12 @@ export abstract class WatchedList<T> {
     return this.currentItems;
   }
 
+  public getItemsCount(list: GetItemsCountParams | undefined = 'currentItems'): number {
+    return this[list].length ?? this.currentItems.length;
+  }
+
   public getNewItems(): T[] {
-    return this.new;
+    return this.currentItems;
   }
 
   public getRemovedItems(): T[] {

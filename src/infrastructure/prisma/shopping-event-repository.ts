@@ -57,6 +57,7 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       },
       include: {
         market: true,
+        product: true,
       },
     });
 
