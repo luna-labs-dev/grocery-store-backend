@@ -42,6 +42,10 @@ export class GetShoppingEventListController implements Controller {
         id: se.id,
         status: se.status,
         market: se.market?.name,
+        totals: {
+          retailTotal: se.retailTotal,
+          wholesaleTotal: se.wholesaleTotal,
+        },
         createdAt: se.createdAt,
       })),
     };

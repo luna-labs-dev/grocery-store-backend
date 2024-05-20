@@ -37,7 +37,9 @@ export class GetShoppingEventByIdController implements Controller {
       status: shoppingEvent.status,
       market: {
         id: shoppingEvent.marketId,
+        code: shoppingEvent.market?.code,
         name: shoppingEvent.market?.name,
+        createdAt: shoppingEvent.market?.createdAt,
       },
       calculatedTotals: shoppingEvent.getCalculatedTotals(),
       producs: shoppingEvent.products.getItems().map((prod) => ({
