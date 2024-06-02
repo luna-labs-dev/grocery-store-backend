@@ -30,7 +30,7 @@ export class ShoppingEventMapper {
                     amount: prod.amount,
                     wholesaleMinAmount: prod.wholesaleMinAmount ?? undefined,
                     price: Number(prod.price),
-                    wholesalePrice: Number(prod.wholesalePrice ?? 0),
+                    wholesalePrice: prod.wholesalePrice ? Number(prod.wholesalePrice) : undefined,
                     addedAt: prod.addedAt,
                     addedBy: prod.addedBy,
                   },
