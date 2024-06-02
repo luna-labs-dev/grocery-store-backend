@@ -28,7 +28,7 @@ export abstract class WatchedList<T> {
   }
 
   public getNewItems(): T[] {
-    return this.currentItems;
+    return this.new;
   }
 
   public getRemovedItems(): T[] {

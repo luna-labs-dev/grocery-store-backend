@@ -1,4 +1,5 @@
 import { Entity, TimerHelper } from '../core';
+import { MonetaryCalc } from '../helper';
 
 import { Market } from './market';
 import { Product } from './product';
@@ -133,23 +134,42 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
 
   public getCalculatedTotals(): object {
     this.calculateTotals();
-
-    const wholesaleSavingValue =
-      !!this.retailTotal && !!this.wholesaleTotal ? this.retailTotal - this.wholesaleTotal : 0;
-
-    const retailPaidDifferenceValue =
-      !!this.retailTotal && !!this.totalPaid ? this.retailTotal - this.totalPaid : 0;
-
-    const wholesalePaidDifferenceValue =
-      !!this.wholesaleTotal && !!this.totalPaid ? this.wholesaleTotal - this.totalPaid : 0;
-
-    return {
+    const totals = {
       retailTotal: this.retailTotal,
       wholesaleTotal: this.wholesaleTotal,
       paidValue: this.totalPaid,
-      wholesaleSavingValue,
-      retailPaidDifferenceValue,
-      wholesalePaidDifferenceValue,
+      wholesaleSavingValue: 0,
+      retailPaidDifferenceValue: 0,
+      wholesalePaidDifferenceValue: 0,
     };
+
+    if (!!this.retailTotal && !!this.wholesaleTotal) {
+      const retailTotalInCents = MonetaryCalc.toCents(this.retailTotal);
+      const wholesaleTotalInCents = MonetaryCalc.toCents(this.wholesaleTotal);
+
+      totals.wholesaleSavingValue = MonetaryCalc.toReais(
+        retailTotalInCents - wholesaleTotalInCents,
+      );
+    }
+
+    if (!!this.retailTotal && !!this.totalPaid) {
+      const retailTotalInCents = MonetaryCalc.toCents(this.retailTotal);
+      const totalPaidInCents = MonetaryCalc.toCents(this.totalPaid);
+
+      totals.retailPaidDifferenceValue = MonetaryCalc.toReais(
+        retailTotalInCents - totalPaidInCents,
+      );
+    }
+
+    if (!!this.wholesaleTotal && !!this.totalPaid) {
+      const wholeSaleInCents = MonetaryCalc.toCents(this.wholesaleTotal);
+      const totalPaidInCents = MonetaryCalc.toCents(this.totalPaid);
+
+      totals.wholesalePaidDifferenceValue = MonetaryCalc.toReais(
+        wholeSaleInCents - totalPaidInCents,
+      );
+    }
+
+    return totals;
   }
 }

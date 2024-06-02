@@ -1,11 +1,11 @@
-import { z } from 'zod';
 import { inject, injectable } from 'tsyringe';
+import { z } from 'zod';
 
 import { getShoppingEventByIdRequestSchema } from './get-shopping-event-by-id-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
-import { GetShoppingEventById } from '@/domain';
 import { mapErrorByCode, ok } from '@/api/helpers';
+import { GetShoppingEventById } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 
 type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdRequestSchema>;
@@ -42,13 +42,13 @@ export class GetShoppingEventByIdController implements Controller {
         createdAt: shoppingEvent.market?.createdAt,
       },
       calculatedTotals: shoppingEvent.getCalculatedTotals(),
-      producs: shoppingEvent.products.getItems().map((prod) => ({
+      products: shoppingEvent.products.getItems().map((prod) => ({
         id: prod.id,
         name: prod.name,
         amount: prod.amount,
         wholesaleMinAmount: prod.wholesaleMinAmount,
         price: prod.price,
-        whosalePrice: prod.wholesalePrice,
+        wholesalePrice: prod.wholesalePrice,
         addedAt: prod.addedAt,
       })),
       elapsedTime: shoppingEvent.elapsedTime,
