@@ -1,6 +1,7 @@
 import { Entity, TimerHelper } from '../core';
 import { MonetaryCalc } from '../helper';
 
+import { Family } from './family';
 import { Market } from './market';
 import { Product } from './product';
 import { Products } from './products';
@@ -9,6 +10,8 @@ export const validShoppingEventStatus = ['CANCELED', 'FINISHED', 'ONGOING'] as c
 export type ShoppingEventStatus = (typeof validShoppingEventStatus)[number];
 
 export interface ShoppingEventProps {
+  familyId: string;
+  family: Family;
   marketId: string;
   market?: Market;
   description?: string;
