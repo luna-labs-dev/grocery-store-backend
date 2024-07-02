@@ -82,6 +82,11 @@ export class ShoppingEventMapper {
 
   static toUpdatePersistence(shoppingEvent: ShoppingEvent): ShoppingEventUpdatePersistence {
     const persistence: ShoppingEventUpdatePersistence = {
+      family: {
+        connect: {
+          id: shoppingEvent.familyId,
+        },
+      },
       description: shoppingEvent.description ?? null,
       totalPaid: new Prisma.Decimal(shoppingEvent.totalPaid ?? 0),
       wholesaleTotal: new Prisma.Decimal(shoppingEvent.wholesaleTotal ?? 0),
