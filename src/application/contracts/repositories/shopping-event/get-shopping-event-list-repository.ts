@@ -2,6 +2,7 @@ import { ShoppingEvent, ShoppingEventStatus } from '@/domain';
 
 export interface GetShoppingEventListRepositoryParams {
   status?: ShoppingEventStatus;
+  familyId: string;
   period?: {
     start: Date;
     end: Date;
@@ -14,7 +15,7 @@ export interface GetShoppingEventListRepositoryParams {
 
 export type CountShoppingEventListRepositoryParams = Pick<
   GetShoppingEventListRepositoryParams,
-  'status' | 'period'
+  'familyId' | 'status' | 'period'
 >;
 
 export interface GetShoppingEventListRepository {

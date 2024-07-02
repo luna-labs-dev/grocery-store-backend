@@ -31,6 +31,14 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     super(props, id);
   }
 
+  get familyId(): string {
+    return this.props.familyId;
+  }
+
+  get family(): Family {
+    return this.props.family;
+  }
+
   get marketId(): string {
     return this.props.marketId;
   }

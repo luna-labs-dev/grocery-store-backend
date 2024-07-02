@@ -7,7 +7,7 @@ interface UserProps {
   email: string;
   displayName: string;
   familyId: string;
-  family: Family;
+  family?: Family;
 }
 
 export class User extends Entity<UserProps> {
@@ -31,7 +31,7 @@ export class User extends Entity<UserProps> {
     return this.props.familyId;
   }
 
-  public get family(): Family {
+  public get family(): Family | undefined {
     return this.props.family;
   }
 

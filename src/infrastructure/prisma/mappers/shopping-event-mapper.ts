@@ -1,11 +1,16 @@
-import { market, Prisma, product, shopping_event } from '@prisma/client';
+import { family, market, Prisma, product, shopping_event, user } from '@prisma/client';
 
 import { MarketMapper } from './market-mapper';
+import { FamilyMapper } from './family-mapper';
 
 import { Market, Product, ShoppingEvent } from '@/domain';
 import { Products } from '@/domain/entities/products';
 
-type ShoppingEventPersistence = shopping_event & { market?: market; product?: product[] };
+type ShoppingEventPersistence = shopping_event & {
+  market?: market;
+  product?: product[];
+  family: family & { owner: user; members: user[] };
+};
 type ShoppingEventCreatePersistence = Prisma.shopping_eventCreateInput;
 type ShoppingEventUpdatePersistence = Prisma.shopping_eventUpdateInput;
 
@@ -13,6 +18,8 @@ export class ShoppingEventMapper {
   static toDomain(raw: ShoppingEventPersistence): ShoppingEvent {
     return ShoppingEvent.create(
       {
+        familyId: raw.familyId,
+        family: FamilyMapper.toDomain(raw.family),
         marketId: raw.marketId,
         market: MarketMapper.toDomain(raw.market as Market),
         description: raw.description ?? '',
@@ -54,6 +61,11 @@ export class ShoppingEventMapper {
       market: {
         connect: {
           id: shoppingEvent.marketId,
+        },
+      },
+      family: {
+        connect: {
+          id: shoppingEvent.familyId,
         },
       },
       description: shoppingEvent.description ?? null,

@@ -20,9 +20,14 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
     @inject(infra.productRepositories) private readonly productRepository: ProductRepositories,
   ) {}
 
-  count = async ({ status, period }: CountShoppingEventListRepositoryParams): Promise<number> => {
+  count = async ({
+    familyId,
+    status,
+    period,
+  }: CountShoppingEventListRepositoryParams): Promise<number> => {
     const count = await prisma.shopping_event.count({
       where: {
+        familyId,
         status,
         createdAt: period && {
           gte: period.start,
@@ -35,6 +40,7 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
   };
 
   getAll = async ({
+    familyId,
     status,
     period,
     pageIndex,
@@ -44,6 +50,7 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
   }: GetShoppingEventListRepositoryParams): Promise<ShoppingEvent[]> => {
     const shoppingEvents = await prisma.shopping_event.findMany({
       where: {
+        familyId,
         status,
         createdAt: period && {
           gte: period.start,
@@ -58,6 +65,12 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       include: {
         market: true,
         product: true,
+        family: {
+          include: {
+            owner: true,
+            members: true,
+          },
+        },
       },
     });
 
@@ -69,15 +82,23 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
   };
 
   getById = async ({
+    familyId,
     shoppingEventId,
   }: GetShoppingEventByIdRepositoryProps): Promise<ShoppingEvent | undefined> => {
     const shoppingEvent = await prisma.shopping_event.findFirst({
       where: {
+        familyId,
         id: shoppingEventId,
       },
       include: {
         market: true,
         product: true,
+        family: {
+          include: {
+            owner: true,
+            members: true,
+          },
+        },
       },
     });
 
