@@ -7,7 +7,8 @@ interface FamilyProps {
   owner: User;
   name: string;
   description?: string;
-  members: User[];
+  inviteCode?: string;
+  users: User[];
 }
 
 export class Family extends Entity<FamilyProps> {
@@ -31,8 +32,12 @@ export class Family extends Entity<FamilyProps> {
     return this.props.description;
   }
 
+  public get inviteCode(): string | undefined {
+    return this.props.inviteCode;
+  }
+
   public get members(): User[] {
-    return this.props.members;
+    return this.props.users;
   }
 
   public static create(props: FamilyProps, id?: string): Family {
