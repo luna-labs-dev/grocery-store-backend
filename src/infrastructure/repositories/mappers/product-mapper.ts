@@ -5,8 +5,8 @@ import { Product } from '@/domain';
 type ProductCreatePersistence = Prisma.productCreateInput;
 type ProductUpdatePersistence = Prisma.productUpdateInput;
 
-export class ProductMapper {
-  static toCreatePersistence(product: Product): ProductCreatePersistence {
+export const ProductMapper = {
+  toCreatePersistence: (product: Product): ProductCreatePersistence => {
     const persistence: ProductCreatePersistence = {
       id: product.id,
       shoppingEvent: {
@@ -23,9 +23,9 @@ export class ProductMapper {
       addedBy: product.addedBy,
     };
     return persistence;
-  }
+  },
 
-  static toUpdatePersistence(product: Product): ProductUpdatePersistence {
+  toUpdatePersistence: (product: Product): ProductUpdatePersistence => {
     return {
       name: product.name,
       amount: product.amount,
@@ -33,5 +33,5 @@ export class ProductMapper {
       price: product.price,
       wholesalePrice: product.wholesalePrice,
     };
-  }
-}
+  },
+};

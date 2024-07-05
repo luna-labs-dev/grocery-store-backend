@@ -2,8 +2,8 @@ import { user } from '@prisma/client';
 
 import { User } from '@/domain';
 
-export class UserMapper {
-  static toDomain(raw: user): User {
+export const UserMapper = {
+  toDomain: (raw: user): User => {
     return User.create(
       {
         familyId: raw.familyId,
@@ -13,5 +13,5 @@ export class UserMapper {
       },
       raw.id,
     );
-  }
-}
+  },
+};

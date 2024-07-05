@@ -19,7 +19,8 @@ const { infra } = injection;
 @injectable()
 export class DbStartShoppingEvent implements StartShoppingEvent {
   constructor(
-    @inject(infra.marketRepositories) private readonly marketRepository: GetMarketByIdRepository,
+    @inject(infra.marketRepositories)
+    private readonly marketRepository: GetMarketByIdRepository,
     @inject(infra.shoppingEventRepositories)
     private readonly shoppingEventRepository: AddShoppingEventRepository,
   ) {}

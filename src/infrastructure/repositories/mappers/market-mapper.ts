@@ -4,8 +4,8 @@ import { Market } from '@/domain';
 
 type MarketPersistence = market;
 
-export class MarketMapper {
-  static toDomain(raw: MarketPersistence): Market {
+export const MarketMapper = {
+  toDomain: (raw: MarketPersistence): Market => {
     return Market.create(
       {
         code: raw.code,
@@ -15,9 +15,9 @@ export class MarketMapper {
       },
       raw.id,
     );
-  }
+  },
 
-  static toPersistence(market: Market): MarketPersistence {
+  toPersistence: (market: Market): MarketPersistence => {
     return {
       id: market.id,
       code: market.code,
@@ -25,5 +25,5 @@ export class MarketMapper {
       createdAt: market.createdAt,
       createdBy: market.createdBy,
     };
-  }
-}
+  },
+};

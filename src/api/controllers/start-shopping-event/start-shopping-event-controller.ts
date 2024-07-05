@@ -13,7 +13,8 @@ const { usecases } = injection;
 @injectable()
 export class StartShoppingEventController implements Controller {
   constructor(
-    @inject(usecases.startShoppingEvent) private readonly startShoppingEvent: StartShoppingEvent,
+    @inject(usecases.startShoppingEvent)
+    private readonly startShoppingEvent: StartShoppingEvent,
   ) {}
 
   handle = async ({

@@ -1,7 +1,7 @@
-import { family, market, Prisma, product, shopping_event, user } from '@prisma/client';
+import { Prisma, family, market, product, shopping_event, user } from '@prisma/client';
 
-import { MarketMapper } from './market-mapper';
 import { FamilyMapper } from './family-mapper';
+import { MarketMapper } from './market-mapper';
 
 import { Market, Product, ShoppingEvent } from '@/domain';
 import { Products } from '@/domain/entities/products';
@@ -14,8 +14,8 @@ type ShoppingEventPersistence = shopping_event & {
 type ShoppingEventCreatePersistence = Prisma.shopping_eventCreateInput;
 type ShoppingEventUpdatePersistence = Prisma.shopping_eventUpdateInput;
 
-export class ShoppingEventMapper {
-  static toDomain(raw: ShoppingEventPersistence): ShoppingEvent {
+export const ShoppingEventMapper = {
+  toDomain: (raw: ShoppingEventPersistence): ShoppingEvent => {
     return ShoppingEvent.create(
       {
         familyId: raw.familyId,
@@ -53,9 +53,9 @@ export class ShoppingEventMapper {
       },
       raw.id,
     );
-  }
+  },
 
-  static toCreatePersistence(shoppingEvent: ShoppingEvent): ShoppingEventCreatePersistence {
+  toCreatePersistence: (shoppingEvent: ShoppingEvent): ShoppingEventCreatePersistence => {
     const persistence: ShoppingEventCreatePersistence = {
       id: shoppingEvent.id,
       market: {
@@ -78,9 +78,9 @@ export class ShoppingEventMapper {
       createdBy: shoppingEvent.createdBy,
     };
     return persistence;
-  }
+  },
 
-  static toUpdatePersistence(shoppingEvent: ShoppingEvent): ShoppingEventUpdatePersistence {
+  toUpdatePersistence: (shoppingEvent: ShoppingEvent): ShoppingEventUpdatePersistence => {
     const persistence: ShoppingEventUpdatePersistence = {
       family: {
         connect: {
@@ -96,5 +96,5 @@ export class ShoppingEventMapper {
       finishedAt: shoppingEvent.finishedAt ?? null,
     };
     return persistence;
-  }
-}
+  },
+};

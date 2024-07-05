@@ -6,8 +6,8 @@ import { Family } from '@/domain';
 
 type FamilyPersistence = family & { owner: user; members: user[] };
 
-export class FamilyMapper {
-  static toDomain(family: FamilyPersistence): Family {
+export const FamilyMapper = {
+  toDomain: (family: FamilyPersistence): Family => {
     return Family.create(
       {
         ownerId: family.ownerId,
@@ -19,5 +19,5 @@ export class FamilyMapper {
       },
       family.id,
     );
-  }
-}
+  },
+};
