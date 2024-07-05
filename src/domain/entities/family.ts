@@ -8,7 +8,9 @@ interface FamilyProps {
   name: string;
   description?: string;
   inviteCode?: string;
-  users: User[];
+  createdAt: Date;
+  createdBy: string;
+  members: User[];
 }
 
 export class Family extends Entity<FamilyProps> {
@@ -36,8 +38,16 @@ export class Family extends Entity<FamilyProps> {
     return this.props.inviteCode;
   }
 
+  public get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  public get createdBy(): string {
+    return this.props.createdBy;
+  }
+
   public get members(): User[] {
-    return this.props.users;
+    return this.props.members;
   }
 
   public static create(props: FamilyProps, id?: string): Family {

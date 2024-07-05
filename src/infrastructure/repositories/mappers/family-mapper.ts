@@ -15,7 +15,7 @@ export const FamilyMapper = {
         name: family.name,
         description: family.description ?? undefined,
         inviteCode: family.inviteCode ?? undefined,
-        users: family.members.map((member) => UserMapper.toDomain(member)),
+        members: family.members.map((member) => UserMapper.toDomain(member)),
       },
       family.id,
     );
