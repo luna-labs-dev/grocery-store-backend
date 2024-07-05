@@ -25,7 +25,7 @@ model user {
   firebaseId   String  @unique @db.VarChar(320)
   email        String  @unique @db.VarChar(320)
   displayName  String  @db.VarChar(320)
-  familyId     String  @db.Uuid
+  familyId     String?  @db.Uuid 
   familyMember family? @relation("FamilyMembers", fields: [familyId], references: [id])
   ownedFamily  family? @relation("familyOwner")
 }
