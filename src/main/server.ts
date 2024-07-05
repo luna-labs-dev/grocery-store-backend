@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import './di';
-import { env } from '@/main/config/env';
 import { setupApp } from '@/main/config/app';
+import { env } from '@/main/config/env';
 
 const init = async (): Promise<void> => {
   const app = await setupApp();

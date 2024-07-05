@@ -1,5 +1,5 @@
-import { firebaseApp } from '@/main/firebase/client';
 import { Controller, HttpResponse, unauthorized } from '@/api';
+import { firebaseApp } from '@/main/firebase/client';
 
 export class AuthorizationControllerDecorator implements Controller {
   constructor(private readonly controller: Controller) {}

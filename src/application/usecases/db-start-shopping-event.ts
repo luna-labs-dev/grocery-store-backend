@@ -3,17 +3,17 @@ import { inject, injectable } from 'tsyringe';
 import { AddShoppingEventRepository, GetMarketByIdRepository } from '@/application/contracts';
 import {
   Either,
-  left,
   MarketNotFoundError,
-  right,
   ShoppingEvent,
   StartShoppingEvent,
   StartShoppingEventErrors,
   StartShoppingEventParams,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
-import { injection } from '@/main/di/injection-codes';
 import { Products } from '@/domain/entities/products';
+import { injection } from '@/main/di/injection-codes';
 
 const { infra } = injection;
 @injectable()

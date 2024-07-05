@@ -8,15 +8,15 @@ import {
 
 import {
   Either,
-  left,
   Market,
   MarketAlreadyExistsError,
   MarketNotFoundError,
-  right,
   UnexpectedError,
   UpdateMarket,
   UpdateMarketErrors,
   UpdateMarketParams,
+  left,
+  right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 

@@ -8,12 +8,12 @@ import {
   EndShoppingEvent,
   EndShoppingEventErrors,
   EndShoppingEventParams,
-  left,
-  right,
   ShoppingEvent,
   ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 

@@ -4,16 +4,16 @@ import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '.
 
 import {
   Either,
-  left,
   Product,
   ProductNotFoundError,
-  right,
   ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
   UpdateProductInCart,
   UpdateProductInCartErrors,
   UpdateProductInCartParams,
+  left,
+  right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 

@@ -1,12 +1,12 @@
-import { z } from 'zod';
 import { inject, injectable } from 'tsyringe';
+import { z } from 'zod';
 
 import { getMarketListRequestSchema } from './get-market-list-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
+import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetMarketList } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
-import { mapErrorByCode, ok } from '@/api/helpers';
 
 type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>;
 

@@ -7,11 +7,11 @@ import {
   GetShoppingEventById,
   GetShoppingEventByIdErrors,
   GetShoppingEventByIdParams,
-  left,
-  right,
   ShoppingEvent,
   ShoppingEventNotFoundError,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 

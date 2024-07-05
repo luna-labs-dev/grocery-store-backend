@@ -9,7 +9,7 @@
     "dev": "tsx watch src/main/server.ts",
     "start": "node dist/src/main/server.js",
     "build": "tsup src prisma/**/*.ts --clean",
-    "lint": "biome check --apply-unsafe src ",
+    "lint": "biome check --write --unsafe src ",
     "test": "vitest run --silent --reporter verbose",
     "test:watch": "vitest --silent --reporter verbose",
     "prisma-generate": "prisma generate",
