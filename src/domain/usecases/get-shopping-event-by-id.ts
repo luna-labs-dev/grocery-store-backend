@@ -6,6 +6,7 @@ import { ShoppingEventNotFoundError, UnexpectedError } from './errors';
 export type GetShoppingEventByIdErrors = UnexpectedError | ShoppingEventNotFoundError;
 
 export interface GetShoppingEventByIdParams {
+  familyId: string;
   shoppingEventId: string;
 }
 

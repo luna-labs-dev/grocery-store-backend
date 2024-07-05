@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const updateProductInCartRequestSchema = z.object({
+  familyId: z.string().uuid(),
   shoppingEventId: z.string().uuid(),
   productId: z.string().uuid(),
   name: z.string().min(1),

@@ -23,6 +23,7 @@ export class DbGetShoppingEventList implements GetShoppingEventList {
   ) {}
 
   execute = async ({
+    familyId,
     status,
     period,
     pageIndex,
@@ -34,7 +35,7 @@ export class DbGetShoppingEventList implements GetShoppingEventList {
   > => {
     try {
       // Get the ShoppingEvent List count based on the filters
-      const shoppingEventListCount = await this.repository.count({ status, period });
+      const shoppingEventListCount = await this.repository.count({ familyId, status, period });
 
       // Create the return object with the count and an empty array
       const response: GetShoppingEventListResult = {
@@ -45,6 +46,7 @@ export class DbGetShoppingEventList implements GetShoppingEventList {
       // IF count is greater than 0 fetch the actual list based on the same filter
       if (shoppingEventListCount > 0) {
         const shoppingEventList = await this.repository.getAll({
+          familyId,
           status,
           period,
           pageIndex,

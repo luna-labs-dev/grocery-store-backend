@@ -11,6 +11,7 @@ export type UpdateProductInCartParams = z.infer<typeof updateProductInCartReques
 export class UpdateProductInCartController implements Controller {
   constructor(private readonly updateProductInCart: UpdateProductInCart) {}
   handle = async ({
+    familyId,
     shoppingEventId,
     productId,
     name,
@@ -20,6 +21,7 @@ export class UpdateProductInCartController implements Controller {
     wholesalePrice,
   }: UpdateProductInCartParams): Promise<HttpResponse> => {
     const updateProductInCartResult = await this.updateProductInCart.execute({
+      familyId,
       shoppingEventId,
       productId,
       name,

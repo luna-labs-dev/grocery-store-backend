@@ -18,10 +18,12 @@ export class EndShoppingEventController implements Controller {
 
   handle = async ({
     shoppingEventId,
+    familyId,
     totalPaid,
   }: EndShoppingEventControllerRequest): Promise<HttpResponse> => {
     const endShoppingEventResult = await this.endShoppingEvent.execute({
       shoppingEventId,
+      familyId,
       totalPaid,
     });
 

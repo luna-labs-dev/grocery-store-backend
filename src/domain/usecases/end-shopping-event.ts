@@ -10,6 +10,7 @@ import {
 
 export interface EndShoppingEventParams {
   shoppingEventId: string;
+  familyId: string;
   totalPaid: number;
 }
 

@@ -7,6 +7,7 @@ export type StartShoppingEventErrors = UnexpectedError & MarketNotFoundError;
 
 export interface StartShoppingEventParams {
   user: string;
+  familyId: string;
   marketId: string;
 }
 

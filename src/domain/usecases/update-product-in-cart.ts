@@ -8,6 +8,7 @@ export type UpdateProductInCartErrors = UnexpectedError &
   ProductNotFoundError;
 
 export interface UpdateProductInCartParams {
+  familyId: string;
   shoppingEventId: string;
   productId: string;
   name: string;

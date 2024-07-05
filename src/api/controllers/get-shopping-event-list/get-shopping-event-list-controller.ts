@@ -11,6 +11,7 @@ type GetShoppingEventListControllerParams = z.infer<typeof getShoppingEventListR
 export class GetShoppingEventListController implements Controller {
   constructor(private readonly getShoppingEventList: GetShoppingEventList) {}
   handle = async ({
+    familyId,
     status,
     period,
     pageIndex,
@@ -19,6 +20,7 @@ export class GetShoppingEventListController implements Controller {
     orderDirection,
   }: GetShoppingEventListControllerParams): Promise<HttpResponse> => {
     const result = await this.getShoppingEventList.execute({
+      familyId,
       status,
       period: period && {
         start: new Date(period.start),

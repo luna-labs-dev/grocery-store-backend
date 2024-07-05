@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { validShoppingEventStatus } from '@/domain';
 
 export const getShoppingEventListRequestSchema = z.object({
+  familyId: z.string().uuid(),
   status: z.enum(validShoppingEventStatus).optional(),
   period: z
     .object({

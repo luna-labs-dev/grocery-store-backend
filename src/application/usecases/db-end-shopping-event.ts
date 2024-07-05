@@ -29,12 +29,14 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
 
   execute = async ({
     shoppingEventId,
+    familyId,
     totalPaid,
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
     try {
       // Get Shopping Event by Id
       const shoppingEvent = await this.repository.getById({
         shoppingEventId,
+        familyId,
       });
 
       // Returns ShoppingEventNotFoundError if ShoppingEvent is undefined

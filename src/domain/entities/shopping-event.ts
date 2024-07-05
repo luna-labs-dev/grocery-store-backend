@@ -11,7 +11,7 @@ export type ShoppingEventStatus = (typeof validShoppingEventStatus)[number];
 
 export interface ShoppingEventProps {
   familyId: string;
-  family: Family;
+  family?: Family;
   marketId: string;
   market?: Market;
   description?: string;
@@ -35,7 +35,7 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     return this.props.familyId;
   }
 
-  get family(): Family {
+  get family(): Family | undefined {
     return this.props.family;
   }
 

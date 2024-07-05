@@ -27,9 +27,15 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
 
   execute = async ({
     user,
+    familyId,
     marketId,
   }: StartShoppingEventParams): Promise<Either<StartShoppingEventErrors, ShoppingEvent>> => {
     try {
+      // TUDO - Implement Family Repository
+      // Fetch Family
+
+      // If Family doesnt exists returns FamilyNotFoundError
+
       // Calls GetMarketById
       const market = await this.marketRepository.getById({
         id: marketId,
@@ -42,6 +48,7 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
 
       // Create ShoppingEvent instance
       const shoppingEvent = ShoppingEvent.create({
+        familyId,
         marketId,
         market,
         status: 'ONGOING',

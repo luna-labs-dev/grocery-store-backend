@@ -7,6 +7,7 @@ export type AddProductToCartErrors = UnexpectedError & ShoppingEventNotFoundErro
 
 export interface AddProductToCartParams {
   user: string;
+  familyId: string;
   shoppingEventId: string;
   name: string;
   amount: number;

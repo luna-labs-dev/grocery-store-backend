@@ -28,6 +28,7 @@ export class DbAddProductToCart implements AddProductToCart {
 
   execute = async ({
     user,
+    familyId,
     shoppingEventId,
     name,
     amount,
@@ -39,6 +40,7 @@ export class DbAddProductToCart implements AddProductToCart {
       // Fetch ShoppingEvent
       const shoppingEvent = await this.shoppingEventRepository.getById({
         shoppingEventId,
+        familyId,
       });
 
       // Returns ShoppingEventNotFoundError fetch returns undefined

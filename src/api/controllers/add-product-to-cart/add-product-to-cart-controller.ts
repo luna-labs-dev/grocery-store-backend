@@ -20,11 +20,20 @@ export class AddProductToCartController implements Controller {
   ) {}
 
   handle = async (request: AddProductToCartRequest): Promise<HttpResponse> => {
-    const { user, shoppingEventId, name, amount, wholesaleMinAmount, price, wholesalePrice } =
-      request;
+    const {
+      user,
+      familyId,
+      shoppingEventId,
+      name,
+      amount,
+      wholesaleMinAmount,
+      price,
+      wholesalePrice,
+    } = request;
 
     const addProductResult = await this.addProductToCart.execute({
       user,
+      familyId,
       shoppingEventId,
       name,
       amount,

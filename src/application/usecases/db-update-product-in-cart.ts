@@ -29,6 +29,7 @@ export class DbUpdateProductInCart implements UpdateProductInCart {
   ) {}
 
   execute = async ({
+    familyId,
     shoppingEventId,
     productId,
     name,
@@ -39,9 +40,7 @@ export class DbUpdateProductInCart implements UpdateProductInCart {
   }: UpdateProductInCartParams): Promise<Either<UpdateProductInCartErrors, Product>> => {
     try {
       // Fetch shoppingEvent
-      const shoppingEvent = await this.repository.getById({
-        shoppingEventId,
-      });
+      const shoppingEvent = await this.repository.getById({ familyId, shoppingEventId });
 
       // Return shoppingEventNotFoundError if shoppingEvent is undefined
       if (!shoppingEvent) {

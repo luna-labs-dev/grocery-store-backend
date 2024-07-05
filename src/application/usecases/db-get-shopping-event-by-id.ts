@@ -25,11 +25,13 @@ export class DbGetShoppingEventById implements GetShoppingEventById {
   ) {}
 
   execute = async ({
+    familyId,
     shoppingEventId,
   }: GetShoppingEventByIdParams): Promise<Either<GetShoppingEventByIdErrors, ShoppingEvent>> => {
     try {
       const shoppingEvent = await this.repository.getById({
         shoppingEventId,
+        familyId,
       });
 
       if (!shoppingEvent) {

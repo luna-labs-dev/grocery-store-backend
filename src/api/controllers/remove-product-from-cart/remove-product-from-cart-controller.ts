@@ -21,10 +21,12 @@ export class RemoveProductFromCartController implements Controller {
   ) {}
 
   handle = async ({
+    familyId,
     shoppingEventId,
     productId,
   }: RemoveProductFromCartControllerParams): Promise<HttpResponse> => {
     const removeProductFromCartResult = await this.removeProductFromCart.execute({
+      familyId,
       shoppingEventId,
       productId,
     });

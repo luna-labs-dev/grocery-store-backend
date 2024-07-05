@@ -29,12 +29,14 @@ export class DbRemoveProductFromCart implements RemoveProductFromCart {
   ) {}
 
   execute = async ({
+    familyId,
     shoppingEventId,
     productId,
   }: RemoveProductFromCartParams): Promise<Either<RemoveProductFromCartErrors, void>> => {
     try {
       // Get shoppingEvent by ID
       const shoppingEvent = await this.repository.getById({
+        familyId,
         shoppingEventId,
       });
 

@@ -4,6 +4,7 @@ import { ShoppingEvent, ShoppingEventStatus } from '../entities';
 import { UnexpectedError } from './errors';
 
 export interface GetShoppingEventListParams {
+  familyId: string;
   status?: ShoppingEventStatus;
   period?: {
     start: Date;

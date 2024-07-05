@@ -19,10 +19,12 @@ export class StartShoppingEventController implements Controller {
 
   handle = async ({
     user,
+    familyId,
     marketId,
   }: StartShoppingEventControllerRequest): Promise<HttpResponse> => {
     const startShoppingEventResult = await this.startShoppingEvent.execute({
       user,
+      familyId,
       marketId,
     });
 

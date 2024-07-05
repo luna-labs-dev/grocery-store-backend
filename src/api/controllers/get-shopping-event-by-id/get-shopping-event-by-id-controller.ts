@@ -20,9 +20,11 @@ export class GetShoppingEventByIdController implements Controller {
   ) {}
 
   handle = async ({
+    familyId,
     shoppingEventId,
   }: GetShoppingEventByIdControllerParams): Promise<HttpResponse> => {
     const result = await this.getShoppingEventById.execute({
+      familyId,
       shoppingEventId,
     });
 

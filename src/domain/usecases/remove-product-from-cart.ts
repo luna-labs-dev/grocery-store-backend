@@ -3,6 +3,7 @@ import { Either } from '../core';
 import { ProductNotFoundError, ShoppingEventNotFoundError, UnexpectedError } from './errors';
 
 export interface RemoveProductFromCartParams {
+  familyId: string;
   shoppingEventId: string;
   productId: string;
 }
