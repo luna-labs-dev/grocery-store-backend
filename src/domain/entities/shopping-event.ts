@@ -1,6 +1,7 @@
 import { Entity, TimerHelper } from '../core';
-import { MonetaryCalc } from '../helper';
+import { monetaryCalc } from '../helper';
 
+import { Family } from './family';
 import { Market } from './market';
 import { Product } from './product';
 import { Products } from './products';
@@ -9,6 +10,8 @@ export const validShoppingEventStatus = ['CANCELED', 'FINISHED', 'ONGOING'] as c
 export type ShoppingEventStatus = (typeof validShoppingEventStatus)[number];
 
 export interface ShoppingEventProps {
+  familyId: string;
+  family: Family;
   marketId: string;
   market?: Market;
   description?: string;
@@ -26,6 +29,14 @@ export interface ShoppingEventProps {
 export class ShoppingEvent extends Entity<ShoppingEventProps> {
   private constructor(props: ShoppingEventProps, id?: string) {
     super(props, id);
+  }
+
+  get familyId(): string {
+    return this.props.familyId;
+  }
+
+  get family(): Family {
+    return this.props.family;
   }
 
   get marketId(): string {
@@ -119,14 +130,16 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
       retailTotal: 0,
     };
 
-    this.props.products.getItems().forEach((prod) => {
-      summed.retailTotal += prod.amount * prod.price;
+    for (const product of this.props.products.getItems()) {
+      summed.retailTotal += product.amount * product.price;
 
       summed.wholesaleTotal +=
-        prod.wholesaleMinAmount && prod.wholesalePrice && prod.amount >= prod.wholesaleMinAmount
-          ? prod.amount * prod.wholesalePrice
-          : prod.amount * prod.price;
-    });
+        product.wholesaleMinAmount &&
+        product.wholesalePrice &&
+        product.amount >= product.wholesaleMinAmount
+          ? product.amount * product.wholesalePrice
+          : product.amount * product.price;
+    }
 
     this.retailTotal = summed.retailTotal;
     this.wholesaleTotal = summed.wholesaleTotal;
@@ -144,28 +157,28 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     };
 
     if (!!this.retailTotal && !!this.wholesaleTotal) {
-      const retailTotalInCents = MonetaryCalc.toCents(this.retailTotal);
-      const wholesaleTotalInCents = MonetaryCalc.toCents(this.wholesaleTotal);
+      const retailTotalInCents = monetaryCalc.toCents(this.retailTotal);
+      const wholesaleTotalInCents = monetaryCalc.toCents(this.wholesaleTotal);
 
-      totals.wholesaleSavingValue = MonetaryCalc.toReais(
+      totals.wholesaleSavingValue = monetaryCalc.toReais(
         retailTotalInCents - wholesaleTotalInCents,
       );
     }
 
     if (!!this.retailTotal && !!this.totalPaid) {
-      const retailTotalInCents = MonetaryCalc.toCents(this.retailTotal);
-      const totalPaidInCents = MonetaryCalc.toCents(this.totalPaid);
+      const retailTotalInCents = monetaryCalc.toCents(this.retailTotal);
+      const totalPaidInCents = monetaryCalc.toCents(this.totalPaid);
 
-      totals.retailPaidDifferenceValue = MonetaryCalc.toReais(
+      totals.retailPaidDifferenceValue = monetaryCalc.toReais(
         retailTotalInCents - totalPaidInCents,
       );
     }
 
     if (!!this.wholesaleTotal && !!this.totalPaid) {
-      const wholeSaleInCents = MonetaryCalc.toCents(this.wholesaleTotal);
-      const totalPaidInCents = MonetaryCalc.toCents(this.totalPaid);
+      const wholeSaleInCents = monetaryCalc.toCents(this.wholesaleTotal);
+      const totalPaidInCents = monetaryCalc.toCents(this.totalPaid);
 
-      totals.wholesalePaidDifferenceValue = MonetaryCalc.toReais(
+      totals.wholesalePaidDifferenceValue = monetaryCalc.toReais(
         wholeSaleInCents - totalPaidInCents,
       );
     }

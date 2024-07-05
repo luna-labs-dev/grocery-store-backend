@@ -2,8 +2,8 @@ import cors from 'cors';
 import express, { Express } from 'express';
 import logger from 'morgan';
 
-import { router } from '@/main/routes';
 import { env } from '@/main/config';
+import { router } from '@/main/routes';
 
 export const setupApp = async (): Promise<Express> => {
   const app = express();

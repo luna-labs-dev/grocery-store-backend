@@ -1,17 +1,17 @@
 import { inject, injectable } from 'tsyringe';
 
+import { AddMarketRepository, GetMarketByCodeRepository } from '@/application';
 import {
   AddMarket,
   AddMarketErrors,
   AddMarketParams,
   Either,
-  left,
   Market,
   MarketAlreadyExistsError,
-  right,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
-import { AddMarketRepository, GetMarketByCodeRepository } from '@/application';
 import { injection } from '@/main/di/injection-codes';
 
 export type AddMarketRepositories = AddMarketRepository & GetMarketByCodeRepository;

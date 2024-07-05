@@ -7,11 +7,11 @@ import {
   GetMarketById,
   GetMarketByIdErrors,
   GetMarketByIdParams,
-  left,
   Market,
   MarketNotFoundError,
-  right,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 

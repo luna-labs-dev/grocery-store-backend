@@ -1,6 +1,6 @@
 import { ZodSchema } from 'zod';
 
-import { badRequest, Controller, HttpResponse, InvalidParamError } from '@/api';
+import { Controller, HttpResponse, InvalidParamError, badRequest } from '@/api';
 
 export class ValidationControllerDecorator implements Controller {
   constructor(

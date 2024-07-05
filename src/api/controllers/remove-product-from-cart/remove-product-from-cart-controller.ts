@@ -1,11 +1,11 @@
-import { z } from 'zod';
 import { inject, injectable } from 'tsyringe';
+import { z } from 'zod';
 
 import { removeProductFromCartRequestSchema } from './remove-product-from-cart-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
-import { RemoveProductFromCart } from '@/domain';
 import { mapErrorByCode, noContent } from '@/api/helpers';
+import { RemoveProductFromCart } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 
 export type RemoveProductFromCartControllerParams = z.infer<

@@ -2,19 +2,19 @@ import { inject, injectable } from 'tsyringe';
 
 import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '../contracts';
 
-import { injection } from '@/main/di/injection-codes';
 import {
   Either,
-  left,
   ProductNotFoundError,
   RemoveProductFromCart,
   RemoveProductFromCartErrors,
   RemoveProductFromCartParams,
-  right,
   ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 
 type RemoveProductFromCartRepositories = GetShoppingEventByIdRepository &
   UpdateShoppingEventRepository;

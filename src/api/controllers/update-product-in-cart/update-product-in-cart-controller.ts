@@ -3,8 +3,8 @@ import { z } from 'zod';
 import { updateProductInCartRequestSchema } from './update-product-in-cart-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
-import { UpdateProductInCart } from '@/domain';
 import { mapErrorByCode, noContent } from '@/api/helpers';
+import { UpdateProductInCart } from '@/domain';
 
 export type UpdateProductInCartParams = z.infer<typeof updateProductInCartRequestSchema>;
 

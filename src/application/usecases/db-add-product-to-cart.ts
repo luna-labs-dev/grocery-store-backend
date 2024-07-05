@@ -1,18 +1,18 @@
 import { inject, injectable } from 'tsyringe';
 
+import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '@/application';
 import {
   AddProductToCart,
   AddProductToCartErrors,
   AddProductToCartParams,
   Either,
-  left,
   Product,
-  right,
   ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
+  left,
+  right,
 } from '@/domain';
-import { GetShoppingEventByIdRepository, UpdateShoppingEventRepository } from '@/application';
 import { injection } from '@/main/di/injection-codes';
 
 type ShoppingEventRepositories = GetShoppingEventByIdRepository & UpdateShoppingEventRepository;

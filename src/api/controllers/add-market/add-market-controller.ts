@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { addMarketRequestSchema } from './add-market-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
-import { AddMarket } from '@/domain';
 import { created, mapErrorByCode } from '@/api/helpers';
+import { AddMarket } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 
 type AddMarketControllerRequest = z.infer<typeof addMarketRequestSchema>;

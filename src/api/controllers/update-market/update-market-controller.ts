@@ -3,10 +3,10 @@ import { z } from 'zod';
 
 import { updateMarketRequestSchema } from './update-market-controller-validation-schema';
 
-import { injection } from '@/main/di/injection-codes';
+import { mapErrorByCode, ok } from '@/api';
 import { Controller, HttpResponse } from '@/api/contracts';
 import { UpdateMarket } from '@/domain';
-import { mapErrorByCode, ok } from '@/api';
+import { injection } from '@/main/di/injection-codes';
 
 export type UpdateMarketControllerRequest = z.infer<typeof updateMarketRequestSchema>;
 

@@ -8,9 +8,9 @@ import {
   GetShoppingEventListErrors,
   GetShoppingEventListParams,
   GetShoppingEventListResult,
+  UnexpectedError,
   left,
   right,
-  UnexpectedError,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 

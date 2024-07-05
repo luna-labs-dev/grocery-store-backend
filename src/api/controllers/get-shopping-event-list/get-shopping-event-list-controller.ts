@@ -3,8 +3,8 @@ import { z } from 'zod';
 import { getShoppingEventListRequestSchema } from './get-shopping-event-list-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
-import { GetShoppingEventList } from '@/domain';
 import { mapErrorByCode, ok } from '@/api/helpers';
+import { GetShoppingEventList } from '@/domain';
 
 type GetShoppingEventListControllerParams = z.infer<typeof getShoppingEventListRequestSchema>;
 

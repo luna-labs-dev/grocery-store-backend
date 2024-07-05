@@ -1,6 +1,6 @@
 export const nameToCode = (name: string): string => {
   // Remove accents from letters
-  const normalized = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const normalized = name.normalize('NFD').replace(/\p{M}/gu, '');
   // Remove special characters and non-word characters
   const cleanedName = normalized.replace(/[^\w\s]/gi, '');
   // Remove leading and trailing spaces

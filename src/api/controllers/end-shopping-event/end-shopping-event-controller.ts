@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { inject, injectable } from 'tsyringe';
+import { z } from 'zod';
 
 import { EndShoppingEventRequestSchema } from './end-shopping-event-controller-validation-schema';
 
