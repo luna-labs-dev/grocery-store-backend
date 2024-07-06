@@ -37,6 +37,20 @@ export const FamilyMapper = {
           id: family.ownerId,
         },
       },
+      members: {
+        update: family.members.map((member) => ({
+          where: {
+            id: member.id,
+          },
+          data: {
+            ownedFamily: {
+              connect: {
+                id: family.id,
+              },
+            },
+          },
+        })),
+      },
     };
   },
 
