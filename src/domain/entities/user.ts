@@ -6,7 +6,7 @@ interface UserProps {
   firebaseId: string;
   email: string;
   displayName: string;
-  familyId: string;
+  familyId?: string;
   family?: Family;
 }
 
@@ -27,7 +27,7 @@ export class User extends Entity<UserProps> {
     return this.props.displayName;
   }
 
-  public get familyId(): string {
+  public get familyId(): string | undefined {
     return this.props.familyId;
   }
 
