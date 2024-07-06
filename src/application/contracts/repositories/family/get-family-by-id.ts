@@ -6,5 +6,5 @@ export interface GetFamilyByIdRepositoryParams {
 }
 
 export interface GetFamilyByIdRepository {
-  getById: (params: GetFamilyByIdRepositoryParams) => Promise<Family>;
+  getById: (params: GetFamilyByIdRepositoryParams) => Promise<Family | undefined>;
 }

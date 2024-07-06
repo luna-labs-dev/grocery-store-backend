@@ -1,25 +1,39 @@
 import { FamilyRepositories, GetFamilyByIdRepositoryParams } from '@/application';
 import { Family } from '@/domain';
 import { prisma } from '@/main/prisma/client';
+import { FamilyMapper } from './mappers';
 
 export class PrismaFamilyRepository implements FamilyRepositories {
   add = async (family: Family): Promise<void> => {
     await prisma.family.create({
-      data: {
-        name: family.name,
-        owner: {
-          connect: {
-            id: family.ownerId,
-          },
-        },
-        description: family.description,
-        createdAt: family.createdAt,
-        createdBy: family.createdBy,
-      },
+      data: FamilyMapper.toCreatePersistence(family),
     });
   };
-  getById = async (params: GetFamilyByIdRepositoryParams): Promise<Family> => {
-    throw new Error('Method not implemented.');
+
+  update = async (family: Family): Promise<void> => {
+    await prisma.family.update({
+      where: {
+        id: family.id,
+      },
+      data: FamilyMapper.toUpdatePersistence(family),
+    });
   };
-  update = async (family: Family): Promise<void> => {};
+
+  getById = async (params: GetFamilyByIdRepositoryParams): Promise<Family | undefined> => {
+    const family = await prisma.family.findFirst({
+      where: {
+        id: params.familyId,
+      },
+      include: {
+        owner: true,
+        members: true,
+      },
+    });
+
+    if (!family) {
+      return undefined;
+    }
+
+    return FamilyMapper.toDomain(family);
+  };
 }
