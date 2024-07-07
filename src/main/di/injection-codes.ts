@@ -1,6 +1,7 @@
 export const injection = {
   infra: {
     marketRepositories: 'market-repositories',
+    familyRepositories: 'family-repositories',
     shoppingEventRepositories: 'shopping-event-repositories',
     productRepositories: 'product-repositories',
   },

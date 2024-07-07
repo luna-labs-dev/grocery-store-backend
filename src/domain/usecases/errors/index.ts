@@ -5,3 +5,5 @@ export * from './shopping-event-not-found-error';
 export * from './product-not-found-error';
 export * from './shopping-event-already-ended-error';
 export * from './empty-cart-error';
+export * from './family-not-found-error';
+export * from './user-not-a-family-member-error';

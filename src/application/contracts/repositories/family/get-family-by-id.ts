@@ -1,7 +1,6 @@
 import { Family } from '@/domain';
 
 export interface GetFamilyByIdRepositoryParams {
-  userId: string;
   familyId: string;
 }
 
