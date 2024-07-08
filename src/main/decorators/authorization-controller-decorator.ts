@@ -1,11 +1,12 @@
 import { Controller, HttpResponse, unauthorized } from '@/api';
-import { GetUserByIdRepository } from '@/application';
+import { UserRepositories } from '@/application';
+import { User } from '@/domain';
 import { firebaseApp } from '@/main/firebase/client';
 
 export class AuthorizationControllerDecorator implements Controller {
   constructor(
     private readonly controller: Controller,
-    private readonly userRepository: GetUserByIdRepository,
+    private readonly userRepository: UserRepositories,
   ) {}
   handle = async (request: any): Promise<HttpResponse> => {
     const authToken = request.authToken;
@@ -19,14 +20,28 @@ export class AuthorizationControllerDecorator implements Controller {
     try {
       const decodedToken = await firebaseApp.auth().verifyIdToken(authToken);
 
-      // TODO: Fetch user from db
-      const dbUser = await this.userRepository.getByExternalId(decodedToken.uid);
+      // Fetch user from db
+      let dbUser = await this.userRepository.getByExternalId(decodedToken.uid);
 
-      // If no user is found in db, return unauthorized with required action to register user
+      // If no user is found in db, create a new user and move on to the next step
+      // TODO Move this to a usecase
       if (!dbUser) {
-        return unauthorized({
-          requiredAction: 'register-user',
-        });
+        const firebaseUser = await firebaseApp.auth().getUser(decodedToken.uid);
+
+        await this.userRepository.add(
+          User.create({
+            displayName: firebaseUser.displayName ?? '',
+            email: firebaseUser.email ?? '',
+            firebaseId: decodedToken.uid,
+          }),
+        );
+
+        dbUser = await this.userRepository.getByExternalId(decodedToken.uid);
+        if (!dbUser) {
+          return unauthorized({
+            requiredAction: 'register-user',
+          });
+        }
       }
 
       // if user is not member of any family, return unauthorized with required action to add user to family
