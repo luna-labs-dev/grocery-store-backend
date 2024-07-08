@@ -46,9 +46,11 @@ import {
   DbUpdateMarket,
 } from '@/application';
 import {
+  FamilyRepositories,
   MarketRepositories,
   ProductRepositories,
   ShoppingEventRepositories,
+  UserRepositories,
 } from '@/application/contracts';
 import { DbUpdateProductInCart } from '@/application/usecases/db-update-product-in-cart';
 import {
@@ -65,14 +67,18 @@ import {
   UpdateProductInCart,
 } from '@/domain';
 import {
+  PrismaFamilyRepository,
   PrismaMarketRepository,
   PrismaProductRepository,
   PrismaShoppingEventRepository,
+  PrismaUserRepository,
 } from '@/infrastructure';
 
 const { infra, usecases, controllers } = injection;
 // Infra
 container.register<MarketRepositories>(infra.marketRepositories, PrismaMarketRepository);
+container.register<UserRepositories>(infra.userRepositories, PrismaUserRepository);
+container.register<FamilyRepositories>(infra.familyRepositories, PrismaFamilyRepository);
 container.register<ShoppingEventRepositories>(
   infra.shoppingEventRepositories,
   PrismaShoppingEventRepository,
@@ -101,6 +107,7 @@ container.register<Controller>(controllers.newMarket, {
         addMarketRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -112,6 +119,7 @@ container.register<Controller>(controllers.updateMarket, {
         updateMarketRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -123,6 +131,7 @@ container.register<Controller>(controllers.getMarketList, {
         getMarketListRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -134,6 +143,7 @@ container.register<Controller>(controllers.getMarketById, {
         getMarketByIdRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -145,6 +155,7 @@ container.register<Controller>(controllers.startShoppingEvent, {
         StartShoppingEventRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -156,6 +167,7 @@ container.register<Controller>(controllers.endShoppingEvent, {
         EndShoppingEventRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -167,6 +179,7 @@ container.register<Controller>(controllers.getShoppingEventList, {
         getShoppingEventListRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -178,6 +191,7 @@ container.register<Controller>(controllers.getShoppingEventById, {
         getShoppingEventByIdRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -189,6 +203,7 @@ container.register<Controller>(controllers.addProductToCart, {
         addProductToCartRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -200,6 +215,7 @@ container.register<Controller>(controllers.updateProductInCart, {
         updateProductInCartRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });
 
@@ -211,5 +227,6 @@ container.register<Controller>(controllers.removeProductFromCart, {
         removeProductFromCartRequestSchema,
       ),
     ),
+    container.resolve(infra.userRepositories),
   ),
 });

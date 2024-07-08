@@ -32,4 +32,18 @@ export class PrismaUserRepository implements UserRepositories {
 
     return UserMapper.toDomain(user);
   };
+
+  getByExternalId = async (externalId: string): Promise<User | undefined> => {
+    const user = await prisma.user.findFirst({
+      where: {
+        firebaseId: externalId,
+      },
+    });
+
+    if (!user) {
+      return undefined;
+    }
+
+    return UserMapper.toDomain(user);
+  };
 }
