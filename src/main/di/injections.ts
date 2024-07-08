@@ -41,6 +41,7 @@ import {
   DbGetMarketList,
   DbGetShoppingEventById,
   DbGetShoppingEventList,
+  DbGetUser,
   DbRemoveProductFromCart,
   DbStartShoppingEvent,
   DbUpdateMarket,
@@ -61,6 +62,7 @@ import {
   GetMarketList,
   GetShoppingEventById,
   GetShoppingEventList,
+  GetUser,
   RemoveProductFromCart,
   StartShoppingEvent,
   UpdateMarket,
@@ -97,6 +99,7 @@ container.register<GetShoppingEventById>(usecases.getShoppingEventById, DbGetSho
 container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCart);
 container.register<UpdateProductInCart>(usecases.updateProductInCart, DbUpdateProductInCart);
 container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemoveProductFromCart);
+container.register<GetUser>(usecases.getUser, DbGetUser);
 
 // Api
 container.register<Controller>(controllers.newMarket, {
@@ -107,7 +110,7 @@ container.register<Controller>(controllers.newMarket, {
         addMarketRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -119,7 +122,7 @@ container.register<Controller>(controllers.updateMarket, {
         updateMarketRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -131,7 +134,7 @@ container.register<Controller>(controllers.getMarketList, {
         getMarketListRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -143,7 +146,7 @@ container.register<Controller>(controllers.getMarketById, {
         getMarketByIdRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -155,7 +158,7 @@ container.register<Controller>(controllers.startShoppingEvent, {
         StartShoppingEventRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -167,7 +170,7 @@ container.register<Controller>(controllers.endShoppingEvent, {
         EndShoppingEventRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -179,7 +182,7 @@ container.register<Controller>(controllers.getShoppingEventList, {
         getShoppingEventListRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -191,7 +194,7 @@ container.register<Controller>(controllers.getShoppingEventById, {
         getShoppingEventByIdRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -203,7 +206,7 @@ container.register<Controller>(controllers.addProductToCart, {
         addProductToCartRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -215,7 +218,7 @@ container.register<Controller>(controllers.updateProductInCart, {
         updateProductInCartRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });
 
@@ -227,6 +230,6 @@ container.register<Controller>(controllers.removeProductFromCart, {
         removeProductFromCartRequestSchema,
       ),
     ),
-    container.resolve(infra.userRepositories),
+    container.resolve(usecases.getUser),
   ),
 });

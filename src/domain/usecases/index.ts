@@ -10,3 +10,4 @@ export * from './remove-product-from-cart';
 export * from './start-shopping-event';
 export * from './update-market';
 export * from './update-product-in-cart';
+export * from './get-user';

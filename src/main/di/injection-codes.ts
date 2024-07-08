@@ -18,6 +18,7 @@ export const injection = {
     addProductToCart: 'add-product-to-cart-usecase',
     updateProductInCart: 'update-product-in-cart-usecase',
     removeProductFromCart: 'remove-product-from-cart-usecase',
+    getUser: 'get-user-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',

@@ -20,6 +20,7 @@ export const UserMapper = {
 
   toCreatePersistence: (user: User): UserCreatePersistence => {
     return {
+      id: user.id,
       displayName: user.displayName,
       email: user.email,
       firebaseId: user.firebaseId,

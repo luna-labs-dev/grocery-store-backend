@@ -9,3 +9,4 @@ export * from './db-remove-product-from-cart';
 export * from './db-start-shopping-event';
 export * from './db-update-market';
 export * from './db-update-product-in-cart';
+export * from './db-get-user';
