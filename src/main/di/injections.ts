@@ -26,7 +26,6 @@ import {
   addMarketRequestSchema,
   addProductToCartRequestSchema,
   getMarketByIdRequestSchema,
-  getMarketListRequestSchema,
   getShoppingEventByIdRequestSchema,
   getShoppingEventListRequestSchema,
   removeProductFromCartRequestSchema,
@@ -134,12 +133,7 @@ container.register<Controller>(controllers.updateMarket, {
 container.register<Controller>(controllers.getMarketList, {
   useValue: new AuthorizationControllerDecorator(
     new FamilyBarrierControllerDecorator(
-      new ErrorHandlingControllerDecorator(
-        new ValidationControllerDecorator(
-          new GetMarketListController(container.resolve(usecases.getMarketList)),
-          getMarketListRequestSchema,
-        ),
-      ),
+      new GetMarketListController(container.resolve(usecases.getMarketList)),
       container.resolve(usecases.getUser),
     ),
   ),

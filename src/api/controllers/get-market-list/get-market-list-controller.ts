@@ -6,6 +6,7 @@ import { getMarketListRequestSchema } from './get-market-list-controller-validat
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetMarketList } from '@/domain';
+import { controllerErrorHandler, controllerValidationHandler } from '@/main/decorators';
 import { injection } from '@/main/di/injection-codes';
 
 type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>;
@@ -13,6 +14,8 @@ type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>
 const { usecases } = injection;
 
 @injectable()
+@controllerErrorHandler()
+@controllerValidationHandler(getMarketListRequestSchema)
 export class GetMarketListController implements Controller {
   constructor(@inject(usecases.getMarketList) private readonly getMarketList: GetMarketList) {}
   handle = async ({
