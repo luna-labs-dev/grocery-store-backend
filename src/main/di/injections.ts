@@ -75,6 +75,7 @@ import {
   PrismaShoppingEventRepository,
   PrismaUserRepository,
 } from '@/infrastructure';
+import { FamilyBarrierControllerDecorator } from '../decorators/family-barrier-controller-decorator';
 
 const { infra, usecases, controllers } = injection;
 // Infra
@@ -104,37 +105,43 @@ container.register<GetUser>(usecases.getUser, DbGetUser);
 // Api
 container.register<Controller>(controllers.newMarket, {
   useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new AddMarketController(container.resolve(usecases.newMarket)),
-        addMarketRequestSchema,
+    new FamilyBarrierControllerDecorator(
+      new ErrorHandlingControllerDecorator(
+        new ValidationControllerDecorator(
+          new AddMarketController(container.resolve(usecases.newMarket)),
+          addMarketRequestSchema,
+        ),
       ),
+      container.resolve(usecases.getUser),
     ),
-    container.resolve(usecases.getUser),
   ),
 });
 
 container.register<Controller>(controllers.updateMarket, {
   useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new UpdateMarketController(container.resolve(usecases.updateMarket)),
-        updateMarketRequestSchema,
+    new FamilyBarrierControllerDecorator(
+      new ErrorHandlingControllerDecorator(
+        new ValidationControllerDecorator(
+          new UpdateMarketController(container.resolve(usecases.updateMarket)),
+          updateMarketRequestSchema,
+        ),
       ),
+      container.resolve(usecases.getUser),
     ),
-    container.resolve(usecases.getUser),
   ),
 });
 
 container.register<Controller>(controllers.getMarketList, {
   useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new GetMarketListController(container.resolve(usecases.getMarketList)),
-        getMarketListRequestSchema,
+    new FamilyBarrierControllerDecorator(
+      new ErrorHandlingControllerDecorator(
+        new ValidationControllerDecorator(
+          new GetMarketListController(container.resolve(usecases.getMarketList)),
+          getMarketListRequestSchema,
+        ),
       ),
+      container.resolve(usecases.getUser),
     ),
-    container.resolve(usecases.getUser),
   ),
 });
 
