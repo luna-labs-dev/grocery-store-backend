@@ -1,5 +1,4 @@
-import { Controller, HttpError, HttpResponse, IHttpError, serverError } from '@/api';
-import { type Constructor } from './decorator-types';
+import { Controller, HttpResponse, IHttpError, serverError } from '@/api';
 
 export class ErrorHandlingControllerDecorator implements Controller {
   constructor(private readonly controller: Controller) {}
@@ -20,23 +19,3 @@ export class ErrorHandlingControllerDecorator implements Controller {
     }
   };
 }
-
-export const controllerErrorHandler = () => {
-  return <T extends Constructor<Controller>>(target: T) => {
-    const originalHandle = target.prototype.handle;
-
-    target.prototype.handle = async (request: any) => {
-      try {
-        const httpResponse = await originalHandle.apply(this, [request]);
-
-        return httpResponse;
-      } catch (error) {
-        console.log(error);
-
-        return serverError(error as HttpError);
-      }
-    };
-
-    return target;
-  };
-};

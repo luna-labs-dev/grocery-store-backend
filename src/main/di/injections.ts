@@ -130,14 +130,16 @@ container.register<Controller>(controllers.updateMarket, {
   ),
 });
 
-container.register<Controller>(controllers.getMarketList, {
-  useValue: new AuthorizationControllerDecorator(
-    new FamilyBarrierControllerDecorator(
-      new GetMarketListController(container.resolve(usecases.getMarketList)),
-      container.resolve(usecases.getUser),
-    ),
-  ),
-});
+// container.register<Controller>(controllers.getMarketList, {
+//   useValue: new AuthorizationControllerDecorator(
+//     new FamilyBarrierControllerDecorator(
+//       new GetMarketListController(container.resolve(usecases.getMarketList)),
+//       container.resolve(usecases.getUser),
+//     ),
+//   ),
+// });
+
+container.register<Controller>(controllers.getMarketList, GetMarketListController);
 
 container.register<Controller>(controllers.getMarketById, {
   useValue: new AuthorizationControllerDecorator(
