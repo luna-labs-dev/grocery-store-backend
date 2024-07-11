@@ -4,10 +4,13 @@ import { z } from 'zod';
 import { Controller, HttpResponse } from '@/api/contracts';
 import { created, mapErrorByCode } from '@/api/helpers';
 import { AddMarket } from '@/domain';
-import { controllerAuthorizationHandling } from '@/main/decorators/controller-authorization-handling';
-import { controllerErrorHandling } from '@/main/decorators/controller-error-handling';
-import { controllerFamilyBarrierHandling } from '@/main/decorators/controller-family-barrier-handling';
-import { controllerValidationHandling } from '@/main/decorators/controller-validation-handling';
+import {
+  controllerAuthorizationHandling,
+  controllerErrorHandling,
+  controllerFamilyBarrierHandling,
+  controllerValidationHandling,
+} from '@/main/decorators';
+
 import { injection } from '@/main/di/injection-codes';
 
 export const addMarketRequestSchema = z.object({

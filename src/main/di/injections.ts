@@ -95,9 +95,6 @@ container.register<Controller>(controllers.startShoppingEvent, StartShoppingEven
 container.register<Controller>(controllers.endShoppingEvent, EndShoppingEventController);
 container.register<Controller>(controllers.getShoppingEventList, GetShoppingEventListController);
 container.register<Controller>(controllers.getShoppingEventById, GetShoppingEventByIdController);
-
 container.register<Controller>(controllers.addProductToCart, AddProductToCartController);
-
 container.register<Controller>(controllers.updateProductInCart, UpdateProductInCartController);
-
 container.register<Controller>(controllers.removeProductFromCart, RemoveProductFromCartController);

@@ -5,10 +5,12 @@ import { AddProductToCart } from '../../domain/usecases/add-product-to-cart';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
-import { controllerAuthorizationHandling } from '@/main/decorators/controller-authorization-handling';
-import { controllerErrorHandling } from '@/main/decorators/controller-error-handling';
-import { controllerFamilyBarrierHandling } from '@/main/decorators/controller-family-barrier-handling';
-import { controllerValidationHandling } from '@/main/decorators/controller-validation-handling';
+import {
+  controllerAuthorizationHandling,
+  controllerErrorHandling,
+  controllerFamilyBarrierHandling,
+  controllerValidationHandling,
+} from '@/main/decorators';
 import { injection } from '@/main/di/injection-codes';
 
 export const addProductToCartRequestSchema = z.object({
