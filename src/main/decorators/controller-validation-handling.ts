@@ -7,6 +7,7 @@ export const controllerValidationHandling = (schema: ZodSchema<any>) => {
     const originalHandle = target.prototype.handle;
 
     target.prototype.handle = async function (request: any) {
+      console.log('before validation');
       const validationResult = await schema.safeParseAsync(request);
 
       if (!validationResult.success) {
@@ -16,6 +17,8 @@ export const controllerValidationHandling = (schema: ZodSchema<any>) => {
       }
 
       const httpResponse = await originalHandle.apply(this, [validationResult.data]);
+
+      console.log('after validation');
 
       return httpResponse;
     };

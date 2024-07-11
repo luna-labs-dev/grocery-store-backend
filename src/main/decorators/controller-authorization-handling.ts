@@ -20,7 +20,6 @@ export const controllerAuthorizationHandling = () => {
 
         request.user = decodedToken.uid;
 
-        console.log('teste');
         const httpResponse = await originalHandle.apply(this, [request]);
 
         return httpResponse;

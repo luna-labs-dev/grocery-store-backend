@@ -1,16 +1,19 @@
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
-import { getShoppingEventByIdRequestSchema } from './get-shopping-event-by-id-controller-validation-schema';
-
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetShoppingEventById } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
 
-type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdRequestSchema>;
-
 const { usecases } = injection;
+
+export const getShoppingEventByIdRequestSchema = z.object({
+  familyId: z.string().uuid(),
+  shoppingEventId: z.string().uuid(),
+});
+
+type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdRequestSchema>;
 
 @injectable()
 export class GetShoppingEventByIdController implements Controller {
@@ -19,10 +22,10 @@ export class GetShoppingEventByIdController implements Controller {
     private readonly getShoppingEventById: GetShoppingEventById,
   ) {}
 
-  handle = async ({
+  async handle({
     familyId,
     shoppingEventId,
-  }: GetShoppingEventByIdControllerParams): Promise<HttpResponse> => {
+  }: GetShoppingEventByIdControllerParams): Promise<HttpResponse> {
     const result = await this.getShoppingEventById.execute({
       familyId,
       shoppingEventId,
@@ -60,5 +63,5 @@ export class GetShoppingEventByIdController implements Controller {
     };
 
     return ok(response);
-  };
+  }
 }

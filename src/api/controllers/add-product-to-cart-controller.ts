@@ -1,25 +1,42 @@
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
-import { AddProductToCart } from '../../../domain/usecases/add-product-to-cart';
-
-import { addProductToCartRequestSchema } from './add-product-to-cart-controller-validation-schema';
+import { AddProductToCart } from '../../domain/usecases/add-product-to-cart';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
+import { controllerAuthorizationHandling } from '@/main/decorators/controller-authorization-handling';
+import { controllerErrorHandling } from '@/main/decorators/controller-error-handling';
+import { controllerFamilyBarrierHandling } from '@/main/decorators/controller-family-barrier-handling';
+import { controllerValidationHandling } from '@/main/decorators/controller-validation-handling';
 import { injection } from '@/main/di/injection-codes';
+
+export const addProductToCartRequestSchema = z.object({
+  user: z.string(),
+  familyId: z.string().uuid(),
+  shoppingEventId: z.string().uuid(),
+  name: z.string().min(1),
+  amount: z.number().int().gt(0),
+  price: z.number().gt(0),
+  wholesaleMinAmount: z.number().int().gt(0).optional(),
+  wholesalePrice: z.number().gt(0).optional(),
+});
 
 export type AddProductToCartRequest = z.infer<typeof addProductToCartRequestSchema>;
 
 const { usecases } = injection;
 
 @injectable()
+@controllerAuthorizationHandling()
+@controllerFamilyBarrierHandling()
+@controllerErrorHandling()
+@controllerValidationHandling(addProductToCartRequestSchema)
 export class AddProductToCartController implements Controller {
   constructor(
     @inject(usecases.addProductToCart) private readonly addProductToCart: AddProductToCart,
   ) {}
 
-  handle = async (request: AddProductToCartRequest): Promise<HttpResponse> => {
+  async handle(request: AddProductToCartRequest): Promise<HttpResponse> {
     const {
       user,
       familyId,
@@ -54,5 +71,5 @@ export class AddProductToCartController implements Controller {
     };
 
     return ok(response);
-  };
+  }
 }

@@ -1,21 +1,32 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
-
-import { getMarketByIdRequestSchema } from './get-market-by-id-controller-validation-schema';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetMarketById } from '@/domain';
+import { controllerAuthorizationHandling } from '@/main/decorators/controller-authorization-handling';
+import { controllerErrorHandling } from '@/main/decorators/controller-error-handling';
+import { controllerFamilyBarrierHandling } from '@/main/decorators/controller-family-barrier-handling';
+import { controllerValidationHandling } from '@/main/decorators/controller-validation-handling';
 import { injection } from '@/main/di/injection-codes';
 
 const { usecases } = injection;
 
+export const getMarketByIdRequestSchema = z.object({
+  marketId: z.string().uuid(),
+});
+
 type GetMarketByIdControllerParams = z.infer<typeof getMarketByIdRequestSchema>;
 
+@injectable()
+@controllerAuthorizationHandling()
+@controllerFamilyBarrierHandling()
+@controllerErrorHandling()
+@controllerValidationHandling(getMarketByIdRequestSchema)
 export class GetMarketByIdController implements Controller {
   constructor(@inject(usecases.getMarketById) private readonly getMarketById: GetMarketById) {}
 
-  handle = async ({ marketId }: GetMarketByIdControllerParams): Promise<HttpResponse> => {
+  async handle({ marketId }: GetMarketByIdControllerParams): Promise<HttpResponse> {
     const result = await this.getMarketById.execute({
       marketId,
     });
@@ -34,5 +45,5 @@ export class GetMarketByIdController implements Controller {
     };
 
     return ok(response);
-  };
+  }
 }

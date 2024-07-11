@@ -11,6 +11,8 @@ import { controllerFamilyBarrierHandling } from '@/main/decorators/controller-fa
 import { controllerValidationHandling } from '@/main/decorators/controller-validation-handling';
 import { injection } from '@/main/di/injection-codes';
 
+const { usecases } = injection;
+
 export const getMarketListRequestSchema = z.object({
   search: z.string().optional(),
   pageIndex: z.coerce.number().min(0).default(0),
@@ -20,8 +22,6 @@ export const getMarketListRequestSchema = z.object({
 });
 
 type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>;
-
-const { usecases } = injection;
 
 @injectable()
 @controllerAuthorizationHandling()

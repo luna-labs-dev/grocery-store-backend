@@ -13,3 +13,7 @@ export const nameToCode = (name: string): string => {
   code = code.replace(/\s/g, '_');
   return code;
 };
+
+// const name = 'Assai Goiania';
+// const code = nameToCode(name);
+// console.log(code);

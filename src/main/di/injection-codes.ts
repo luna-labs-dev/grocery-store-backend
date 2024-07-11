@@ -31,6 +31,6 @@ export const injection = {
     getShoppingEventById: 'get-shopping-event-by-id-controller',
     addProductToCart: 'add-product-to-cart-controller',
     updateProductInCart: 'update-product-in-cart-controller',
-    removeProductFromCart: 'remove-product-from-cart-usecase',
+    removeProductFromCart: 'remove-product-from-cart-controller',
   },
 };

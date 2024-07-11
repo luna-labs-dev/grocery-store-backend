@@ -1,10 +1,6 @@
 import { container } from 'tsyringe';
 
-import {
-  AuthorizationControllerDecorator,
-  ErrorHandlingControllerDecorator,
-  ValidationControllerDecorator,
-} from '../decorators';
+import {} from '../decorators';
 
 import { injection } from './injection-codes';
 
@@ -13,24 +9,14 @@ import {
   AddProductToCartController,
   Controller,
   EndShoppingEventController,
-  EndShoppingEventRequestSchema,
   GetMarketByIdController,
   GetMarketListController,
   GetShoppingEventByIdController,
   GetShoppingEventListController,
   RemoveProductFromCartController,
   StartShoppingEventController,
-  StartShoppingEventRequestSchema,
   UpdateMarketController,
   UpdateProductInCartController,
-  addMarketRequestSchema,
-  addProductToCartRequestSchema,
-  getMarketByIdRequestSchema,
-  getShoppingEventByIdRequestSchema,
-  getShoppingEventListRequestSchema,
-  removeProductFromCartRequestSchema,
-  updateMarketRequestSchema,
-  updateProductInCartRequestSchema,
 } from '@/api';
 import {
   DbAddMarket,
@@ -74,7 +60,6 @@ import {
   PrismaShoppingEventRepository,
   PrismaUserRepository,
 } from '@/infrastructure';
-import { FamilyBarrierControllerDecorator } from '../decorators/family-barrier-controller-decorator';
 
 const { infra, usecases, controllers } = injection;
 // Infra
@@ -102,137 +87,17 @@ container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemo
 container.register<GetUser>(usecases.getUser, DbGetUser);
 
 // Api
-container.register<Controller>(controllers.newMarket, {
-  useValue: new AuthorizationControllerDecorator(
-    new FamilyBarrierControllerDecorator(
-      new ErrorHandlingControllerDecorator(
-        new ValidationControllerDecorator(
-          new AddMarketController(container.resolve(usecases.newMarket)),
-          addMarketRequestSchema,
-        ),
-      ),
-      container.resolve(usecases.getUser),
-    ),
-  ),
-});
-
-container.register<Controller>(controllers.updateMarket, {
-  useValue: new AuthorizationControllerDecorator(
-    new FamilyBarrierControllerDecorator(
-      new ErrorHandlingControllerDecorator(
-        new ValidationControllerDecorator(
-          new UpdateMarketController(container.resolve(usecases.updateMarket)),
-          updateMarketRequestSchema,
-        ),
-      ),
-      container.resolve(usecases.getUser),
-    ),
-  ),
-});
-
-// container.register<Controller>(controllers.getMarketList, {
-//   useValue: new AuthorizationControllerDecorator(
-//     new FamilyBarrierControllerDecorator(
-//       new GetMarketListController(container.resolve(usecases.getMarketList)),
-//       container.resolve(usecases.getUser),
-//     ),
-//   ),
-// });
-
+container.register<Controller>(controllers.newMarket, AddMarketController);
+container.register<Controller>(controllers.updateMarket, UpdateMarketController);
 container.register<Controller>(controllers.getMarketList, GetMarketListController);
+container.register<Controller>(controllers.getMarketById, GetMarketByIdController);
+container.register<Controller>(controllers.startShoppingEvent, StartShoppingEventController);
+container.register<Controller>(controllers.endShoppingEvent, EndShoppingEventController);
+container.register<Controller>(controllers.getShoppingEventList, GetShoppingEventListController);
+container.register<Controller>(controllers.getShoppingEventById, GetShoppingEventByIdController);
 
-container.register<Controller>(controllers.getMarketById, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new GetMarketByIdController(container.resolve(usecases.getMarketById)),
-        getMarketByIdRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
+container.register<Controller>(controllers.addProductToCart, AddProductToCartController);
 
-container.register<Controller>(controllers.startShoppingEvent, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new StartShoppingEventController(container.resolve(usecases.startShoppingEvent)),
-        StartShoppingEventRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
+container.register<Controller>(controllers.updateProductInCart, UpdateProductInCartController);
 
-container.register<Controller>(controllers.endShoppingEvent, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new EndShoppingEventController(container.resolve(usecases.endShoppingEvent)),
-        EndShoppingEventRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
-
-container.register<Controller>(controllers.getShoppingEventList, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new GetShoppingEventListController(container.resolve(usecases.getShoppingEventList)),
-        getShoppingEventListRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
-
-container.register<Controller>(controllers.getShoppingEventById, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new GetShoppingEventByIdController(container.resolve(usecases.getShoppingEventById)),
-        getShoppingEventByIdRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
-
-container.register<Controller>(controllers.addProductToCart, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new AddProductToCartController(container.resolve(usecases.addProductToCart)),
-        addProductToCartRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
-
-container.register<Controller>(controllers.updateProductInCart, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new UpdateProductInCartController(container.resolve(usecases.updateProductInCart)),
-        updateProductInCartRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
-
-container.register<Controller>(controllers.removeProductFromCart, {
-  useValue: new AuthorizationControllerDecorator(
-    new ErrorHandlingControllerDecorator(
-      new ValidationControllerDecorator(
-        new RemoveProductFromCartController(container.resolve(usecases.removeProductFromCart)),
-        removeProductFromCartRequestSchema,
-      ),
-    ),
-    container.resolve(usecases.getUser),
-  ),
-});
+container.register<Controller>(controllers.removeProductFromCart, RemoveProductFromCartController);
