@@ -1,3 +1,5 @@
+export * from './family';
+
 export * from './db-add-market';
 export * from './db-add-product-to-cart';
 export * from './db-end-shopping-event';

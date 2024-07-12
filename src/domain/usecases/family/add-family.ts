@@ -11,5 +11,5 @@ export interface AddFamilyParams {
 export type AddFamilyErrors = UnexpectedError | UserNotFoundError;
 
 export interface AddFamily {
-  execute(request: any): Promise<Either<AddFamilyErrors, Family>>;
+  execute(request: AddFamilyParams): Promise<Either<AddFamilyErrors, Family>>;
 }

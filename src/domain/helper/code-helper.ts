@@ -1,3 +1,5 @@
+import * as referalCodes from 'referral-codes';
+
 export const nameToCode = (name: string): string => {
   // Remove accents from letters
   const normalized = name.normalize('NFD').replace(/\p{M}/gu, '');
@@ -17,3 +19,17 @@ export const nameToCode = (name: string): string => {
 // const name = 'Assai Goiania';
 // const code = nameToCode(name);
 // console.log(code);
+
+type generateReferalCode = {
+  name: string;
+};
+export const generateReferalCode = ({ name }: generateReferalCode): string => {
+  const code = referalCodes.generate({
+    length: 6,
+    count: 1,
+    charset: referalCodes.charset(referalCodes.Charset.ALPHANUMERIC),
+    prefix: `${nameToCode(name)}-`,
+  });
+
+  return code[0];
+};
