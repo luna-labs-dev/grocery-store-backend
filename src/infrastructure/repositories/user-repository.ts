@@ -38,6 +38,10 @@ export class PrismaUserRepository implements UserRepositories {
       where: {
         firebaseId: externalId,
       },
+      include: {
+        familyMember: true,
+        ownedFamily: true,
+      },
     });
 
     if (!user) {

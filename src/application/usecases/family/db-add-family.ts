@@ -6,6 +6,7 @@ import {
   Either,
   Family,
   UnexpectedError,
+  UserAlreadyAFamilyMemberError,
   UserNotFoundError,
   left,
   right,
@@ -32,6 +33,10 @@ export class DbAddFamily implements AddFamily {
 
       if (!user) {
         return left(new UserNotFoundError());
+      }
+
+      if (user.family) {
+        return left(new UserAlreadyAFamilyMemberError());
       }
 
       // Create Family entity
