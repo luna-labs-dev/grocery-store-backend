@@ -33,5 +33,6 @@ export const injection = {
     addProductToCart: 'add-product-to-cart-controller',
     updateProductInCart: 'update-product-in-cart-controller',
     removeProductFromCart: 'remove-product-from-cart-controller',
+    addFamily: 'add-family-controller',
   },
 };

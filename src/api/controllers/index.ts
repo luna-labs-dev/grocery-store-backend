@@ -1,3 +1,5 @@
+export * from './family';
+
 export * from './add-market-controller';
 export * from './add-product-to-cart-controller';
 export * from './end-shopping-event-controller';

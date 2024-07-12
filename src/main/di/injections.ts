@@ -5,6 +5,7 @@ import {} from '../decorators';
 import { injection } from './injection-codes';
 
 import {
+  AddFamillyController,
   AddMarketController,
   AddProductToCartController,
   Controller,
@@ -101,3 +102,4 @@ container.register<Controller>(controllers.getShoppingEventById, GetShoppingEven
 container.register<Controller>(controllers.addProductToCart, AddProductToCartController);
 container.register<Controller>(controllers.updateProductInCart, UpdateProductInCartController);
 container.register<Controller>(controllers.removeProductFromCart, RemoveProductFromCartController);
+container.register<Controller>(controllers.addFamily, AddFamillyController);
