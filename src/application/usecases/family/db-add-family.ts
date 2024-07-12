@@ -10,11 +10,15 @@ import {
   left,
   right,
 } from '@/domain';
+import { injection } from '@/main/di';
+import { inject, injectable } from 'tsyringe';
 
+const { infra } = injection;
+@injectable()
 export class DbAddFamily implements AddFamily {
   constructor(
-    private readonly userRepository: GetUserByIdRepository,
-    private readonly familyRepository: AddFamilyRepository,
+    @inject(infra.userRepositories) private readonly userRepository: GetUserByIdRepository,
+    @inject(infra.familyRepositories) private readonly familyRepository: AddFamilyRepository,
   ) {}
 
   async execute({

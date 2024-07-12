@@ -19,6 +19,7 @@ import {
   UpdateProductInCartController,
 } from '@/api';
 import {
+  DbAddFamily,
   DbAddMarket,
   DbAddProductToCart,
   DbEndShoppingEvent,
@@ -40,6 +41,7 @@ import {
 } from '@/application/contracts';
 import { DbUpdateProductInCart } from '@/application/usecases/db-update-product-in-cart';
 import {
+  AddFamily,
   AddMarket,
   AddProductToCart,
   EndShoppingEvent,
@@ -85,6 +87,7 @@ container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCa
 container.register<UpdateProductInCart>(usecases.updateProductInCart, DbUpdateProductInCart);
 container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemoveProductFromCart);
 container.register<GetUser>(usecases.getUser, DbGetUser);
+container.register<AddFamily>(usecases.addFamily, DbAddFamily);
 
 // Api
 container.register<Controller>(controllers.newMarket, AddMarketController);

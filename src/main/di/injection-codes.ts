@@ -19,6 +19,7 @@ export const injection = {
     updateProductInCart: 'update-product-in-cart-usecase',
     removeProductFromCart: 'remove-product-from-cart-usecase',
     getUser: 'get-user-usecase',
+    addFamily: 'add-family-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
