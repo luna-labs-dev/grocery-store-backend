@@ -2,16 +2,29 @@ import {
   FamilyRepositories,
   GetFamilyByIdRepositoryParams,
   GetFamilyByInviteCodeRepositoryParams,
+  UpdateUserRepository,
 } from '@/application';
 import { Family } from '@/domain';
+import { injection } from '@/main/di/injection-codes';
 import { prisma } from '@/main/prisma/client';
+import { inject, injectable } from 'tsyringe';
+
 import { FamilyMapper } from './mappers';
 
+const { infra } = injection;
+
+@injectable()
 export class PrismaFamilyRepository implements FamilyRepositories {
+  constructor(
+    @inject(infra.userRepositories) private readonly userRepositories: UpdateUserRepository,
+  ) {}
+
   add = async (family: Family): Promise<void> => {
     await prisma.family.create({
       data: FamilyMapper.toCreatePersistence(family),
     });
+
+    await this.userRepositories.update(family.owner);
   };
 
   update = async (family: Family): Promise<void> => {
@@ -29,8 +42,18 @@ export class PrismaFamilyRepository implements FamilyRepositories {
         id: params.familyId,
       },
       include: {
-        owner: true,
-        members: true,
+        owner: {
+          include: {
+            family: true,
+            ownedFamily: true,
+          },
+        },
+        members: {
+          include: {
+            family: true,
+            ownedFamily: true,
+          },
+        },
       },
     });
 
@@ -49,8 +72,18 @@ export class PrismaFamilyRepository implements FamilyRepositories {
         inviteCode: inviteCode,
       },
       include: {
-        owner: true,
-        members: true,
+        owner: {
+          include: {
+            family: true,
+            ownedFamily: true,
+          },
+        },
+        members: {
+          include: {
+            family: true,
+            ownedFamily: true,
+          },
+        },
       },
     });
 

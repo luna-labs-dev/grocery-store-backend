@@ -1,4 +1,8 @@
-import { AddFamilyRepository, GetUserByIdRepository } from '@/application/contracts';
+import {
+  AddFamilyRepository,
+  GetUserByIdRepository,
+  UpdateUserRepository,
+} from '@/application/contracts';
 import {
   AddFamily,
   AddFamilyErrors,
@@ -11,14 +15,15 @@ import {
   left,
   right,
 } from '@/domain';
-import { injection } from '@/main/di';
+import { injection } from '@/main/di/injection-codes';
 import { inject, injectable } from 'tsyringe';
 
 const { infra } = injection;
 @injectable()
 export class DbAddFamily implements AddFamily {
   constructor(
-    @inject(infra.userRepositories) private readonly userRepository: GetUserByIdRepository,
+    @inject(infra.userRepositories)
+    private readonly userRepository: GetUserByIdRepository & UpdateUserRepository,
     @inject(infra.familyRepositories) private readonly familyRepository: AddFamilyRepository,
   ) {}
 
@@ -47,6 +52,8 @@ export class DbAddFamily implements AddFamily {
         createdAt: new Date(),
         createdBy: user.id,
       });
+
+      user.familyId = family.id;
 
       // Save Family to database
       await this.familyRepository.add(family);

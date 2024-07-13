@@ -24,6 +24,14 @@ export class PrismaUserRepository implements UserRepositories {
       where: {
         id: userId,
       },
+      include: {
+        family: {
+          include: {
+            owner: true,
+            members: true,
+          },
+        },
+      },
     });
 
     if (!user) {
@@ -39,8 +47,12 @@ export class PrismaUserRepository implements UserRepositories {
         firebaseId: externalId,
       },
       include: {
-        familyMember: true,
-        ownedFamily: true,
+        family: {
+          include: {
+            owner: true,
+            members: true,
+          },
+        },
       },
     });
 

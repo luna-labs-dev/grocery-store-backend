@@ -1,0 +1,7 @@
+POST http://localhost:8000/api/grocery-shopping/v1/family
+Content-Type: application/json
+x-authorization-token: {{token}}
+
+{  
+  "name": "Trindade Poli"  
+}

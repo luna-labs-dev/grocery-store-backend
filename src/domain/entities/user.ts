@@ -31,6 +31,10 @@ export class User extends Entity<UserProps> {
     return this.props.familyId;
   }
 
+  public set familyId(familyId: string | undefined) {
+    this.props.familyId = familyId;
+  }
+
   public get family(): Family | undefined {
     return this.props.family;
   }

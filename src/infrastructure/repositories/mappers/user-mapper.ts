@@ -1,20 +1,51 @@
-import { Prisma, user } from '@prisma/client';
+import { Prisma, family, user } from '@prisma/client';
 
-import { User } from '@/domain';
+import { Family, User } from '@/domain';
+import {} from './family-mapper';
+
+type FamilyPersistence = family & {
+  owner: user;
+  members: user[];
+};
+export type UserPersistence = user & {
+  family?: FamilyPersistence | null;
+};
 
 type UserCreatePersistence = Prisma.userCreateInput;
 type UserUpdatePersistence = Prisma.userUpdateInput;
 
 export const UserMapper = {
-  toDomain: (raw: user): User => {
+  toDomain: (user: UserPersistence): User => {
     return User.create(
       {
-        familyId: raw.familyId ?? undefined,
-        email: raw.email,
-        displayName: raw.displayName,
-        firebaseId: raw.firebaseId,
+        firebaseId: user.firebaseId,
+        email: user.email,
+        displayName: user.displayName,
+        familyId: user.familyId ?? undefined,
+        family: user.family
+          ? Family.create(
+              {
+                ownerId: '',
+                owner: User.create(
+                  {
+                    firebaseId: user.family.owner.firebaseId,
+                    email: user.family.owner.email,
+                    displayName: user.family.owner.displayName,
+                  },
+                  user.family.owner.id,
+                ),
+                name: user.family.name,
+                description: user.family.description ?? undefined,
+                inviteCode: user.family.inviteCode ?? undefined,
+                createdAt: user.family.createdAt,
+                createdBy: user.family.createdBy,
+              },
+              user.family.id,
+            )
+          : undefined,
       },
-      raw.id,
+
+      user.id,
     );
   },
 
@@ -31,7 +62,7 @@ export const UserMapper = {
     return {
       displayName: user.displayName,
       email: user.email,
-      familyMember: user.familyId
+      family: user.familyId
         ? {
             connect: {
               id: user.familyId,

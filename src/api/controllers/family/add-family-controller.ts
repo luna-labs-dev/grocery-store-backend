@@ -6,7 +6,7 @@ import {
   controllerErrorHandling,
   controllerValidationHandling,
 } from '@/main/decorators';
-import { injection } from '@/main/di';
+import { injection } from '@/main/di/injection-codes';
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
@@ -27,11 +27,7 @@ export type addFamilyControllerRequest = z.infer<typeof addFamilyRequestSchema>;
 export class AddFamillyController implements Controller {
   constructor(@inject(usecases.addFamily) private readonly addFamily: AddFamily) {}
 
-  handle = async ({
-    user,
-    name,
-    description,
-  }: addFamilyControllerRequest): Promise<HttpResponse> => {
+  async handle({ user, name, description }: addFamilyControllerRequest): Promise<HttpResponse> {
     const result = await this.addFamily.execute({
       userId: user,
       name,
@@ -65,5 +61,5 @@ export class AddFamillyController implements Controller {
     };
 
     return ok(response);
-  };
+  }
 }
