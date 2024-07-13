@@ -48,7 +48,7 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
         return left(new FamilyNotFoundError(familyId));
       }
 
-      const member = family.members.find((member) => member.id === user);
+      const member = family.members?.find((member) => member.id === user);
 
       if (!member) {
         return left(new UserNotAFamilyMemberError());

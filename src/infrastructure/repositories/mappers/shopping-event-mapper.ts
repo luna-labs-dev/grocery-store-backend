@@ -1,9 +1,7 @@
 import { Prisma, family, market, product, shopping_event, user } from '@prisma/client';
-
-import { FamilyMapper } from './family-mapper';
 import { MarketMapper } from './market-mapper';
 
-import { Market, Product, ShoppingEvent } from '@/domain';
+import { Family, Market, Product, ShoppingEvent, User } from '@/domain';
 import { Products } from '@/domain/entities/products';
 
 type ShoppingEventPersistence = shopping_event & {
@@ -15,24 +13,54 @@ type ShoppingEventCreatePersistence = Prisma.shopping_eventCreateInput;
 type ShoppingEventUpdatePersistence = Prisma.shopping_eventUpdateInput;
 
 export const ShoppingEventMapper = {
-  toDomain: (raw: ShoppingEventPersistence): ShoppingEvent => {
+  toDomain: (shoppingEvent: ShoppingEventPersistence): ShoppingEvent => {
     return ShoppingEvent.create(
       {
-        familyId: raw.familyId,
-        family: FamilyMapper.toDomain(raw.family),
-        marketId: raw.marketId,
-        market: MarketMapper.toDomain(raw.market as Market),
-        description: raw.description ?? '',
-        totalPaid: Number(raw.totalPaid ?? 0),
-        wholesaleTotal: Number(raw.wholesaleTotal ?? 0),
-        retailTotal: Number(raw.retailTotal ?? 0),
-        status: raw.status,
+        familyId: shoppingEvent.familyId,
+        family: Family.create(
+          {
+            ownerId: shoppingEvent.family.ownerId,
+            owner: User.create(
+              {
+                firebaseId: shoppingEvent.family.owner.firebaseId,
+                email: shoppingEvent.family.owner.email,
+                displayName: shoppingEvent.family.owner.displayName,
+              },
+              shoppingEvent.family.owner.id,
+            ),
+            name: shoppingEvent.family.name,
+            createdAt: shoppingEvent.family.createdAt,
+            createdBy: shoppingEvent.family.createdBy,
+            description: shoppingEvent.family.description ?? undefined,
+            inviteCode: shoppingEvent.family.inviteCode ?? undefined,
+            members: shoppingEvent.family.members
+              ? shoppingEvent.family.members.map((member) =>
+                  User.create(
+                    {
+                      firebaseId: member.firebaseId,
+                      email: member.email,
+                      displayName: member.displayName,
+                    },
+                    member.id,
+                  ),
+                )
+              : [],
+          },
+          shoppingEvent.family.id,
+        ),
+        marketId: shoppingEvent.marketId,
+        market: MarketMapper.toDomain(shoppingEvent.market as Market),
+        description: shoppingEvent.description ?? '',
+        totalPaid: Number(shoppingEvent.totalPaid ?? 0),
+        wholesaleTotal: Number(shoppingEvent.wholesaleTotal ?? 0),
+        retailTotal: Number(shoppingEvent.retailTotal ?? 0),
+        status: shoppingEvent.status,
         products: Products.create(
-          raw.product
-            ? raw.product?.map((prod) =>
+          shoppingEvent.product
+            ? shoppingEvent.product?.map((prod) =>
                 Product.create(
                   {
-                    shoppingEventId: raw.id,
+                    shoppingEventId: shoppingEvent.id,
                     name: prod.name,
                     amount: prod.amount,
                     wholesaleMinAmount: prod.wholesaleMinAmount ?? undefined,
@@ -46,12 +74,12 @@ export const ShoppingEventMapper = {
               )
             : [],
         ),
-        elapsedTime: raw.elapsedTime ?? undefined,
-        createdAt: raw.createdAt,
-        finishedAt: raw.finishedAt ?? undefined,
-        createdBy: raw.createdBy,
+        elapsedTime: shoppingEvent.elapsedTime ?? undefined,
+        createdAt: shoppingEvent.createdAt,
+        finishedAt: shoppingEvent.finishedAt ?? undefined,
+        createdBy: shoppingEvent.createdBy,
       },
-      raw.id,
+      shoppingEvent.id,
     );
   },
 
