@@ -1,7 +1,7 @@
-import { Either } from '../core';
-import { Market } from '../entities';
+import { Either } from '../../core';
+import { Market } from '../../entities';
 
-import { MarketAlreadyExistsError, UnexpectedError } from './errors';
+import { MarketAlreadyExistsError, UnexpectedError } from '../errors';
 
 export type AddMarketErrors = UnexpectedError & MarketAlreadyExistsError;
 

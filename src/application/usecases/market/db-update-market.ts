@@ -4,7 +4,7 @@ import {
   GetMarketByCodeRepository,
   GetMarketByIdRepository,
   UpdateMarketRepository,
-} from '../contracts';
+} from '../../contracts';
 
 import {
   Either,

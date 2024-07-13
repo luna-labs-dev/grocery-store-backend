@@ -1,12 +1,12 @@
-import { Either } from '../core';
-import { ShoppingEvent } from '../entities';
+import { Either } from '../../core';
+import { ShoppingEvent } from '../../entities';
 
 import {
   EmptyCartError,
   ShoppingEventAlreadyEndedError,
   ShoppingEventNotFoundError,
   UnexpectedError,
-} from './errors';
+} from '../errors';
 
 export interface EndShoppingEventParams {
   shoppingEventId: string;

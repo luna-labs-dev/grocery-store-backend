@@ -1,6 +1,6 @@
-import { Either } from '../core';
+import { Either } from '../../../core';
 
-import { ProductNotFoundError, ShoppingEventNotFoundError, UnexpectedError } from './errors';
+import { ProductNotFoundError, ShoppingEventNotFoundError, UnexpectedError } from '../../errors';
 
 export interface RemoveProductFromCartParams {
   familyId: string;

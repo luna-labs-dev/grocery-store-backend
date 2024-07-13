@@ -40,7 +40,7 @@ import {
   ShoppingEventRepositories,
   UserRepositories,
 } from '@/application/contracts';
-import { DbUpdateProductInCart } from '@/application/usecases/db-update-product-in-cart';
+import { DbUpdateProductInCart } from '@/application/usecases/shopping-event/cart/db-update-product-in-cart';
 import {
   AddFamily,
   AddMarket,

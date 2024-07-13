@@ -1,6 +1,6 @@
-import { Either } from '../core';
-import { User } from '../entities';
-import { UnexpectedError } from './errors';
+import { Either } from '../../core';
+import { User } from '../../entities';
+import { UnexpectedError } from '../errors';
 
 export interface GetUserParams {
   externalId: string;

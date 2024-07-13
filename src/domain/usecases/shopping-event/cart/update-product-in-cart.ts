@@ -1,7 +1,7 @@
-import { Either } from '../core';
-import { Product } from '../entities';
+import { Either } from '../../../core';
+import { Product } from '../../../entities';
 
-import { ProductNotFoundError, ShoppingEventNotFoundError, UnexpectedError } from './errors';
+import { ProductNotFoundError, ShoppingEventNotFoundError, UnexpectedError } from '../../errors';
 
 export type UpdateProductInCartErrors = UnexpectedError &
   ShoppingEventNotFoundError &

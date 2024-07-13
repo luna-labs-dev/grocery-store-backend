@@ -1,7 +1,7 @@
-import { Either } from '../core';
-import { ShoppingEvent } from '../entities';
+import { Either } from '../../core';
+import { ShoppingEvent } from '../../entities';
 
-import { MarketNotFoundError, UnexpectedError } from './errors';
+import { MarketNotFoundError, UnexpectedError } from '../errors';
 
 export type StartShoppingEventErrors = UnexpectedError & MarketNotFoundError;
 

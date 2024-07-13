@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
 
-import { AddProductToCart } from '../../domain/usecases/add-product-to-cart';
+import { AddProductToCart } from '../../../../domain/usecases/shopping-event/cart/add-product-to-cart';
 
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';

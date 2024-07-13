@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { GetMarketListRepository } from '../contracts';
+import { GetMarketListRepository } from '../../contracts';
 
 import {
   Either,

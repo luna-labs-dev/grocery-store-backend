@@ -1,7 +1,7 @@
-import { Either } from '../core';
-import { Market } from '../entities';
+import { Either } from '../../core';
+import { Market } from '../../entities';
 
-import { UnexpectedError } from './errors';
+import { UnexpectedError } from '../errors';
 
 export interface GetMarketListParams {
   search?: string;

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { GetShoppingEventByIdRepository } from '../contracts';
+import { GetShoppingEventByIdRepository } from '../../contracts';
 
 import {
   Either,

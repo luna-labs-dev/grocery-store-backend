@@ -1,7 +1,7 @@
-import { Either } from '../core';
-import { ShoppingEvent } from '../entities';
+import { Either } from '../../core';
+import { ShoppingEvent } from '../../entities';
 
-import { ShoppingEventNotFoundError, UnexpectedError } from './errors';
+import { ShoppingEventNotFoundError, UnexpectedError } from '../errors';
 
 export type GetShoppingEventByIdErrors = UnexpectedError | ShoppingEventNotFoundError;
 

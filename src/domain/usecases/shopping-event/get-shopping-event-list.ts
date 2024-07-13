@@ -1,7 +1,7 @@
-import { Either } from '../core';
-import { ShoppingEvent, ShoppingEventStatus } from '../entities';
+import { Either } from '../../core';
+import { ShoppingEvent, ShoppingEventStatus } from '../../entities';
 
-import { UnexpectedError } from './errors';
+import { UnexpectedError } from '../errors';
 
 export interface GetShoppingEventListParams {
   familyId: string;
