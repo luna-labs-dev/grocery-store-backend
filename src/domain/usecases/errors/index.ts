@@ -9,3 +9,4 @@ export * from './family-not-found-error';
 export * from './user-not-a-family-member-error';
 export * from './user-not-found-error';
 export * from './user-already-a-family-member-error';
+export * from './invalid-invate-code-error';
