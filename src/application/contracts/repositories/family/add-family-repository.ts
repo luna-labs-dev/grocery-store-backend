@@ -1,5 +1,5 @@
-import { Family } from '@/domain';
+import { Either, Family } from '@/domain';
 
 export interface AddFamilyRepository {
-  add: (family: Family) => Promise<void>;
+  add: (family: Family) => Promise<Either<void, void>>;
 }

@@ -9,6 +9,7 @@ import {
   AddFamilyParams,
   Either,
   Family,
+  InvalidFamilyNameError,
   UnexpectedError,
   UserAlreadyAFamilyMemberError,
   UserNotFoundError,
@@ -56,7 +57,11 @@ export class DbAddFamily implements AddFamily {
       user.familyId = family.id;
 
       // Save Family to database
-      await this.familyRepository.add(family);
+      const createResult = await this.familyRepository.add(family);
+
+      if (createResult.isLeft()) {
+        return left(new InvalidFamilyNameError());
+      }
 
       // Return Family entity
       return right(family);
