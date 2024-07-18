@@ -1,7 +1,17 @@
+### add family
 POST http://localhost:8000/api/grocery-shopping/v1/family
 Content-Type: application/json
 x-authorization-token: {{token}}
 
 {  
-  "name": "Trindade Poli"  
+  "name": "seuaciuc"  
+}
+
+### join family
+POST http://localhost:8000/api/grocery-shopping/v1/family/join
+Content-Type: application/json
+x-authorization-token: {{token}}
+
+{  
+  "inviteCode": "poli-5Mw2hN"
 }

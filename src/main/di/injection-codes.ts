@@ -20,6 +20,7 @@ export const injection = {
     removeProductFromCart: 'remove-product-from-cart-usecase',
     getUser: 'get-user-usecase',
     addFamily: 'add-family-usecase',
+    joinFamily: 'join-family-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
@@ -34,5 +35,6 @@ export const injection = {
     updateProductInCart: 'update-product-in-cart-controller',
     removeProductFromCart: 'remove-product-from-cart-controller',
     addFamily: 'add-family-controller',
+    joinFamily: 'join-family-controller',
   },
 };
