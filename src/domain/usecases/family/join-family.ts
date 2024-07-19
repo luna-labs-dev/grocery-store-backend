@@ -1,5 +1,4 @@
 import { Either } from '@/domain/core';
-import { Family } from '@/domain/entities';
 import {
   InvalidInviteCodeError,
   UnexpectedError,
@@ -19,5 +18,5 @@ export type JoinFamilyErrors =
   | InvalidInviteCodeError;
 
 export interface JoinFamily {
-  execute(params: JoinFamilyParams): Promise<Either<JoinFamilyErrors, Family>>;
+  execute(params: JoinFamilyParams): Promise<Either<JoinFamilyErrors, void>>;
 }

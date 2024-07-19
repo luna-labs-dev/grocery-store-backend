@@ -5,7 +5,6 @@ import {
 } from '@/application/contracts';
 import {
   Either,
-  Family,
   InvalidInviteCodeError,
   JoinFamily,
   JoinFamilyErrors,
@@ -29,10 +28,7 @@ export class DbJoinFamily implements JoinFamily {
     private readonly familyRepository: GetFamilyByInviteCodeRepository,
   ) {}
 
-  async execute({
-    userId,
-    inviteCode,
-  }: JoinFamilyParams): Promise<Either<JoinFamilyErrors, Family>> {
+  async execute({ userId, inviteCode }: JoinFamilyParams): Promise<Either<JoinFamilyErrors, void>> {
     // Get user
     const user = await this.userRepository.getByExternalId(userId);
 
@@ -58,9 +54,7 @@ export class DbJoinFamily implements JoinFamily {
 
     await this.userRepository.update(user);
 
-    family.members?.push(user);
-
     // Add user to family
-    return right(family);
+    return right(undefined);
   }
 }
