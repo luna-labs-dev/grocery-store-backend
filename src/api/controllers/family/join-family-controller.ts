@@ -20,8 +20,8 @@ export const joinFamilyRequestSchema = z.object({
 export type JoinFamilyControllerRequest = z.infer<typeof joinFamilyRequestSchema>;
 
 @injectable()
-@controllerAuthorizationHandling()
 @controllerErrorHandling()
+@controllerAuthorizationHandling()
 @controllerValidationHandling(joinFamilyRequestSchema)
 export class JoinFamilyController implements Controller {
   constructor(@inject(usecases.joinFamily) private readonly joinFamily: JoinFamily) {}

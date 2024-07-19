@@ -15,3 +15,12 @@ x-authorization-token: {{token}}
 {  
   "inviteCode": "poli-5Mw2hN"
 }
+
+### leave family
+POST http://localhost:8000/api/grocery-shopping/v1/family/leave
+Content-Type: application/json
+x-authorization-token: {{token}}
+
+{  
+  "familyId": "de0802cf-9ad7-4d73-a329-3ed56e38a08e"  
+}

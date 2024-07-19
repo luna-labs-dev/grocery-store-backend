@@ -68,7 +68,9 @@ export const UserMapper = {
               id: user.familyId,
             },
           }
-        : undefined,
+        : {
+            disconnect: true,
+          },
     };
   },
 };
