@@ -17,6 +17,7 @@ import {
   GetShoppingEventListController,
   JoinFamilyController,
   LeaveFamilyController,
+  RemoveFamilyMemberController,
   RemoveProductFromCartController,
   StartShoppingEventController,
   UpdateMarketController,
@@ -35,6 +36,7 @@ import {
   DbGetUser,
   DbJoinFamily,
   DbLeaveFamily,
+  DbRemoveFamilyMember,
   DbRemoveProductFromCart,
   DbStartShoppingEvent,
   DbUpdateMarket,
@@ -60,6 +62,7 @@ import {
   GetUser,
   JoinFamily,
   LeaveFamily,
+  RemoveFamilyMember,
   RemoveProductFromCart,
   StartShoppingEvent,
   UpdateMarket,
@@ -101,6 +104,7 @@ container.register<AddFamily>(usecases.addFamily, DbAddFamily);
 container.register<JoinFamily>(usecases.joinFamily, DbJoinFamily);
 container.register<LeaveFamily>(usecases.leaveFamily, DbLeaveFamily);
 container.register<GetFamily>(usecases.getFamily, DbGetFamily);
+container.register<RemoveFamilyMember>(usecases.removeFamilyMember, DbRemoveFamilyMember);
 
 // Api
 container.register<Controller>(controllers.newMarket, AddMarketController);
@@ -118,3 +122,4 @@ container.register<Controller>(controllers.addFamily, AddFamillyController);
 container.register<Controller>(controllers.joinFamily, JoinFamilyController);
 container.register<Controller>(controllers.leaveFamily, LeaveFamilyController);
 container.register<Controller>(controllers.getFamily, GetFamilyController);
+container.register<Controller>(controllers.removeFamilyMember, RemoveFamilyMemberController);

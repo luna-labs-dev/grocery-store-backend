@@ -9,3 +9,7 @@ familyRouter.post('/', adaptRoute(container.resolve(injection.controllers.addFam
 familyRouter.get('/', adaptRoute(container.resolve(injection.controllers.getFamily)));
 familyRouter.post('/join', adaptRoute(container.resolve(injection.controllers.joinFamily)));
 familyRouter.put('/leave', adaptRoute(container.resolve(injection.controllers.leaveFamily)));
+familyRouter.put(
+  '/remove',
+  adaptRoute(container.resolve(injection.controllers.removeFamilyMember)),
+);

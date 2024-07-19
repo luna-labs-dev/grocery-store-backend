@@ -4,4 +4,10 @@
     ✔ join family @done(24-07-19 02:32)
     ✔ leave family @done(24-07-19 02:32)
     ☐ remove family member
+        user exists
+        user is a family member
+        user is the owner
+        userToBeRemoved is a family member
+        userToBeRemoved is not the owner
+
 ☐ test end to end flow

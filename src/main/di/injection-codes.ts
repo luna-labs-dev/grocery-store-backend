@@ -23,6 +23,7 @@ export const injection = {
     joinFamily: 'join-family-usecase',
     leaveFamily: 'leave-family-usecase',
     getFamily: 'get-family-usecase',
+    removeFamilyMember: 'remove-family-member-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
@@ -40,5 +41,6 @@ export const injection = {
     joinFamily: 'join-family-controller',
     leaveFamily: 'leave-family-controller',
     getFamily: 'get-family-controller',
+    removeFamilyMember: 'remove-family-member-controller',
   },
 };
