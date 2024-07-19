@@ -33,12 +33,12 @@ export class PrismaFamilyRepository implements FamilyRepositories {
     } catch (error) {
       const typedError = error as PrismaClientKnownRequestError;
 
-      console.log(typedError.code);
       const mappedError = getMappedPrismaError(typedError.code);
       if (mappedError === 'UNMAPPED') {
         throw error;
       }
-      console.log({
+
+      console.error({
         message: typedError.message,
         context: typedError.meta,
       });

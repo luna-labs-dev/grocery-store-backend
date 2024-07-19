@@ -16,10 +16,6 @@ export const nameToCode = (name: string): string => {
   return code;
 };
 
-// const name = 'Assai Goiania';
-// const code = nameToCode(name);
-// console.log(code);
-
 type generateReferalCode = {
   name: string;
 };

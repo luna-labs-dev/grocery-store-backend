@@ -14,7 +14,6 @@ type FamilyCreatePersistence = Prisma.familyCreateInput;
 
 export const FamilyMapper = {
   toDomain: (family: FamilyPersistence): Family => {
-    console.log(family);
     return Family.create(
       {
         ownerId: family.ownerId,

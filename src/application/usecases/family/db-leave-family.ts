@@ -1,7 +1,6 @@
 import { FamilyRepositories, UserRepositories } from '@/application/contracts';
 import {
   Either,
-  FamilyNotFoundError,
   LeaveFamily,
   LeaveFamilyErrors,
   LeaveFamilyParams,
@@ -22,7 +21,7 @@ export class DbLeaveFamily implements LeaveFamily {
     @inject(infra.userRepositories) private readonly userRepository: UserRepositories,
     @inject(infra.familyRepositories) private readonly familyRepository: FamilyRepositories,
   ) {}
-  async execute({ userId, familyId }: LeaveFamilyParams): Promise<Either<LeaveFamilyErrors, void>> {
+  async execute({ userId }: LeaveFamilyParams): Promise<Either<LeaveFamilyErrors, void>> {
     try {
       const user = await this.userRepository.getByExternalId(userId);
 
@@ -32,14 +31,6 @@ export class DbLeaveFamily implements LeaveFamily {
 
       if (!user.family) {
         return left(new UserNotAFamilyMemberError());
-      }
-
-      const family = await this.familyRepository.getById({
-        familyId,
-      });
-
-      if (!family) {
-        return left(new FamilyNotFoundError());
       }
 
       user.familyId = undefined;

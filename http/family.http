@@ -17,10 +17,7 @@ x-authorization-token: {{token}}
 }
 
 ### leave family
-POST http://localhost:8000/api/grocery-shopping/v1/family/leave
+PUT http://localhost:8000/api/grocery-shopping/v1/family/leave
 Content-Type: application/json
 x-authorization-token: {{token}}
 
-{  
-  "familyId": "de0802cf-9ad7-4d73-a329-3ed56e38a08e"  
-}

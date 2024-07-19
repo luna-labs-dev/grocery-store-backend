@@ -7,4 +7,4 @@ export const familyRouter = Router();
 
 familyRouter.post('/', adaptRoute(container.resolve(injection.controllers.addFamily)));
 familyRouter.post('/join', adaptRoute(container.resolve(injection.controllers.joinFamily)));
-familyRouter.post('/leave', adaptRoute(container.resolve(injection.controllers.leaveFamily)));
+familyRouter.put('/leave', adaptRoute(container.resolve(injection.controllers.leaveFamily)));

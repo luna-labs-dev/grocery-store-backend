@@ -64,8 +64,6 @@ export class UpdateProductInCartController implements Controller {
 
     const product = updateProductInCartResult.value;
 
-    console.log(product);
-
     return noContent();
   }
 }
