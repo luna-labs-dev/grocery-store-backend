@@ -4,6 +4,12 @@ import { z } from 'zod';
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetShoppingEventById } from '@/domain';
+import {
+  controllerAuthorizationHandling,
+  controllerErrorHandling,
+  controllerFamilyBarrierHandling,
+  controllerValidationHandling,
+} from '@/main/decorators';
 import { injection } from '@/main/di/injection-codes';
 
 const { usecases } = injection;
@@ -16,6 +22,10 @@ export const getShoppingEventByIdRequestSchema = z.object({
 type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdRequestSchema>;
 
 @injectable()
+@controllerErrorHandling()
+@controllerFamilyBarrierHandling()
+@controllerAuthorizationHandling()
+@controllerValidationHandling(getShoppingEventByIdRequestSchema)
 export class GetShoppingEventByIdController implements Controller {
   constructor(
     @inject(usecases.getShoppingEventById)

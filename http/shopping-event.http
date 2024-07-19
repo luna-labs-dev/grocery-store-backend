@@ -1,0 +1,7 @@
+POST http://localhost:8000/api/grocery-shopping/v1/shopping-event/start
+Content-Type: application/json
+x-authorization-token: {{token}}
+
+{
+  "marketId": "aa3f488c-80d2-4d9d-9ebd-5c7c5073fc95"
+}

@@ -33,6 +33,8 @@ export const controllerFamilyBarrierHandling = () => {
           });
         }
 
+        request.familyId = dbUser.familyId;
+
         const httpResponse = await originalHandle.apply(this, [request]);
 
         return httpResponse;

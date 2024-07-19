@@ -23,9 +23,9 @@ export const StartShoppingEventRequestSchema = z.object({
 export type StartShoppingEventControllerRequest = z.infer<typeof StartShoppingEventRequestSchema>;
 
 @injectable()
-@controllerAuthorizationHandling()
-@controllerFamilyBarrierHandling()
 @controllerErrorHandling()
+@controllerFamilyBarrierHandling()
+@controllerAuthorizationHandling()
 @controllerValidationHandling(StartShoppingEventRequestSchema)
 export class StartShoppingEventController implements Controller {
   constructor(

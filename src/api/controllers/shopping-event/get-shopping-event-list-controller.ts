@@ -38,9 +38,9 @@ export const getShoppingEventListRequestSchema = z.object({
 type GetShoppingEventListControllerParams = z.infer<typeof getShoppingEventListRequestSchema>;
 
 @injectable()
-@controllerAuthorizationHandling()
-@controllerFamilyBarrierHandling()
 @controllerErrorHandling()
+@controllerFamilyBarrierHandling()
+@controllerAuthorizationHandling()
 @controllerValidationHandling(getShoppingEventListRequestSchema)
 export class GetShoppingEventListController implements Controller {
   constructor(
