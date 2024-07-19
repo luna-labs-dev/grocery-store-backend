@@ -7,6 +7,11 @@ x-authorization-token: {{token}}
   "name": "seuaciuc"  
 }
 
+### get family
+GET http://localhost:8000/api/grocery-shopping/v1/family
+Content-Type: application/json
+x-authorization-token: {{token}}
+
 ### join family
 POST http://localhost:8000/api/grocery-shopping/v1/family/join
 Content-Type: application/json

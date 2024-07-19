@@ -34,6 +34,16 @@ export const UserMapper = {
                   },
                   user.family.owner.id,
                 ),
+                members: user.family.members.map((member) =>
+                  User.create(
+                    {
+                      firebaseId: member.firebaseId,
+                      email: member.email,
+                      displayName: member.displayName,
+                    },
+                    member.id,
+                  ),
+                ),
                 name: user.family.name,
                 description: user.family.description ?? undefined,
                 inviteCode: user.family.inviteCode ?? undefined,
