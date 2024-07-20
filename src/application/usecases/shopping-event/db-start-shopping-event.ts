@@ -7,14 +7,12 @@ import {
 } from '@/application/contracts';
 import {
   Either,
-  FamilyNotFoundError,
   MarketNotFoundError,
   ShoppingEvent,
   StartShoppingEvent,
   StartShoppingEventErrors,
   StartShoppingEventParams,
   UnexpectedError,
-  UserNotAFamilyMemberError,
   left,
   right,
 } from '@/domain';
@@ -39,21 +37,6 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
     marketId,
   }: StartShoppingEventParams): Promise<Either<StartShoppingEventErrors, ShoppingEvent>> => {
     try {
-      // TUDO - Implement Family Repository
-      // Fetch Family
-      const family = await this.familyRepository.getById({ familyId });
-
-      // If Family doesnt exists returns FamilyNotFoundError
-      if (!family) {
-        return left(new FamilyNotFoundError(familyId));
-      }
-
-      const member = family.members?.find((member) => member.firebaseId === user);
-
-      if (!member) {
-        return left(new UserNotAFamilyMemberError());
-      }
-
       // Calls GetMarketById
       const market = await this.marketRepository.getById({
         id: marketId,

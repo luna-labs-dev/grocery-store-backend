@@ -24,7 +24,7 @@ const { infra } = injection;
 export class DbEndShoppingEvent implements EndShoppingEvent {
   constructor(
     @inject(infra.shoppingEventRepositories)
-    private readonly repository: EndShoppingEventRepositories,
+    private readonly shoppingRepository: EndShoppingEventRepositories,
   ) {}
 
   execute = async ({
@@ -34,7 +34,7 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
   }: EndShoppingEventParams): Promise<Either<EndShoppingEventErrors, ShoppingEvent>> => {
     try {
       // Get Shopping Event by Id
-      const shoppingEvent = await this.repository.getById({
+      const shoppingEvent = await this.shoppingRepository.getById({
         shoppingEventId,
         familyId,
       });
@@ -56,7 +56,7 @@ export class DbEndShoppingEvent implements EndShoppingEvent {
       shoppingEvent.end(totalPaid);
 
       // Update ShoppingEvent to the database
-      await this.repository.update(shoppingEvent);
+      await this.shoppingRepository.update(shoppingEvent);
 
       // Returns Updated ShoppingEvent
       return right(shoppingEvent);
