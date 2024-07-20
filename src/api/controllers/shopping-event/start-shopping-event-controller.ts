@@ -24,8 +24,8 @@ export type StartShoppingEventControllerRequest = z.infer<typeof StartShoppingEv
 
 @injectable()
 @controllerErrorHandling()
-@controllerFamilyBarrierHandling()
 @controllerAuthorizationHandling()
+@controllerFamilyBarrierHandling()
 @controllerValidationHandling(StartShoppingEventRequestSchema)
 export class StartShoppingEventController implements Controller {
   constructor(

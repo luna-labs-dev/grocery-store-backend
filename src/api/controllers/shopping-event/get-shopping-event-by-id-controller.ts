@@ -23,8 +23,8 @@ type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdR
 
 @injectable()
 @controllerErrorHandling()
-@controllerFamilyBarrierHandling()
 @controllerAuthorizationHandling()
+@controllerFamilyBarrierHandling()
 @controllerValidationHandling(getShoppingEventByIdRequestSchema)
 export class GetShoppingEventByIdController implements Controller {
   constructor(

@@ -21,9 +21,9 @@ export type UpdateMarketControllerRequest = z.infer<typeof updateMarketRequestSc
 
 const { usecases } = injection;
 @injectable()
+@controllerErrorHandling()
 @controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
-@controllerErrorHandling()
 @controllerValidationHandling(updateMarketRequestSchema)
 export class UpdateMarketController implements Controller {
   constructor(@inject(usecases.updateMarket) private readonly updateMarket: UpdateMarket) {}

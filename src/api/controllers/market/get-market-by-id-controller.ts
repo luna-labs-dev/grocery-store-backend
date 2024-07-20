@@ -21,9 +21,9 @@ export const getMarketByIdRequestSchema = z.object({
 type GetMarketByIdControllerParams = z.infer<typeof getMarketByIdRequestSchema>;
 
 @injectable()
+@controllerErrorHandling()
 @controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
-@controllerErrorHandling()
 @controllerValidationHandling(getMarketByIdRequestSchema)
 export class GetMarketByIdController implements Controller {
   constructor(@inject(usecases.getMarketById) private readonly getMarketById: GetMarketById) {}

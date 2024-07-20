@@ -23,9 +23,9 @@ type AddMarketControllerRequest = z.infer<typeof addMarketRequestSchema>;
 const { usecases } = injection;
 
 @injectable()
+@controllerErrorHandling()
 @controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
-@controllerErrorHandling()
 @controllerValidationHandling(addMarketRequestSchema)
 export class AddMarketController implements Controller {
   constructor(@inject(usecases.newMarket) private readonly newMarket: AddMarket) {}

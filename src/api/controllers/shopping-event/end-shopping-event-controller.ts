@@ -22,8 +22,8 @@ export type EndShoppingEventControllerRequest = z.infer<typeof EndShoppingEventR
 const { usecases } = injection;
 @injectable()
 @controllerErrorHandling()
-@controllerFamilyBarrierHandling()
 @controllerAuthorizationHandling()
+@controllerFamilyBarrierHandling()
 @controllerValidationHandling(EndShoppingEventRequestSchema)
 export class EndShoppingEventController implements Controller {
   constructor(

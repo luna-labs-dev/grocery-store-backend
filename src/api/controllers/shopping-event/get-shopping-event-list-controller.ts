@@ -39,8 +39,8 @@ type GetShoppingEventListControllerParams = z.infer<typeof getShoppingEventListR
 
 @injectable()
 @controllerErrorHandling()
-@controllerFamilyBarrierHandling()
 @controllerAuthorizationHandling()
+@controllerFamilyBarrierHandling()
 @controllerValidationHandling(getShoppingEventListRequestSchema)
 export class GetShoppingEventListController implements Controller {
   constructor(

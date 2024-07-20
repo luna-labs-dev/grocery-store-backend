@@ -14,6 +14,13 @@ export const controllerFamilyBarrierHandling = () => {
         const getUser = container.resolve<GetUser>(usecases.getUser);
 
         const externalUserId = request.user;
+        if (!externalUserId) {
+          console.error('external user id is not provided');
+          return unauthorized();
+        }
+
+        console.log(externalUserId);
+
         const dbUserResult = await getUser.execute({
           externalId: externalUserId,
         });
@@ -25,6 +32,7 @@ export const controllerFamilyBarrierHandling = () => {
         }
 
         const dbUser = dbUserResult.value;
+        console.log(dbUser);
 
         if (!dbUser.familyId) {
           // if user is not member of any family, return unauthorized with required action to add user to family

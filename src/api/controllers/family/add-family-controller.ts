@@ -21,8 +21,8 @@ export const addFamilyRequestSchema = z.object({
 export type addFamilyControllerRequest = z.infer<typeof addFamilyRequestSchema>;
 
 @injectable()
-@controllerAuthorizationHandling()
 @controllerErrorHandling()
+@controllerAuthorizationHandling()
 @controllerValidationHandling(addFamilyRequestSchema)
 export class AddFamillyController implements Controller {
   constructor(@inject(usecases.addFamily) private readonly addFamily: AddFamily) {}

@@ -26,9 +26,9 @@ export const getMarketListRequestSchema = z.object({
 type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>;
 
 @injectable()
+@controllerErrorHandling()
 @controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
-@controllerErrorHandling()
 @controllerValidationHandling(getMarketListRequestSchema)
 export class GetMarketListController implements Controller {
   constructor(@inject(usecases.getMarketList) private readonly getMarketList: GetMarketList) {}
