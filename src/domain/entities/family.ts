@@ -1,4 +1,5 @@
 import { Entity } from '../core';
+import { generateReferalCode } from '../helper';
 
 import { User } from './user';
 
@@ -8,7 +9,9 @@ interface FamilyProps {
   name: string;
   description?: string;
   inviteCode?: string;
-  users: User[];
+  createdAt: Date;
+  createdBy: string;
+  members?: User[];
 }
 
 export class Family extends Entity<FamilyProps> {
@@ -36,11 +39,24 @@ export class Family extends Entity<FamilyProps> {
     return this.props.inviteCode;
   }
 
-  public get members(): User[] {
-    return this.props.users;
+  public get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  public get createdBy(): string {
+    return this.props.createdBy;
+  }
+
+  public get members(): User[] | undefined {
+    return this.props.members;
   }
 
   public static create(props: FamilyProps, id?: string): Family {
+    props.inviteCode = generateReferalCode({ name: props.name });
     return new Family(props, id);
+  }
+
+  public generateInviteCode(): void {
+    this.props.inviteCode = generateReferalCode({ name: this.props.name });
   }
 }

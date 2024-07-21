@@ -1,6 +1,8 @@
 export const injection = {
   infra: {
     marketRepositories: 'market-repositories',
+    userRepositories: 'user-repositories',
+    familyRepositories: 'family-repositories',
     shoppingEventRepositories: 'shopping-event-repositories',
     productRepositories: 'product-repositories',
   },
@@ -16,6 +18,12 @@ export const injection = {
     addProductToCart: 'add-product-to-cart-usecase',
     updateProductInCart: 'update-product-in-cart-usecase',
     removeProductFromCart: 'remove-product-from-cart-usecase',
+    getUser: 'get-user-usecase',
+    addFamily: 'add-family-usecase',
+    joinFamily: 'join-family-usecase',
+    leaveFamily: 'leave-family-usecase',
+    getFamily: 'get-family-usecase',
+    removeFamilyMember: 'remove-family-member-usecase',
   },
   controllers: {
     newMarket: 'new-market-controller',
@@ -28,6 +36,11 @@ export const injection = {
     getShoppingEventById: 'get-shopping-event-by-id-controller',
     addProductToCart: 'add-product-to-cart-controller',
     updateProductInCart: 'update-product-in-cart-controller',
-    removeProductFromCart: 'remove-product-from-cart-usecase',
+    removeProductFromCart: 'remove-product-from-cart-controller',
+    addFamily: 'add-family-controller',
+    joinFamily: 'join-family-controller',
+    leaveFamily: 'leave-family-controller',
+    getFamily: 'get-family-controller',
+    removeFamilyMember: 'remove-family-member-controller',
   },
 };

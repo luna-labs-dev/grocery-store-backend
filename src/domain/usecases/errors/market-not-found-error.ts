@@ -1,4 +1,4 @@
-import { UseCaseError } from '@/domain/core';
+import { UseCaseError } from '@/domain';
 
 export class MarketNotFoundError extends Error implements UseCaseError {
   code: string;
