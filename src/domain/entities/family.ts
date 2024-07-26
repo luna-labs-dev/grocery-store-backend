@@ -52,7 +52,7 @@ export class Family extends Entity<FamilyProps> {
   }
 
   public static create(props: FamilyProps, id?: string): Family {
-    props.inviteCode = generateReferalCode({ name: props.name });
+    props.inviteCode = props.inviteCode ?? generateReferalCode({ name: props.name });
     return new Family(props, id);
   }
 

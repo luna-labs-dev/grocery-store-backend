@@ -68,7 +68,7 @@ export const FamilyMapper = {
           id: family.ownerId,
         },
       },
-      description: family.description,
+      description: family.description ?? null,
       inviteCode: family.inviteCode,
       createdAt: family.createdAt,
       createdBy: family.createdBy,

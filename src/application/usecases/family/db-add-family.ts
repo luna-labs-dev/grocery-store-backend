@@ -48,6 +48,7 @@ export class DbAddFamily implements AddFamily {
       // Create Family entity
       const family = Family.create({
         name: name,
+        description,
         ownerId: user.id,
         owner: user,
         createdAt: new Date(),
