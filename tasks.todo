@@ -1,3 +1,4 @@
 ✔ ensure the externalId is also returned in the owner and member list @done(24-07-26 00:38)
 ✔ ensure get family returns always the same inviteCode @done(24-07-26 00:51)
 ✔ ensure description are also saved on family creation @done(24-07-26 02:13)
+✔ remove family barrier from getFamily route @done(24-07-26 02:16)

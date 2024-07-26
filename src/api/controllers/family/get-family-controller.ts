@@ -4,7 +4,6 @@ import { GetFamily } from '@/domain';
 import {
   controllerAuthorizationHandling,
   controllerErrorHandling,
-  controllerFamilyBarrierHandling,
   controllerValidationHandling,
 } from '@/main/decorators';
 import { injection } from '@/main/di/injection-codes';
@@ -22,7 +21,6 @@ export type GetFamilyControllerRequest = z.infer<typeof getFamilyRequestSchema>;
 
 @injectable()
 @controllerErrorHandling()
-@controllerFamilyBarrierHandling()
 @controllerAuthorizationHandling()
 @controllerValidationHandling(getFamilyRequestSchema)
 export class GetFamilyController implements Controller {
