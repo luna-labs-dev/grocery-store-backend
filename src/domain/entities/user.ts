@@ -6,6 +6,7 @@ interface UserProps {
   firebaseId: string;
   email: string;
   displayName: string;
+  profilePicture?: string;
   familyId?: string;
   family?: Family;
 }
@@ -25,6 +26,14 @@ export class User extends Entity<UserProps> {
 
   public get displayName(): string {
     return this.props.displayName;
+  }
+
+  public get profilePicture(): string | undefined {
+    return this.props.profilePicture;
+  }
+
+  public set profilePicture(profilePicture: string | undefined) {
+    this.props.profilePicture = profilePicture;
   }
 
   public get familyId(): string | undefined {

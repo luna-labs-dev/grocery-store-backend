@@ -2,3 +2,12 @@
 ✔ ensure get family returns always the same inviteCode @done(24-07-26 00:51)
 ✔ ensure description are also saved on family creation @done(24-07-26 02:13)
 ✔ remove family barrier from getFamily route @done(24-07-26 02:16)
+
+✔ Add profilePicture prop to user @done(24-07-28 20:55)
+☐ create service to get user info by email
+    ☐ interface
+    ☐ implementation (firebase)
+☐ remove displayName from user table in database
+    ☐ schema
+    ☐ migration
+☐ get user from service into entity on user / family fetch
