@@ -8,6 +8,6 @@
     ☐ interface
     ☐ implementation (firebase)
 ☐ remove displayName from user table in database
-    ☐ schema
+    ✔ schema @done(24-07-28 20:56)
     ☐ migration
 ☐ get user from service into entity on user / family fetch
