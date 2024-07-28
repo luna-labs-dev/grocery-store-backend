@@ -7,7 +7,7 @@
 ☐ create service to get user info by email
     ☐ interface
     ☐ implementation (firebase)
-☐ remove displayName from user table in database
+✔ remove displayName from user table in database @done(24-07-28 20:57)
     ✔ schema @done(24-07-28 20:56)
-    ☐ migration
+    ✔ migration @done(24-07-28 20:57)
 ☐ get user from service into entity on user / family fetch
