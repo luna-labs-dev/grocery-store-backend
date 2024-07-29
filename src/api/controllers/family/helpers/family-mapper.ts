@@ -4,7 +4,6 @@ export const userMapper = {
   toResponse: (user: User) => ({
     id: user.id,
     externalId: user.firebaseId,
-    displayName: user.displayName,
     email: user.email,
   }),
 };

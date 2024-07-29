@@ -17,7 +17,6 @@ export class DbGetUser implements GetUser {
       const firebaseUser = await firebaseApp.auth().getUser(externalId);
 
       user = User.create({
-        displayName: firebaseUser.displayName ?? '',
         email: firebaseUser.email ?? '',
         firebaseId: externalId,
       });

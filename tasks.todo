@@ -11,4 +11,6 @@
 ✔ remove displayName from user table in database @done(24-07-28 20:57)
     ✔ schema @done(24-07-28 20:56)
     ✔ migration @done(24-07-28 20:57)
+✔ remove displayName fetching from user creation usecase @done(24-07-29 00:30)
+✔ remove displayName from user-repository @done(24-07-29 00:33)
 ☐ get user from service into entity on user / family fetch
