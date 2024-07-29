@@ -4,9 +4,10 @@
 ✔ remove family barrier from getFamily route @done(24-07-26 02:16)
 
 ✔ Add profilePicture prop to user @done(24-07-28 20:55)
-☐ create service to get user info by email
-    ☐ interface
-    ☐ implementation (firebase)
+✔ create service to get user info by id @done(24-07-29 00:24)
+    ✔ interface @done(24-07-29 00:21)
+    ✔ implementation (firebase) @done(24-07-29 00:21)
+    ✔ injection @done(24-07-29 00:23)
 ✔ remove displayName from user table in database @done(24-07-28 20:57)
     ✔ schema @done(24-07-28 20:56)
     ✔ migration @done(24-07-28 20:57)

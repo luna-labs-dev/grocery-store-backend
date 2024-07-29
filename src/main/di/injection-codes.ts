@@ -5,6 +5,7 @@ export const injection = {
     familyRepositories: 'family-repositories',
     shoppingEventRepositories: 'shopping-event-repositories',
     productRepositories: 'product-repositories',
+    userInfo: 'user-info-service',
   },
   usecases: {
     newMarket: 'new-market-usecase',
