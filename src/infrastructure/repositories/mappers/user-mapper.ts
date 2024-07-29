@@ -24,7 +24,7 @@ export const UserMapper = {
         family: user.family
           ? Family.create(
               {
-                ownerId: '',
+                ownerId: user.family.ownerId,
                 owner: User.create(
                   {
                     firebaseId: user.family.owner.firebaseId,

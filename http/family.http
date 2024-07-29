@@ -32,5 +32,5 @@ Content-Type: application/json
 x-authorization-token: {{token}}
 
 {  
-  "userToBeRemovedId": "bc996ef2-0696-42f5-b742-c1e3c6592799"
+  "userToBeRemovedId": "0885b802-a1be-4847-b02d-7306830f31f0"
 }
