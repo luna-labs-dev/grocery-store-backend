@@ -13,3 +13,4 @@ export * from './invalid-invate-code-error';
 export * from './invalid-family-name-error';
 export * from './family-owner-cannot-be-removed-error';
 export * from './user-not-family-owner-error';
+export * from './family-without-members-error';

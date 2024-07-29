@@ -12,7 +12,7 @@ interface UserProps {
 }
 
 interface UserInfoProps {
-  name: string;
+  name?: string;
   picture?: string;
 }
 
@@ -29,7 +29,7 @@ export class User extends Entity<UserProps> {
     return this.props.email;
   }
 
-  public get displayName(): string | undefined {
+  public get name(): string | undefined {
     return this.props.name;
   }
 

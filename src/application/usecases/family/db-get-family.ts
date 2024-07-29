@@ -1,7 +1,8 @@
-import { UserRepositories } from '@/application/contracts';
+import { UserInfo, UserRepositories } from '@/application/contracts';
 import {
   Either,
   Family,
+  FamilyWithoutMembersError,
   GetFamily,
   GetFamilyErrors,
   GetFamilyParams,
@@ -18,7 +19,10 @@ const { infra } = injection;
 
 @injectable()
 export class DbGetFamily implements GetFamily {
-  constructor(@inject(infra.userRepositories) private readonly userRepository: UserRepositories) {}
+  constructor(
+    @inject(infra.userRepositories) private readonly userRepository: UserRepositories,
+    @inject(infra.userInfo) private readonly userinfo: UserInfo,
+  ) {}
 
   async execute({ userId }: GetFamilyParams): Promise<Either<GetFamilyErrors, Family>> {
     try {
@@ -27,6 +31,25 @@ export class DbGetFamily implements GetFamily {
       if (!user) {
         return left(new UserNotFoundError());
       }
+
+      if (!user.family?.members) {
+        return left(new FamilyWithoutMembersError());
+      }
+
+      for (const member of user.family.members) {
+        const userInfo = await this.userinfo.getInfoByUserId(member.firebaseId);
+        member.setUserInfo({
+          name: userInfo.name,
+          picture: userInfo.picture,
+        });
+      }
+
+      const userInfo = await this.userinfo.getInfoByUserId(user.family.owner.firebaseId);
+
+      user.family.owner.setUserInfo({
+        name: userInfo.name,
+        picture: userInfo.picture,
+      });
 
       if (!user.family) {
         return left(new UserNotAFamilyMemberError());

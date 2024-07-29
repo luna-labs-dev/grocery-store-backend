@@ -18,6 +18,8 @@ export class DbGetUser implements GetUser {
 
       user = User.create({
         email: firebaseUser.email ?? '',
+        name: firebaseUser.displayName,
+        picture: firebaseUser.photoURL,
         firebaseId: externalId,
       });
 
