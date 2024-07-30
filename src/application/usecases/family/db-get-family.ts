@@ -32,7 +32,11 @@ export class DbGetFamily implements GetFamily {
         return left(new UserNotFoundError());
       }
 
-      if (!user.family?.members) {
+      if (!user.family) {
+        return left(new UserNotAFamilyMemberError());
+      }
+
+      if (!user.family.members) {
         return left(new FamilyWithoutMembersError());
       }
 
@@ -50,10 +54,6 @@ export class DbGetFamily implements GetFamily {
         name: userInfo.name,
         picture: userInfo.picture,
       });
-
-      if (!user.family) {
-        return left(new UserNotAFamilyMemberError());
-      }
 
       return right(user.family);
     } catch (error) {

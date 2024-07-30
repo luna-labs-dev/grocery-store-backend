@@ -14,3 +14,4 @@
 ✔ remove displayName fetching from user creation usecase @done(24-07-29 00:30)
 ✔ remove displayName from user-repository @done(24-07-29 00:33)
 ✔ get user from service into entity on user / family fetch @done(24-07-29 01:02)
+✔ ensure family existence is validated before other family related validations @done(24-07-29 21:21)
