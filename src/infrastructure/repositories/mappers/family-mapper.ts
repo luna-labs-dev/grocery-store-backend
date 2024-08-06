@@ -21,7 +21,6 @@ export const FamilyMapper = {
           {
             firebaseId: family.owner.firebaseId,
             email: family.owner.email,
-            displayName: family.owner.displayName,
           },
           family.owner.id,
         ),
@@ -35,7 +34,6 @@ export const FamilyMapper = {
             {
               firebaseId: m.firebaseId,
               email: m.email,
-              displayName: m.displayName,
             },
             m.id,
           ),
@@ -68,7 +66,7 @@ export const FamilyMapper = {
           id: family.ownerId,
         },
       },
-      description: family.description,
+      description: family.description ?? null,
       inviteCode: family.inviteCode,
       createdAt: family.createdAt,
       createdBy: family.createdBy,

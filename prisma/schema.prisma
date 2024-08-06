@@ -24,7 +24,6 @@ model user {
   id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   firebaseId  String  @unique @db.VarChar(320)
   email       String  @unique @db.VarChar(320)
-  displayName String  @db.VarChar(320)
   familyId    String? @db.Uuid
   family      family? @relation("FamilyMembers", fields: [familyId], references: [id])
   ownedFamily family? @relation("familyOwner")

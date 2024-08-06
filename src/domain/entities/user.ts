@@ -5,9 +5,15 @@ import { Family } from './family';
 interface UserProps {
   firebaseId: string;
   email: string;
-  displayName: string;
+  name?: string;
+  picture?: string;
   familyId?: string;
   family?: Family;
+}
+
+interface UserInfoProps {
+  name?: string;
+  picture?: string;
 }
 
 export class User extends Entity<UserProps> {
@@ -23,8 +29,16 @@ export class User extends Entity<UserProps> {
     return this.props.email;
   }
 
-  public get displayName(): string {
-    return this.props.displayName;
+  public get name(): string | undefined {
+    return this.props.name;
+  }
+
+  public get picture(): string | undefined {
+    return this.props.picture;
+  }
+
+  public set picture(picture: string | undefined) {
+    this.props.picture = picture;
   }
 
   public get familyId(): string | undefined {
@@ -37,6 +51,11 @@ export class User extends Entity<UserProps> {
 
   public get family(): Family | undefined {
     return this.props.family;
+  }
+
+  public setUserInfo({ name, picture }: UserInfoProps) {
+    this.props.name = name;
+    this.props.picture = picture;
   }
 
   public static create(props: UserProps, id?: string): User {

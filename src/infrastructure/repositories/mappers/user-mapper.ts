@@ -20,17 +20,15 @@ export const UserMapper = {
       {
         firebaseId: user.firebaseId,
         email: user.email,
-        displayName: user.displayName,
         familyId: user.familyId ?? undefined,
         family: user.family
           ? Family.create(
               {
-                ownerId: '',
+                ownerId: user.family.ownerId,
                 owner: User.create(
                   {
                     firebaseId: user.family.owner.firebaseId,
                     email: user.family.owner.email,
-                    displayName: user.family.owner.displayName,
                   },
                   user.family.owner.id,
                 ),
@@ -39,7 +37,6 @@ export const UserMapper = {
                     {
                       firebaseId: member.firebaseId,
                       email: member.email,
-                      displayName: member.displayName,
                     },
                     member.id,
                   ),
@@ -62,7 +59,6 @@ export const UserMapper = {
   toCreatePersistence: (user: User): UserCreatePersistence => {
     return {
       id: user.id,
-      displayName: user.displayName,
       email: user.email,
       firebaseId: user.firebaseId,
     };
@@ -70,7 +66,6 @@ export const UserMapper = {
 
   toUpdatePersistence: (user: User): UserUpdatePersistence => {
     return {
-      displayName: user.displayName,
       email: user.email,
       family: user.familyId
         ? {

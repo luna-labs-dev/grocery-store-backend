@@ -24,7 +24,6 @@ export const ShoppingEventMapper = {
               {
                 firebaseId: shoppingEvent.family.owner.firebaseId,
                 email: shoppingEvent.family.owner.email,
-                displayName: shoppingEvent.family.owner.displayName,
               },
               shoppingEvent.family.owner.id,
             ),
@@ -39,7 +38,6 @@ export const ShoppingEventMapper = {
                     {
                       firebaseId: member.firebaseId,
                       email: member.email,
-                      displayName: member.displayName,
                     },
                     member.id,
                   ),

@@ -18,7 +18,7 @@ export const controllerAuthorizationHandling = () => {
 
         const decodedToken = await firebaseApp.auth().verifyIdToken(authToken);
 
-        request.user = decodedToken.uid;
+        request.user = decodedToken.sub;
 
         const httpResponse = await originalHandle.apply(this, [request]);
 
