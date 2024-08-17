@@ -1,27 +1,22 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "module": "CommonJS",
+    "module": "ES2022",
     "target": "ES2022",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": "./",
     "strict": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "types": ["vitest/globals"],
     "paths": {
       "@/tests/*": ["../tests/*"],
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src",
-    "tests",
-    "prisma",
-    "commitlint.config.js",
-    "src/main/types/nodeModules/rule-engine.d.ts"
-  ],
+  "include": ["src", "tests", "prisma/**/*.ts", "commitlint.config.js"],
   "exclude": []
 }

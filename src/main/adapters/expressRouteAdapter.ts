@@ -9,14 +9,14 @@ export const adaptRoute = (controller: Controller) => {
       ...request.params,
       ...request.query,
       user: request.headers['x-user'],
+      authToken: request.headers['x-authorization-token'],
     };
 
     const httpResponse = await controller.handle(requestData);
 
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
       return response.status(httpResponse.statusCode).json(httpResponse.body);
-    } else {
-      return response.status(httpResponse.statusCode).json(httpResponse.body.toResult());
     }
+    return response.status(httpResponse.statusCode).json(httpResponse.body.toResult());
   };
 };

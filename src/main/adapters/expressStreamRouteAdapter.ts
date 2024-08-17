@@ -16,8 +16,7 @@ export const adaptStreamRoute = (controller: Controller) => {
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
       response.setHeader('Content-Type', httpResponse.body.type);
       return httpResponse.body.file.pipe(response);
-    } else {
-      return response.status(httpResponse.statusCode).json(httpResponse.body.toResult());
     }
+    return response.status(httpResponse.statusCode).json(httpResponse.body.toResult());
   };
 };

@@ -1,11 +1,12 @@
 import { HttpError } from './http-error';
 
 export class UnauthorizedError extends HttpError {
-  constructor() {
+  constructor(extras?: any) {
     super({
       message: 'Unauthorized',
       name: 'UnauthorizedError',
       code: 'UNAUTHORIZED_ERROR',
+      extras,
     });
   }
 }

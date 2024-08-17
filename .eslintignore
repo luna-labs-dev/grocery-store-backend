@@ -1,7 +1,0 @@
-node_modules
-dist
-.vscode
-terraform
-prisma/*
-vitest.config.ts
-tsup.config.ts
