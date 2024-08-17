@@ -5,10 +5,12 @@
   "main": "index.js",
   "repository": "git@github.com:Poli-Labs/grocery-store-backend.git",
   "license": "MIT",
+  "type": "module",
+
   "scripts": {
     "dev": "tsx watch src/main/server.ts",
     "start": "node dist/src/main/server.js",
-    "build": "tsup src prisma/**/*.ts --clean",
+    "build": "tsup src prisma/**/*.ts --clean --format esm --splitting false",
     "lint": "biome check --write --unsafe src ",
     "test": "vitest run --silent --reporter verbose",
     "test:watch": "vitest --silent --reporter verbose",
