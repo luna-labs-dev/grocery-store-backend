@@ -1,4 +1,4 @@
-import * as referalCodes from 'referral-codes';
+import { Charset, charset, generate } from 'referral-codes';
 
 export const nameToCode = (name: string): string => {
   // Remove accents from letters
@@ -20,10 +20,10 @@ type generateReferalCode = {
   name: string;
 };
 export const generateReferalCode = ({ name }: generateReferalCode): string => {
-  const code = referalCodes.generate({
+  const code = generate({
     length: 6,
     count: 1,
-    charset: referalCodes.charset(referalCodes.Charset.ALPHANUMERIC),
+    charset: charset(Charset.ALPHANUMERIC),
     prefix: `${nameToCode(name)}-`,
   });
 

@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "tests", "prisma", "commitlint.config.js"],
+  "include": ["src", "tests", "prisma/**/*.ts", "commitlint.config.js"],
   "exclude": []
 }
