@@ -2,3 +2,12 @@ refresh invite code:
     ☐ domain
     ☐ usecase
     ☐ controller
+
+market:
+    ☐ make market visible by family
+        ✔ change schema @done(24-08-23 01:18)
+        ✔ apply migration @done(24-08-23 01:34)
+        ☐ layers
+            ☐ infra
+            ☐ application
+            ☐ domain
