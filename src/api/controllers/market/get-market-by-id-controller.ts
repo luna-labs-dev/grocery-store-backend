@@ -15,6 +15,7 @@ import { injection } from '@/main/di/injection-codes';
 const { usecases } = injection;
 
 export const getMarketByIdRequestSchema = z.object({
+  familyId: z.string().uuid(),
   marketId: z.string().uuid(),
 });
 
@@ -28,8 +29,9 @@ type GetMarketByIdControllerParams = z.infer<typeof getMarketByIdRequestSchema>;
 export class GetMarketByIdController implements Controller {
   constructor(@inject(usecases.getMarketById) private readonly getMarketById: GetMarketById) {}
 
-  async handle({ marketId }: GetMarketByIdControllerParams): Promise<HttpResponse> {
+  async handle({ familyId, marketId }: GetMarketByIdControllerParams): Promise<HttpResponse> {
     const result = await this.getMarketById.execute({
+      familyId,
       marketId,
     });
 

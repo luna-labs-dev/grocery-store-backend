@@ -20,6 +20,7 @@ export class DbGetMarketList implements GetMarketList {
   constructor(@inject(marketRepositories) private readonly repositories: GetMarketListRepository) {}
 
   execute = async ({
+    familyId,
     search,
     pageIndex,
     pageSize,
@@ -28,6 +29,7 @@ export class DbGetMarketList implements GetMarketList {
   }: GetMarketListParams): Promise<Either<UnexpectedError, GetMarketListResult>> => {
     try {
       const marketCount = await this.repositories.count({
+        familyId,
         search,
       });
 
@@ -38,6 +40,7 @@ export class DbGetMarketList implements GetMarketList {
 
       if (marketCount > 0) {
         const markets = await this.repositories.getAll({
+          familyId,
           search,
           pageIndex,
           pageSize,

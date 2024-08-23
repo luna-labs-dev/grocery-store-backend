@@ -6,6 +6,7 @@ import { MarketNotFoundError, UnexpectedError } from '../errors';
 export type GetMarketByIdErrors = UnexpectedError | MarketNotFoundError;
 
 export interface GetMarketByIdParams {
+  familyId: string;
   marketId: string;
 }
 export interface GetMarketById {

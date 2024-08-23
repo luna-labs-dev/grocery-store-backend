@@ -1,6 +1,7 @@
 import { Market } from '@/domain';
 
 export interface GetMarketByIdRepositoryParams {
+  familyId: string;
   id: string;
 }
 

@@ -39,6 +39,7 @@ export class DbStartShoppingEvent implements StartShoppingEvent {
     try {
       // Calls GetMarketById
       const market = await this.marketRepository.getById({
+        familyId,
         id: marketId,
       });
 

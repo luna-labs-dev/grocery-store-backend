@@ -4,6 +4,7 @@ import { Market } from '../../entities';
 import { UnexpectedError } from '../errors';
 
 export interface GetMarketListParams {
+  familyId: string;
   search?: string;
   pageIndex: number;
   pageSize: number;

@@ -24,10 +24,12 @@ export class DbGetMarketById implements GetMarketById {
   ) {}
 
   execute = async ({
+    familyId,
     marketId,
   }: GetMarketByIdParams): Promise<Either<GetMarketByIdErrors, Market>> => {
     try {
       const market = await this.repository.getById({
+        familyId,
         id: marketId,
       });
 

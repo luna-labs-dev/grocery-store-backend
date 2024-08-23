@@ -8,6 +8,6 @@ market:
         ✔ change schema @done(24-08-23 01:18)
         ✔ apply migration @done(24-08-23 01:34)
         ☐ layers
-            ☐ infra
+            ✔ infra @done(24-08-23 01:45)
             ☐ application
             ☐ domain

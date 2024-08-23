@@ -25,17 +25,20 @@ export class DbAddMarket implements AddMarket {
   ) {}
 
   execute = async ({
+    familyId,
     marketName,
     user,
   }: AddMarketParams): Promise<Either<AddMarketErrors, Market>> => {
     try {
       const market = Market.create({
+        familyId,
         name: marketName,
         createdAt: new Date(),
         createdBy: user,
       });
 
       const marketExists = await this.repository.getByCode({
+        familyId,
         code: market.code,
       });
 

@@ -15,6 +15,7 @@ import { injection } from '@/main/di/injection-codes';
 
 export const addMarketRequestSchema = z.object({
   user: z.string(),
+  familyId: z.string().uuid(),
   marketName: z.string().min(1),
 });
 
@@ -31,9 +32,10 @@ export class AddMarketController implements Controller {
   constructor(@inject(usecases.newMarket) private readonly newMarket: AddMarket) {}
 
   async handle(request: AddMarketControllerRequest): Promise<HttpResponse> {
-    const { marketName, user } = request;
+    const { familyId, user, marketName } = request;
 
     const result = await this.newMarket.execute({
+      familyId,
       marketName,
       user,
     });

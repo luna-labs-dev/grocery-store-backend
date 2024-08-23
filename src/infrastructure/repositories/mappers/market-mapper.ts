@@ -8,6 +8,7 @@ export const MarketMapper = {
   toDomain: (raw: MarketPersistence): Market => {
     return Market.create(
       {
+        familyId: raw.familyId,
         code: raw.code,
         name: raw.name,
         createdAt: raw.createdAt,
@@ -20,6 +21,7 @@ export const MarketMapper = {
   toPersistence: (market: Market): MarketPersistence => {
     return {
       id: market.id,
+      familyId: market.familyId,
       code: market.code,
       name: market.name,
       createdAt: market.createdAt,

@@ -33,11 +33,12 @@ export class DbUpdateMarket implements UpdateMarket {
 
   execute = async ({
     name,
+    familyId,
     marketId,
   }: UpdateMarketParams): Promise<Either<UpdateMarketErrors, Market>> => {
     try {
       // GetMarketById
-      const market = await this.repositories.getById({ id: marketId });
+      const market = await this.repositories.getById({ familyId, id: marketId });
 
       // Return Market not found if No market is returned
       if (!market) {
@@ -48,7 +49,7 @@ export class DbUpdateMarket implements UpdateMarket {
       market.update({ name });
 
       // Search by market Code
-      const marketWithSameCode = await this.repositories.getByCode({ code: market.code });
+      const marketWithSameCode = await this.repositories.getByCode({ familyId, code: market.code });
 
       if (marketWithSameCode && marketWithSameCode.id !== marketId) {
         return left(new MarketAlreadyExistsError());

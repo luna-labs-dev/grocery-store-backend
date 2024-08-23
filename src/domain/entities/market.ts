@@ -2,6 +2,7 @@ import { Entity } from '../core';
 import { nameToCode } from '../helper';
 
 export interface MarketProps {
+  familyId: string;
   code?: string;
   name: string;
   createdAt: Date;
@@ -17,8 +18,15 @@ export class Market extends Entity<MarketProps> {
     super(props, id);
   }
 
+  get familyId(): string {
+    return this.props.familyId;
+  }
+
   get code(): string {
-    return this.props.code ?? nameToCode(this.props.name);
+    if (!this.props.code) {
+      this.props.code = nameToCode(this.props.name);
+    }
+    return this.props.code;
   }
 
   get name(): string {

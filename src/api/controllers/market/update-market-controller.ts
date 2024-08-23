@@ -14,6 +14,7 @@ import { injection } from '@/main/di/injection-codes';
 
 export const updateMarketRequestSchema = z.object({
   name: z.string().min(1),
+  familyId: z.string().uuid(),
   marketId: z.string().uuid(),
 });
 
@@ -29,8 +30,8 @@ export class UpdateMarketController implements Controller {
   constructor(@inject(usecases.updateMarket) private readonly updateMarket: UpdateMarket) {}
 
   async handle(request: UpdateMarketControllerRequest): Promise<HttpResponse> {
-    const { marketId, name } = request;
-    const result = await this.updateMarket.execute({ marketId, name });
+    const { familyId, marketId, name } = request;
+    const result = await this.updateMarket.execute({ familyId, marketId, name });
 
     if (result.isLeft()) {
       return mapErrorByCode(result.value);

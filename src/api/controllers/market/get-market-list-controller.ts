@@ -16,6 +16,7 @@ import { injection } from '@/main/di/injection-codes';
 const { usecases } = injection;
 
 export const getMarketListRequestSchema = z.object({
+  familyId: z.string().uuid(),
   search: z.string().optional(),
   pageIndex: z.coerce.number().min(0).default(0),
   pageSize: z.coerce.number().min(1).max(50).default(10),
@@ -34,8 +35,9 @@ export class GetMarketListController implements Controller {
   constructor(@inject(usecases.getMarketList) private readonly getMarketList: GetMarketList) {}
 
   async handle(request: GetMarketListControllerRequest): Promise<HttpResponse> {
-    const { search, pageIndex, pageSize, orderBy, orderDirection } = request;
+    const { familyId, search, pageIndex, pageSize, orderBy, orderDirection } = request;
     const getMarketListResult = await this.getMarketList.execute({
+      familyId,
       search,
       pageIndex,
       pageSize,

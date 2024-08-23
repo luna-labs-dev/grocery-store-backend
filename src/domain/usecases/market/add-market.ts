@@ -6,6 +6,7 @@ import { MarketAlreadyExistsError, UnexpectedError } from '../errors';
 export type AddMarketErrors = UnexpectedError & MarketAlreadyExistsError;
 
 export interface AddMarketParams {
+  familyId: string;
   marketName: string;
   user: string;
 }

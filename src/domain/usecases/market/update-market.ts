@@ -7,6 +7,7 @@ export type UpdateMarketErrors = UnexpectedError & MarketNotFoundError;
 
 export interface UpdateMarketParams {
   name: string;
+  familyId: string;
   marketId: string;
 }
 

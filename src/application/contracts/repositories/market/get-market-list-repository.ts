@@ -1,6 +1,7 @@
 import { Market } from '@/domain';
 
 export interface GetMarketListRepositoryParams {
+  familyId: string;
   search?: string;
   pageIndex: number;
   pageSize: number;
@@ -8,7 +9,10 @@ export interface GetMarketListRepositoryParams {
   orderDirection: 'desc' | 'asc';
 }
 
-export type CountMarketListRepositoryParams = Pick<GetMarketListRepositoryParams, 'search'>;
+export type CountMarketListRepositoryParams = Pick<
+  GetMarketListRepositoryParams,
+  'search' | 'familyId'
+>;
 
 export interface GetMarketListRepository {
   count: (params: CountMarketListRepositoryParams) => Promise<number>;

@@ -11,9 +11,10 @@ import { Market } from '@/domain';
 import { prisma } from '@/main/prisma/client';
 
 export class PrismaMarketRepository implements MarketRepositories {
-  count = async ({ search }: CountMarketListRepositoryParams): Promise<number> => {
+  count = async ({ familyId, search }: CountMarketListRepositoryParams): Promise<number> => {
     const count = await prisma.market.count({
       where: {
+        familyId,
         name: {
           contains: search,
           mode: 'insensitive',
@@ -25,6 +26,7 @@ export class PrismaMarketRepository implements MarketRepositories {
   };
 
   getAll = async ({
+    familyId,
     search,
     pageIndex,
     pageSize,
@@ -33,6 +35,7 @@ export class PrismaMarketRepository implements MarketRepositories {
   }: GetMarketListRepositoryParams): Promise<Market[]> => {
     const markets = await prisma.market.findMany({
       where: {
+        familyId,
         name: {
           contains: search,
           mode: 'insensitive',
@@ -52,9 +55,13 @@ export class PrismaMarketRepository implements MarketRepositories {
     return markets.map((market) => MarketMapper.toDomain(market));
   };
 
-  getById = async ({ id }: GetMarketByIdRepositoryParams): Promise<Market | undefined> => {
+  getById = async ({
+    familyId,
+    id,
+  }: GetMarketByIdRepositoryParams): Promise<Market | undefined> => {
     const market = await prisma.market.findFirst({
       where: {
+        familyId,
         id,
       },
     });
@@ -66,9 +73,13 @@ export class PrismaMarketRepository implements MarketRepositories {
     return MarketMapper.toDomain(market);
   };
 
-  getByCode = async ({ code }: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
+  getByCode = async ({
+    familyId,
+    code,
+  }: GetMarketByCodeRepositoryParams): Promise<Market | undefined> => {
     const market = await prisma.market.findFirst({
       where: {
+        familyId,
         code,
       },
     });
@@ -89,6 +100,7 @@ export class PrismaMarketRepository implements MarketRepositories {
   update = async (market: Market): Promise<void> => {
     await prisma.market.update({
       where: {
+        familyId: market.familyId,
         id: market.id,
       },
       data: MarketMapper.toPersistence(market),
