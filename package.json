@@ -6,7 +6,6 @@
   "repository": "git@github.com:Poli-Labs/grocery-store-backend.git",
   "license": "MIT",
   "type": "module",
-
   "scripts": {
     "dev": "tsx watch src/main/server.ts",
     "start": "node dist/src/main/server.js",
@@ -20,7 +19,8 @@
     "husky:install": "husky install",
     "husky:prepare": "yarn husky:install && chmod ug+x .husky/* && yarn husky:install",
     "db:up": "docker compose -f docker-compose.dev.yml up -d",
-    "db:down": "docker compose -f docker-compose.dev.yml down"
+    "db:down": "docker compose -f docker-compose.dev.yml down",
+    "prepare": "husky"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
