@@ -13,7 +13,7 @@ export const controllerFamilyBarrierHandling = () => {
       try {
         const getUser = container.resolve<GetUser>(usecases.getUser);
 
-        const externalUserId = request.user;
+        const externalUserId = request.auth.userId;
         if (!externalUserId) {
           console.error('external user id is not provided');
           return unauthorized();

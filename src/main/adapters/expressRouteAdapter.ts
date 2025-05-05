@@ -8,8 +8,8 @@ export const adaptRoute = (controller: Controller) => {
       ...request.body,
       ...request.params,
       ...request.query,
-      user: request.headers['x-user'],
-      authToken: request.headers['x-authorization-token'],
+      auth: request.auth,
+      user: request.auth.userId,
     };
 
     const httpResponse = await controller.handle(requestData);

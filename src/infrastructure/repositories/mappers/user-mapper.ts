@@ -18,7 +18,7 @@ export const UserMapper = {
   toDomain: (user: UserPersistence): User => {
     return User.create(
       {
-        firebaseId: user.firebaseId,
+        externalId: user.externalId,
         email: user.email,
         familyId: user.familyId ?? undefined,
         family: user.family
@@ -27,7 +27,7 @@ export const UserMapper = {
                 ownerId: user.family.ownerId,
                 owner: User.create(
                   {
-                    firebaseId: user.family.owner.firebaseId,
+                    externalId: user.family.owner.externalId,
                     email: user.family.owner.email,
                   },
                   user.family.owner.id,
@@ -35,7 +35,7 @@ export const UserMapper = {
                 members: user.family.members.map((member) =>
                   User.create(
                     {
-                      firebaseId: member.firebaseId,
+                      externalId: member.externalId,
                       email: member.email,
                     },
                     member.id,
@@ -60,7 +60,7 @@ export const UserMapper = {
     return {
       id: user.id,
       email: user.email,
-      firebaseId: user.firebaseId,
+      externalId: user.externalId,
     };
   },
 

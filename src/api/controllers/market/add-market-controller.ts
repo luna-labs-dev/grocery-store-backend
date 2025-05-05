@@ -5,7 +5,6 @@ import { Controller, HttpResponse } from '@/api/contracts';
 import { created, mapErrorByCode } from '@/api/helpers';
 import { AddMarket } from '@/domain';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -24,7 +23,6 @@ const { usecases } = injection;
 
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerValidationHandling(addMarketRequestSchema)
 export class AddMarketController implements Controller {

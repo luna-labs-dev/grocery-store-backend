@@ -1,25 +1,37 @@
 import { config } from 'dotenv';
+import { z } from 'zod';
 
 config();
 
+const envVariables = z.object({
+  ENVIRONMENT: z.enum(['local', 'dev', 'prod']).default('local'),
+  LOG_LEVEL: z.enum(['dev', 'debug', 'prod']).default('dev'),
+  PORT: z.coerce.number().default(8000),
+  DATABASE_URL: z.string(),
+  CLERK_PUBLISHABLE_KEY: z.string(),
+  CLERK_SECRET_KEY: z.string(),
+});
+
+const parsedVariables = envVariables.safeParse(process.env);
+
+if (!parsedVariables.success) {
+  throw new Error(parsedVariables.error.message);
+}
+
+const { ENVIRONMENT, LOG_LEVEL, PORT, DATABASE_URL, CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY } =
+  parsedVariables.data;
+
 export const env = {
   baseConfig: {
-    environment: process.env.ENVIRONMENT ?? 'local',
-    logLevel: process.env.LOG_LEVEL ?? 'prod',
-    port: process.env.PORT ?? 8005,
+    environment: ENVIRONMENT,
+    logLevel: LOG_LEVEL,
+    port: PORT,
   },
   database: {
-    host: process.env.PG_HOST,
-    port: Number.parseInt(process.env.PG_PORT ?? '') || 5432,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: process.env.PG_DATABASE,
+    url: DATABASE_URL,
   },
-  firebase: {
-    credential: {
-      projectId: process.env.FIREBASE_PROJECT_ID ?? '',
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL ?? '',
-      privateKey: (process.env.FIREBASE_PRIVATE_KEY ?? '').replace(/\\n/g, '\n'),
-    },
+  clerk: {
+    publishableKey: CLERK_PUBLISHABLE_KEY,
+    secretKey: CLERK_SECRET_KEY,
   },
 } as const;

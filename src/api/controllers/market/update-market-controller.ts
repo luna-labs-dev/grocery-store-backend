@@ -5,7 +5,6 @@ import { mapErrorByCode, ok } from '@/api';
 import { Controller, HttpResponse } from '@/api/contracts';
 import { UpdateMarket } from '@/domain';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -22,7 +21,6 @@ export type UpdateMarketControllerRequest = z.infer<typeof updateMarketRequestSc
 const { usecases } = injection;
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerValidationHandling(updateMarketRequestSchema)
 export class UpdateMarketController implements Controller {

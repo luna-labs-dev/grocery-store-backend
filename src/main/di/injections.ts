@@ -46,7 +46,6 @@ import {
   MarketRepositories,
   ProductRepositories,
   ShoppingEventRepositories,
-  UserInfo,
   UserRepositories,
 } from '@/application/contracts';
 import { DbUpdateProductInCart } from '@/application/usecases/shopping-event/cart/db-update-product-in-cart';
@@ -70,7 +69,6 @@ import {
   UpdateProductInCart,
 } from '@/domain';
 import {
-  FirebaseUserInfo,
   PrismaFamilyRepository,
   PrismaMarketRepository,
   PrismaProductRepository,
@@ -88,7 +86,6 @@ container.register<ShoppingEventRepositories>(
   PrismaShoppingEventRepository,
 );
 container.register<ProductRepositories>(infra.productRepositories, PrismaProductRepository);
-container.register<UserInfo>(infra.userInfo, FirebaseUserInfo);
 
 // Usecases
 container.register<AddMarket>(usecases.newMarket, DbAddMarket);

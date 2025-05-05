@@ -3,7 +3,7 @@ import { Entity } from '../core';
 import { Family } from './family';
 
 interface UserProps {
-  firebaseId: string;
+  externalId: string;
   email: string;
   name?: string;
   picture?: string;
@@ -21,8 +21,8 @@ export class User extends Entity<UserProps> {
     super(props, id);
   }
 
-  public get firebaseId(): string {
-    return this.props.firebaseId;
+  public get externalId(): string {
+    return this.props.externalId;
   }
 
   public get email(): string {

@@ -3,7 +3,7 @@ import { Family, User } from '@/domain';
 export const userMapper = {
   toResponse: (user: User) => ({
     id: user.id,
-    externalId: user.firebaseId,
+    externalId: user.externalId,
     name: user.name,
     picture: user.picture,
     email: user.email,

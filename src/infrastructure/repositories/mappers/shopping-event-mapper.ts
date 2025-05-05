@@ -22,7 +22,7 @@ export const ShoppingEventMapper = {
             ownerId: shoppingEvent.family.ownerId,
             owner: User.create(
               {
-                firebaseId: shoppingEvent.family.owner.firebaseId,
+                externalId: shoppingEvent.family.owner.externalId,
                 email: shoppingEvent.family.owner.email,
               },
               shoppingEvent.family.owner.id,
@@ -36,7 +36,7 @@ export const ShoppingEventMapper = {
               ? shoppingEvent.family.members.map((member) =>
                   User.create(
                     {
-                      firebaseId: member.firebaseId,
+                      externalId: member.externalId,
                       email: member.email,
                     },
                     member.id,
