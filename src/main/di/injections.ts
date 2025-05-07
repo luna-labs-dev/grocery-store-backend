@@ -22,11 +22,13 @@ import {
   StartShoppingEventController,
   UpdateMarketController,
   UpdateProductInCartController,
+  WebhookExternalAuthAddUserController,
 } from '@/api';
 import {
   DbAddFamily,
   DbAddMarket,
   DbAddProductToCart,
+  DbAddUser,
   DbEndShoppingEvent,
   DbGetFamily,
   DbGetMarketById,
@@ -53,6 +55,7 @@ import {
   AddFamily,
   AddMarket,
   AddProductToCart,
+  AddUser,
   EndShoppingEvent,
   GetFamily,
   GetMarketById,
@@ -100,6 +103,7 @@ container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCa
 container.register<UpdateProductInCart>(usecases.updateProductInCart, DbUpdateProductInCart);
 container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemoveProductFromCart);
 container.register<GetUser>(usecases.getUser, DbGetUser);
+container.register<AddUser>(usecases.addUser, DbAddUser);
 container.register<AddFamily>(usecases.addFamily, DbAddFamily);
 container.register<JoinFamily>(usecases.joinFamily, DbJoinFamily);
 container.register<LeaveFamily>(usecases.leaveFamily, DbLeaveFamily);
@@ -123,3 +127,8 @@ container.register<Controller>(controllers.joinFamily, JoinFamilyController);
 container.register<Controller>(controllers.leaveFamily, LeaveFamilyController);
 container.register<Controller>(controllers.getFamily, GetFamilyController);
 container.register<Controller>(controllers.removeFamilyMember, RemoveFamilyMemberController);
+
+container.register<Controller>(
+  controllers.webhooks.externalAuthService.addUser,
+  WebhookExternalAuthAddUserController,
+);

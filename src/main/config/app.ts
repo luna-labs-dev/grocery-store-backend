@@ -1,24 +1,27 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import logger from 'morgan';
 
 import { env } from '@/main/config';
-import { router } from '@/main/routes';
+import { router } from '@/main/express/routes';
 import { clerkMiddleware } from '@clerk/express';
 
 export const setupApp = async (): Promise<Express> => {
   const app = express();
 
-  const { logLevel } = env.baseConfig;
+  const { logLevel, origins } = env.baseConfig;
 
   app.use(express.json({ limit: '50mb' }));
 
   app.use(
     cors({
-      origin: 'http://192.168.18.7:3030',
+      origin: origins,
       credentials: true,
     }),
   );
+
+  app.use(cookieParser());
 
   app.use(clerkMiddleware());
 

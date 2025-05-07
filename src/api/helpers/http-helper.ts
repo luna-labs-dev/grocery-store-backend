@@ -43,16 +43,6 @@ export const badRequest = (error: UseCaseError): HttpResponse => ({
   body: new BadRequestError(error.code, error.message, error.uuid),
 });
 
-export const notFound = (error: UseCaseError): HttpResponse => ({
-  statusCode: 404,
-  body: new NotFoundError(error),
-});
-
-export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({
-  statusCode: 422,
-  body: new UnprocessableEntityError(error.code, error.message, error.uuid),
-});
-
 export const unauthorized = (extra?: any): HttpResponse => ({
   statusCode: 401,
   body: new UnauthorizedError(extra),
@@ -63,9 +53,19 @@ export const forbidden = (error: IHttpError): HttpResponse => ({
   body: error,
 });
 
+export const notFound = (error: UseCaseError): HttpResponse => ({
+  statusCode: 404,
+  body: new NotFoundError(error),
+});
+
 export const conflict = (error: UseCaseError): HttpResponse => ({
   statusCode: 409,
   body: new ConflictError(error),
+});
+
+export const unprocessableEntity = (error: UseCaseError): HttpResponse => ({
+  statusCode: 422,
+  body: new UnprocessableEntityError(error.code, error.message, error.uuid),
 });
 
 type ServerErrors = IHttpError | UnexpectedError;

@@ -10,6 +10,7 @@ const envVariables = z.object({
   DATABASE_URL: z.string(),
   CLERK_PUBLISHABLE_KEY: z.string(),
   CLERK_SECRET_KEY: z.string(),
+  ORIGINS: z.string(),
 });
 
 const parsedVariables = envVariables.safeParse(process.env);
@@ -18,14 +19,29 @@ if (!parsedVariables.success) {
   throw new Error(parsedVariables.error.message);
 }
 
-const { ENVIRONMENT, LOG_LEVEL, PORT, DATABASE_URL, CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY } =
-  parsedVariables.data;
+const getOrigin = (origins: string): string | string[] => {
+  if (origins.includes(',')) {
+    return origins.split(',');
+  }
+  return origins;
+};
+
+const {
+  ENVIRONMENT,
+  LOG_LEVEL,
+  PORT,
+  DATABASE_URL,
+  CLERK_PUBLISHABLE_KEY,
+  CLERK_SECRET_KEY,
+  ORIGINS,
+} = parsedVariables.data;
 
 export const env = {
   baseConfig: {
     environment: ENVIRONMENT,
     logLevel: LOG_LEVEL,
     port: PORT,
+    origins: getOrigin(ORIGINS),
   },
   database: {
     url: DATABASE_URL,
