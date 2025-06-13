@@ -72,7 +72,7 @@ export const ShoppingEventMapper = {
               )
             : [],
         ),
-        elapsedTime: shoppingEvent.elapsedTime ?? undefined,
+        elapsedTime: shoppingEvent.elapsedTime ? Number(shoppingEvent.elapsedTime) : undefined,
         createdAt: shoppingEvent.createdAt,
         finishedAt: shoppingEvent.finishedAt ?? undefined,
         createdBy: shoppingEvent.createdBy,

@@ -1,6 +1,7 @@
 import { UserRepositories } from '@/application';
 import { Either, GetUser, GetUserErrors, GetUserParams, User, right } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
+import { clerkClient } from '@clerk/express';
 
 import { inject, injectable } from 'tsyringe';
 
@@ -14,10 +15,12 @@ export class DbGetUser implements GetUser {
     let user = await this.userRepository.getByExternalId(externalId);
 
     if (!user) {
+      const clerkUser = await clerkClient.users.getUser(externalId);
+
       user = User.create({
-        email: '',
-        name: '',
-        picture: '',
+        email: clerkUser.emailAddresses[0].emailAddress,
+        name: clerkUser.fullName ?? '',
+        picture: clerkUser.imageUrl,
         externalId: externalId,
       });
 

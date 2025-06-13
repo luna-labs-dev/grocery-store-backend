@@ -13,6 +13,7 @@ import {
   right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
+import { clerkClient } from '@clerk/express';
 import { inject, injectable } from 'tsyringe';
 
 const { infra } = injection;
@@ -27,10 +28,6 @@ export class DbGetFamily implements GetFamily {
   async execute({ userId }: GetFamilyParams): Promise<Either<GetFamilyErrors, Family>> {
     try {
       const user = await this.userRepository.getByExternalId(userId);
-      const userInfo = {
-        name: 'tiago',
-        picture: 'member.picture',
-      };
 
       if (!user) {
         return left(new UserNotFoundError());
@@ -45,19 +42,19 @@ export class DbGetFamily implements GetFamily {
       }
 
       for (const member of user.family.members) {
-        // const userInfo = await this.userinfo.getInfoByUserId(member.externalId);
+        const userInfo = await clerkClient.users.getUser(member.externalId);
 
         member.setUserInfo({
-          name: userInfo.name,
-          picture: userInfo.picture,
+          name: userInfo.fullName ?? '',
+          picture: userInfo.imageUrl,
         });
       }
 
-      // const userInfo = await this.userinfo.getInfoByUserId(user.family.owner.externalId);
+      const userInfo = await clerkClient.users.getUser(user.externalId);
 
       user.family.owner.setUserInfo({
-        name: userInfo.name,
-        picture: userInfo.picture,
+        name: userInfo.fullName ?? '',
+        picture: userInfo.imageUrl,
       });
 
       return right(user.family);
