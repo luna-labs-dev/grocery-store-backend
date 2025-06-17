@@ -6,7 +6,6 @@ import { AddProductToCart } from '../../../../domain/usecases/shopping-event/car
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -29,7 +28,6 @@ export type AddProductToCartRequest = z.infer<typeof addProductToCartRequestSche
 const { usecases } = injection;
 
 @injectable()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerErrorHandling()
 @controllerValidationHandling(addProductToCartRequestSchema)

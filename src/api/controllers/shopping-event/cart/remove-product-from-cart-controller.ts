@@ -1,5 +1,4 @@
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -24,7 +23,6 @@ export type RemoveProductFromCartControllerParams = z.infer<
 >;
 
 @injectable()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerErrorHandling()
 @controllerValidationHandling(removeProductFromCartRequestSchema)

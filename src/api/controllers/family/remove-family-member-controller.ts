@@ -1,11 +1,7 @@
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { RemoveFamilyMember } from '@/domain';
-import {
-  controllerAuthorizationHandling,
-  controllerErrorHandling,
-  controllerValidationHandling,
-} from '@/main/decorators';
+import { controllerErrorHandling, controllerValidationHandling } from '@/main/decorators';
 import { injection } from '@/main/di/injection-codes';
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
@@ -21,7 +17,6 @@ export type RemoveFamilyMemberControllerRequest = z.infer<typeof removeFamilyMem
 
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerValidationHandling(removeFamilyMemberRequestSchema)
 export class RemoveFamilyMemberController implements Controller {
   constructor(

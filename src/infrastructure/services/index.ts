@@ -1,1 +1,1 @@
-export * from './firebase-user-info';
+export type {};

@@ -1,11 +1,7 @@
 import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { JoinFamily } from '@/domain';
-import {
-  controllerAuthorizationHandling,
-  controllerErrorHandling,
-  controllerValidationHandling,
-} from '@/main/decorators';
+import { controllerErrorHandling, controllerValidationHandling } from '@/main/decorators';
 import { injection } from '@/main/di/injection-codes';
 import { inject, injectable } from 'tsyringe';
 import { z } from 'zod';
@@ -21,7 +17,6 @@ export type JoinFamilyControllerRequest = z.infer<typeof joinFamilyRequestSchema
 
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerValidationHandling(joinFamilyRequestSchema)
 export class JoinFamilyController implements Controller {
   constructor(@inject(usecases.joinFamily) private readonly joinFamily: JoinFamily) {}

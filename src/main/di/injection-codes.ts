@@ -20,6 +20,7 @@ export const injection = {
     updateProductInCart: 'update-product-in-cart-usecase',
     removeProductFromCart: 'remove-product-from-cart-usecase',
     getUser: 'get-user-usecase',
+    addUser: 'add-user-usecase',
     addFamily: 'add-family-usecase',
     joinFamily: 'join-family-usecase',
     leaveFamily: 'leave-family-usecase',
@@ -43,5 +44,10 @@ export const injection = {
     leaveFamily: 'leave-family-controller',
     getFamily: 'get-family-controller',
     removeFamilyMember: 'remove-family-member-controller',
+    webhooks: {
+      externalAuthService: {
+        addUser: 'webhook-external-auth-service-add-user-controller',
+      },
+    },
   },
 };

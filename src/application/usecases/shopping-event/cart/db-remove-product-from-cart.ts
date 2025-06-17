@@ -58,7 +58,7 @@ export class DbRemoveProductFromCart implements RemoveProductFromCart {
       }
 
       // remove the product from the list
-      shoppingEvent.products.remove(product);
+      shoppingEvent.removeProduct(product);
 
       // Update shoppingEvent (removing the produt) to the database
       await this.repository.update(shoppingEvent);

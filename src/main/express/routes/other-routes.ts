@@ -4,7 +4,7 @@ export const otherRouter = Router();
 
 otherRouter.get('/', (req, res) => {
   res.send({
-    serviceName: 'background-check',
+    serviceName: 'grocery-store',
     version: '1.0.0',
   });
 });

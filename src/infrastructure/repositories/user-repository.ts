@@ -44,7 +44,7 @@ export class PrismaUserRepository implements UserRepositories {
   getByExternalId = async (externalId: string): Promise<User | undefined> => {
     const user = await prisma.user.findFirst({
       where: {
-        firebaseId: externalId,
+        externalId: externalId,
       },
       include: {
         family: {

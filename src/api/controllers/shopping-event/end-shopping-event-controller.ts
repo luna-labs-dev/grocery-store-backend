@@ -5,7 +5,6 @@ import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { EndShoppingEvent } from '@/domain';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -22,7 +21,6 @@ export type EndShoppingEventControllerRequest = z.infer<typeof EndShoppingEventR
 const { usecases } = injection;
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerValidationHandling(EndShoppingEventRequestSchema)
 export class EndShoppingEventController implements Controller {
