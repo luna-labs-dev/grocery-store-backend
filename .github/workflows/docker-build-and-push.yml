@@ -24,10 +24,10 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{variables.DOCKER_REGISTRY}}/your-app:${{ steps.tag.outputs.tag }} .
-          docker tag ${{variables.DOCKER_REGISTRY}}/your-app:${{ steps.tag.outputs.tag }} ${{variables.DOCKER_REGISTRY}}/your-app:latest
+          docker build -t ${{vars.DOCKER_REGISTRY}}/grocery-store-backend:${{ steps.tag.outputs.tag }} .
+          docker tag ${{vars.DOCKER_REGISTRY}}/grocery-store-backend:${{ steps.tag.outputs.tag }} ${{vars.DOCKER_REGISTRY}}/grocery-store-backend:latest
 
       - name: Push Docker image (tagged + latest)
         run: |
-          docker push ${{variables.DOCKER_REGISTRY}}/your-app:${{ steps.tag.outputs.tag }}
-          docker push ${{variables.DOCKER_REGISTRY}}/your-app:latest
+          docker push ${{vars.DOCKER_REGISTRY}}/grocery-store-backend:${{ steps.tag.outputs.tag }}
+          docker push ${{vars.DOCKER_REGISTRY}}/grocery-store-backend:latest
