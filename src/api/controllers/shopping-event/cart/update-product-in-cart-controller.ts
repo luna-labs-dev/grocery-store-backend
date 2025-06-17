@@ -4,7 +4,6 @@ import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, noContent } from '@/api/helpers';
 import { UpdateProductInCart } from '@/domain';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -29,7 +28,6 @@ export const updateProductInCartRequestSchema = z.object({
 export type UpdateProductInCartParams = z.infer<typeof updateProductInCartRequestSchema>;
 
 @injectable()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerErrorHandling()
 @controllerValidationHandling(updateProductInCartRequestSchema)

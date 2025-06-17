@@ -5,7 +5,6 @@ import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetShoppingEventById } from '@/domain';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -23,7 +22,6 @@ type GetShoppingEventByIdControllerParams = z.infer<typeof getShoppingEventByIdR
 
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerValidationHandling(getShoppingEventByIdRequestSchema)
 export class GetShoppingEventByIdController implements Controller {

@@ -22,11 +22,13 @@ import {
   StartShoppingEventController,
   UpdateMarketController,
   UpdateProductInCartController,
+  WebhookExternalAuthAddUserController,
 } from '@/api';
 import {
   DbAddFamily,
   DbAddMarket,
   DbAddProductToCart,
+  DbAddUser,
   DbEndShoppingEvent,
   DbGetFamily,
   DbGetMarketById,
@@ -46,7 +48,6 @@ import {
   MarketRepositories,
   ProductRepositories,
   ShoppingEventRepositories,
-  UserInfo,
   UserRepositories,
 } from '@/application/contracts';
 import { DbUpdateProductInCart } from '@/application/usecases/shopping-event/cart/db-update-product-in-cart';
@@ -54,6 +55,7 @@ import {
   AddFamily,
   AddMarket,
   AddProductToCart,
+  AddUser,
   EndShoppingEvent,
   GetFamily,
   GetMarketById,
@@ -70,7 +72,6 @@ import {
   UpdateProductInCart,
 } from '@/domain';
 import {
-  FirebaseUserInfo,
   PrismaFamilyRepository,
   PrismaMarketRepository,
   PrismaProductRepository,
@@ -88,7 +89,6 @@ container.register<ShoppingEventRepositories>(
   PrismaShoppingEventRepository,
 );
 container.register<ProductRepositories>(infra.productRepositories, PrismaProductRepository);
-container.register<UserInfo>(infra.userInfo, FirebaseUserInfo);
 
 // Usecases
 container.register<AddMarket>(usecases.newMarket, DbAddMarket);
@@ -103,6 +103,7 @@ container.register<AddProductToCart>(usecases.addProductToCart, DbAddProductToCa
 container.register<UpdateProductInCart>(usecases.updateProductInCart, DbUpdateProductInCart);
 container.register<RemoveProductFromCart>(usecases.removeProductFromCart, DbRemoveProductFromCart);
 container.register<GetUser>(usecases.getUser, DbGetUser);
+container.register<AddUser>(usecases.addUser, DbAddUser);
 container.register<AddFamily>(usecases.addFamily, DbAddFamily);
 container.register<JoinFamily>(usecases.joinFamily, DbJoinFamily);
 container.register<LeaveFamily>(usecases.leaveFamily, DbLeaveFamily);
@@ -126,3 +127,8 @@ container.register<Controller>(controllers.joinFamily, JoinFamilyController);
 container.register<Controller>(controllers.leaveFamily, LeaveFamilyController);
 container.register<Controller>(controllers.getFamily, GetFamilyController);
 container.register<Controller>(controllers.removeFamilyMember, RemoveFamilyMemberController);
+
+container.register<Controller>(
+  controllers.webhooks.externalAuthService.addUser,
+  WebhookExternalAuthAddUserController,
+);

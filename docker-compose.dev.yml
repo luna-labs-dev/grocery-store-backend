@@ -3,7 +3,7 @@ services:
     image: postgres:15.3
     container_name: grocery-store-backend-postgres
     ports:
-      - "5433:5433"
+      - "5450:5433"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:

@@ -5,7 +5,6 @@ import { Controller, HttpResponse } from '@/api/contracts';
 import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetMarketById } from '@/domain';
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -22,7 +21,6 @@ type GetMarketByIdControllerParams = z.infer<typeof getMarketByIdRequestSchema>;
 
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerValidationHandling(getMarketByIdRequestSchema)
 export class GetMarketByIdController implements Controller {

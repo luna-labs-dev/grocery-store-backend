@@ -6,7 +6,6 @@ import { mapErrorByCode, ok } from '@/api/helpers';
 import { GetMarketList } from '@/domain';
 
 import {
-  controllerAuthorizationHandling,
   controllerErrorHandling,
   controllerFamilyBarrierHandling,
   controllerValidationHandling,
@@ -27,7 +26,6 @@ type GetMarketListControllerRequest = z.infer<typeof getMarketListRequestSchema>
 
 @injectable()
 @controllerErrorHandling()
-@controllerAuthorizationHandling()
 @controllerFamilyBarrierHandling()
 @controllerValidationHandling(getMarketListRequestSchema)
 export class GetMarketListController implements Controller {

@@ -124,6 +124,11 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     this.calculateTotals();
   };
 
+  removeProduct = (product: Product) => {
+    this.props.products.remove(product);
+    this.calculateTotals();
+  };
+
   private calculateTotals(): void {
     const summed = {
       wholesaleTotal: 0,

@@ -19,7 +19,7 @@ export const FamilyMapper = {
         ownerId: family.ownerId,
         owner: User.create(
           {
-            firebaseId: family.owner.firebaseId,
+            externalId: family.owner.externalId,
             email: family.owner.email,
           },
           family.owner.id,
@@ -32,7 +32,7 @@ export const FamilyMapper = {
         members: family.members.map((m) =>
           User.create(
             {
-              firebaseId: m.firebaseId,
+              externalId: m.externalId,
               email: m.email,
             },
             m.id,

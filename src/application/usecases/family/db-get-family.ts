@@ -1,4 +1,4 @@
-import { UserInfo, UserRepositories } from '@/application/contracts';
+import { UserRepositories } from '@/application/contracts';
 import {
   Either,
   Family,
@@ -13,6 +13,7 @@ import {
   right,
 } from '@/domain';
 import { injection } from '@/main/di/injection-codes';
+import { clerkClient } from '@clerk/express';
 import { inject, injectable } from 'tsyringe';
 
 const { infra } = injection;
@@ -21,7 +22,7 @@ const { infra } = injection;
 export class DbGetFamily implements GetFamily {
   constructor(
     @inject(infra.userRepositories) private readonly userRepository: UserRepositories,
-    @inject(infra.userInfo) private readonly userinfo: UserInfo,
+    // @inject(infra.userInfo) private readonly userinfo: UserInfo,
   ) {}
 
   async execute({ userId }: GetFamilyParams): Promise<Either<GetFamilyErrors, Family>> {
@@ -41,18 +42,19 @@ export class DbGetFamily implements GetFamily {
       }
 
       for (const member of user.family.members) {
-        const userInfo = await this.userinfo.getInfoByUserId(member.firebaseId);
+        const userInfo = await clerkClient.users.getUser(member.externalId);
+
         member.setUserInfo({
-          name: userInfo.name,
-          picture: userInfo.picture,
+          name: userInfo.fullName ?? '',
+          picture: userInfo.imageUrl,
         });
       }
 
-      const userInfo = await this.userinfo.getInfoByUserId(user.family.owner.firebaseId);
+      const userInfo = await clerkClient.users.getUser(user.externalId);
 
       user.family.owner.setUserInfo({
-        name: userInfo.name,
-        picture: userInfo.picture,
+        name: userInfo.fullName ?? '',
+        picture: userInfo.imageUrl,
       });
 
       return right(user.family);
