@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS devDependencies
+FROM node:lts-alpine AS dev-dependencies
 WORKDIR /app
 COPY package.json yarn.* tsconfig.json ./
 COPY ./src ./src
@@ -13,7 +13,7 @@ RUN yarn install --production=true --frozen-lockfile
 
 FROM node:lts-alpine AS build
 WORKDIR /app
-COPY --from=devDependencies /app/ .
+COPY --from=dev-dependencies /app/ .
 COPY . .
 RUN yarn prisma-generate
 RUN yarn build
@@ -24,7 +24,7 @@ COPY --from=build --chown=node:node /app/package.json /home/node/app/package.jso
 COPY --from=build --chown=node:node /app/dist /home/node/app/dist/
 COPY --from=build --chown=node:node /app/scripts /home/node/app/scripts/
 COPY --from=build --chown=node:node /app/prisma /home/node/app/prisma/
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl openssl3
 RUN chmod ug+x /home/node/app/scripts/server.sh
 EXPOSE 8004
 ENTRYPOINT ["/home/node/app/scripts/server.sh"]
