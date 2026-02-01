@@ -8,7 +8,7 @@
   },
   "editor.formatOnSave": true,
   "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma-insider"
