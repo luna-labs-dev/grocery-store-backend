@@ -53,6 +53,7 @@ export class GetMarketListController implements Controller {
         id: mkt.id,
         code: mkt.code,
         name: mkt.name,
+        createdAt: mkt.createdAt,
       })),
     };
 
