@@ -133,17 +133,14 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
     const summed = {
       wholesaleTotal: 0,
       retailTotal: 0,
+      difference: 0,
     };
 
     for (const product of this.props.products.getItems()) {
-      summed.retailTotal += product.amount * product.price;
-
-      summed.wholesaleTotal +=
-        product.wholesaleMinAmount &&
-        product.wholesalePrice &&
-        product.amount >= product.wholesaleMinAmount
-          ? product.amount * product.wholesalePrice
-          : product.amount * product.price;
+      const calcultedTotal = product.getCalculatedTotals();
+      summed.retailTotal += calcultedTotal.totalsRetailOnly;
+      summed.wholesaleTotal += calcultedTotal.totalsWithWhosale;
+      summed.difference += calcultedTotal.totalsDifference;
     }
 
     this.retailTotal = summed.retailTotal;
@@ -175,7 +172,7 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
       const totalPaidInCents = monetaryCalc.toCents(this.totalPaid);
 
       totals.retailPaidDifferenceValue = monetaryCalc.toReais(
-        retailTotalInCents - totalPaidInCents,
+        totalPaidInCents - retailTotalInCents,
       );
     }
 
@@ -184,7 +181,7 @@ export class ShoppingEvent extends Entity<ShoppingEventProps> {
       const totalPaidInCents = monetaryCalc.toCents(this.totalPaid);
 
       totals.wholesalePaidDifferenceValue = monetaryCalc.toReais(
-        wholeSaleInCents - totalPaidInCents,
+        totalPaidInCents - wholeSaleInCents,
       );
     }
 
