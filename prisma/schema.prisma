@@ -60,9 +60,9 @@ model product {
   id                 String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   shoppingEventId    String         @db.Uuid
   name               String         @db.VarChar(256)
-  amount             Int            @db.Integer
+  amount             Float          @db.Real
   price              Decimal        @db.Money
-  wholesaleMinAmount Int?           @db.Integer
+  wholesaleMinAmount Float?         @db.Real
   wholesalePrice     Decimal?       @db.Money
   addedAt            DateTime       @db.Timestamp(6)
   addedBy            String         @db.VarChar(320)

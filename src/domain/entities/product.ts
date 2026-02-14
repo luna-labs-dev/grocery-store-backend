@@ -10,6 +10,9 @@ export interface ProductProps {
   wholesaleMinAmount?: number;
   price: number;
   wholesalePrice?: number;
+  totalRetailPrice?: number;
+  totalWholesalePrice?: number;
+  totalDifference?: number;
   addedAt: Date;
   addedBy: string;
 }
@@ -22,9 +25,15 @@ export interface UpdateProps {
   wholesalePrice?: number;
 }
 
+export interface ProductGetCalculatedTotals {
+  totalsRetailOnly: number;
+  totalsWithWhosale: number;
+  totalsDifference: number;
+}
 export class Product extends Entity<ProductProps> {
   private constructor(props: ProductProps, id?: string) {
     super(props, id);
+    this.calculateTotalPrice();
   }
 
   get shoppingEventId(): string {
@@ -55,6 +64,18 @@ export class Product extends Entity<ProductProps> {
     return this.props.wholesalePrice;
   }
 
+  get totalRetailPrice(): number {
+    return this.props.totalRetailPrice ?? 0;
+  }
+
+  get totalWholesalePrice(): number {
+    return this.props.totalWholesalePrice ?? 0;
+  }
+
+  get totalDifference(): number {
+    return this.props.totalDifference ?? 0;
+  }
+
   get addedAt(): Date {
     return this.props.addedAt;
   }
@@ -63,12 +84,34 @@ export class Product extends Entity<ProductProps> {
     return this.props.addedBy;
   }
 
+  getCalculatedTotals(): ProductGetCalculatedTotals {
+    return {
+      totalsRetailOnly: this.totalRetailPrice,
+      totalsWithWhosale: this.props.totalWholesalePrice ?? this.totalRetailPrice,
+      totalsDifference: this.totalDifference,
+    };
+  }
+
+  private calculateTotalPrice(): void {
+    this.props.totalRetailPrice = this.props.amount * this.props.price;
+    if (
+      !!this.props.wholesaleMinAmount &&
+      !!this.props.wholesalePrice &&
+      !!this.wholesaleMinAmount &&
+      this.amount >= this.wholesaleMinAmount
+    ) {
+      this.props.totalWholesalePrice = this.props.amount * this.props.wholesalePrice;
+    }
+    this.props.totalDifference = this.totalRetailPrice - this.totalWholesalePrice;
+  }
+
   update({ name, amount, price, wholesaleMinAmount, wholesalePrice }: UpdateProps): void {
     this.props.name = name;
     this.props.amount = amount;
     this.props.price = price;
     this.props.wholesaleMinAmount = wholesaleMinAmount;
     this.props.wholesalePrice = wholesalePrice;
+    this.calculateTotalPrice();
   }
 
   public static create(props: ProductProps, id?: string): Product {

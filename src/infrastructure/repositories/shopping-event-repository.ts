@@ -92,7 +92,11 @@ export class PrismaShoppingEventRepository implements ShoppingEventRepositories 
       },
       include: {
         market: true,
-        product: true,
+        product: {
+          orderBy: {
+            addedAt: 'desc',
+          },
+        },
         family: {
           include: {
             owner: true,

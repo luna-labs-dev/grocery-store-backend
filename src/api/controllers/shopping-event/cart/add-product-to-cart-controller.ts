@@ -17,9 +17,9 @@ export const addProductToCartRequestSchema = z.object({
   familyId: z.string().uuid(),
   shoppingEventId: z.string().uuid(),
   name: z.string().min(1),
-  amount: z.number().int().gt(0),
+  amount: z.number().gt(0),
   price: z.number().gt(0),
-  wholesaleMinAmount: z.number().int().gt(0).optional(),
+  wholesaleMinAmount: z.number().gt(0).optional(),
   wholesalePrice: z.number().gt(0).optional(),
 });
 

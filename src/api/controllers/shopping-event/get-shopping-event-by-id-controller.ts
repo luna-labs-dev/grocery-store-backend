@@ -55,15 +55,22 @@ export class GetShoppingEventByIdController implements Controller {
         createdAt: shoppingEvent.market?.createdAt,
       },
       calculatedTotals: shoppingEvent.getCalculatedTotals(),
-      products: shoppingEvent.products.getItems().map((prod) => ({
-        id: prod.id,
-        name: prod.name,
-        amount: prod.amount,
-        wholesaleMinAmount: prod.wholesaleMinAmount,
-        price: prod.price,
-        wholesalePrice: prod.wholesalePrice,
-        addedAt: prod.addedAt,
-      })),
+      products: shoppingEvent.products.getItems().map((prod) => {
+        const { totalsRetailOnly, totalsWithWhosale, totalsDifference } =
+          prod.getCalculatedTotals();
+        return {
+          id: prod.id,
+          name: prod.name,
+          amount: prod.amount,
+          wholesaleMinAmount: prod.wholesaleMinAmount,
+          price: prod.price,
+          wholesalePrice: prod.wholesalePrice,
+          totalRetailPrice: totalsRetailOnly,
+          totalWholesalePrice: totalsWithWhosale,
+          totalDifference: totalsDifference,
+          addedAt: prod.addedAt,
+        };
+      }),
       elapsedTime: shoppingEvent.elapsedTime,
       createdAt: shoppingEvent.createdAt,
       finishedAt: shoppingEvent.finishedAt,
