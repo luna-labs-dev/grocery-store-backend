@@ -15,7 +15,7 @@ FROM node:lts-alpine AS build
 WORKDIR /app
 COPY --from=dev-dependencies /app/ .
 COPY . .
-RUN yarn prisma-generate
+RUN yarn db:generate
 RUN yarn build
 
 FROM node:lts-alpine AS runtime
