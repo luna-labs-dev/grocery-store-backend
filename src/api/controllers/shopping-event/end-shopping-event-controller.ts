@@ -44,19 +44,6 @@ export class EndShoppingEventController implements Controller {
     }
 
     const shoppingEvent = endShoppingEventResult.value;
-
-    const response = {
-      id: shoppingEvent.id,
-      status: shoppingEvent.status,
-      market: {
-        id: shoppingEvent.marketId,
-        name: shoppingEvent.market?.name,
-      },
-      calculatedTotals: shoppingEvent.getCalculatedTotals(),
-      createdAt: shoppingEvent.createdAt,
-      finishedAt: shoppingEvent.finishedAt,
-      createdBy: shoppingEvent.createdBy,
-    };
-    return ok(response);
+    return ok(shoppingEvent.toSummaryDto());
   }
 }
