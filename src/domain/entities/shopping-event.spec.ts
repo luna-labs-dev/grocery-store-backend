@@ -53,6 +53,7 @@ describe('ShoppingEvent Entity', () => {
     expect(totals.highestPrice).toBe(25);
     expect(totals.lowestPrice).toBe(10);
     expect(totals.savingsPercentage).toBeCloseTo(11.11, 2);
+    expect(totals.savingsValue).toBe(5);
     expect(totals.averagePricePerUnit).toBeCloseTo(13.33, 2);
   });
 
@@ -80,12 +81,12 @@ describe('ShoppingEvent Entity', () => {
 
     expect(dto.id).toBe(shoppingEvent.id);
     expect(dto.status).toBe('ONGOING');
-    expect(dto.calculatedTotals.totalItemsDistinct).toBe(1);
-    expect(dto.calculatedTotals.totalItemsQuantity).toBe(2);
-    expect(dto.calculatedTotals.highestPrice).toBe(10);
-    expect(dto.calculatedTotals.lowestPrice).toBe(10);
-    expect(dto.calculatedTotals.retailPaidDifferenceValue).toBeUndefined();
-    expect(dto.calculatedTotals.wholesalePaidDifferenceValue).toBeUndefined();
+    expect(dto.totals.totalItemsDistinct).toBe(1);
+    expect(dto.totals.totalItemsQuantity).toBe(2);
+    expect(dto.totals.highestPrice).toBe(10);
+    expect(dto.totals.lowestPrice).toBe(10);
+    expect(dto.totals.retailPaidDifferenceValue).toBeUndefined();
+    expect(dto.totals.wholesalePaidDifferenceValue).toBeUndefined();
     expect(dto.products).toHaveLength(1);
     expect(dto.products[0].name).toBe('Product 1');
     expect(dto.products[0]).toHaveProperty('totalRetailPrice');
@@ -111,6 +112,7 @@ describe('ShoppingEvent Entity', () => {
     expect(totals.highestPrice).toBe(0);
     expect(totals.lowestPrice).toBe(0);
     expect(totals.savingsPercentage).toBe(0);
+    expect(totals.savingsValue).toBe(0);
     expect(totals.averagePricePerUnit).toBe(0);
   });
 });

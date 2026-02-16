@@ -79,7 +79,7 @@ export class GetShoppingEventListController implements Controller {
         id: se.id,
         status: se.status,
         market: se.market?.name,
-        calculatedTotals: {
+        totals: {
           retailTotal: se.retailTotal,
           wholesaleTotal: se.wholesaleTotal,
           totalItemsDistinct: se.totalItemsDistinct,
