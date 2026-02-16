@@ -94,14 +94,13 @@ export class Product extends Entity<ProductProps> {
 
   private calculateTotalPrice(): void {
     this.props.totalRetailPrice = this.props.amount * this.props.price;
-    if (
-      !!this.props.wholesaleMinAmount &&
-      !!this.props.wholesalePrice &&
-      !!this.wholesaleMinAmount &&
-      this.amount >= this.wholesaleMinAmount
-    ) {
-      this.props.totalWholesalePrice = this.props.amount * this.props.wholesalePrice;
+    if (!this.wholesaleMinAmount || !this.wholesalePrice || this.amount < this.wholesaleMinAmount) {
+      this.props.totalDifference = 0;
+      return;
     }
+
+    this.props.totalWholesalePrice = this.amount * this.wholesalePrice;
+
     this.props.totalDifference = this.totalRetailPrice - this.totalWholesalePrice;
   }
 

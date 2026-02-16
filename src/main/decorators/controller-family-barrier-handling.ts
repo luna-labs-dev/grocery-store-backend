@@ -24,6 +24,9 @@ export const controllerFamilyBarrierHandling = () => {
         });
 
         if (dbUserResult.isLeft()) {
+          console.error(
+            `[AuthSync] User authenticated in Clerk (id: ${externalUserId}) but not found in local database. Possible webhook sync delay or failure.`,
+          );
           return unauthorized({
             requiredAction: 'register-user',
           });
